@@ -1,10 +1,11 @@
 import './App.css'
+import LandingPage from './pages/LandingPage/LandingPage'
 
 function App() {
 
   return (
     <>
-  <h1 className='bg-slate-700'>IndiaVista</h1>
+  <LandingPage/>
     </>
   )
 }
