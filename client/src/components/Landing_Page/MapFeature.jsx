@@ -6,11 +6,12 @@ import image2 from "../../assets/nearby.jpg"
 function MapFeature() {
   return (
     <div className="bg-white w-full h-full flex flex-col items-center justify-center gap-5 p-6">
-      <div className="text-black font-jakarta font-extrabold text-4xl">
+      <div className="text-black  font-bold text-5xl text-center">
         Discover India’s vibrant Heritage with
-      </div>
-      <div className="text-sky-700 font-jakarta font-extrabold text-4xl">
+     
+      <div className="text-blue-600  font-bold text-5xl">
         Interactive Map
+      </div>
       </div>
 
       {/* Container for First & Third Section */}

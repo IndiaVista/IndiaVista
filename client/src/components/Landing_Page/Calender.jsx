@@ -13,8 +13,8 @@ const CulturalCalendar = () => {
         <div className="flex flex-col justify-center">
         <h1 className="text-center text-4xl font-bold ">
         Celebrate India’s rich heritage each day with our{" "}
-        {/* <br /> */}
-        <span className="text-blue-600">Cultural Calendar</span>
+        <br />
+        <span className="text-blue-600 text-5xl">Cultural Calendar</span>
       </h1>
           <img
             src={Calender}
