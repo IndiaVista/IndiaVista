@@ -31,7 +31,7 @@ function HomePage () {
   };
 
   return (
-    <div className="relative w-full h-screen">
+    <div id="home" className="relative w-full h-screen">
       <video 
         className="absolute top-0 left-0 w-full h-full object-cover"
         autoPlay 

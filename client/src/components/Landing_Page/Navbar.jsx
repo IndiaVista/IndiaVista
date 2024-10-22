@@ -1,287 +1,172 @@
-import React, { useState, useEffect } from 'react';
-import logo from '../../assets/IndiaVista_logo.png'
+import { useEffect, useState } from "react";
+// import { Link } from "react-router-dom";
+import { scroller } from "react-scroll";
+import { close , menu  } from "../../constants/index.js"; 
+import logo from "../../assets/IndiaVista_logo.png"
 
-function Navbar() {
-  const [activeLink, setActiveLink] = useState('home');
+const NavBar = () => {
+  const [active, setActive] = useState("Home");
+  const [toggle, setToggle] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
-  const [menuOpen, setMenuOpen] = useState(false); // To manage the mobile menu
-
-  const handleScroll = () => {
-    const scrollPosition = window.scrollY;
-    setIsScrolled(scrollPosition > 50);
-
-    // Update active link based on scroll position
-    const sections = document.querySelectorAll('section');
-    sections.forEach((section) => {
-      const sectionTop = section.offsetTop - 60;
-      const sectionHeight = section.offsetHeight;
-      if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
-        setActiveLink(section.getAttribute('id'));
-      }
-    });
-  };
 
   useEffect(() => {
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll);
+
     return () => {
-      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener("scroll", handleScroll);
     };
   }, []);
 
-  const toggleMenu = () => {
-    setMenuOpen(!menuOpen);
+  const scrollToSection = (id) => {
+    scroller.scrollTo(id, {
+      smooth: true,
+      offset: -70,
+    });
+  };
+
+  const navbar = [
+    {title: "Home", id:"home"},
+    {title: "Discover Heritage", id:"discover"},
+    {title: "Cultural Calendar", id:"calendar"},
+    {title: "Document Your Trip", id:"document"},
+    {title: "Gallery", id:"gallery"},
+    {title: "About us", id:"about"},
+    {title: "Contact us", id:"contact"}
+  ];
+
+  const handleScroll = () => {
+    const isTop = window.scrollY === 0;
+    setIsScrolled(!isTop);
+
+    const homeSection = document.getElementById("home");
+    const discoverSection = document.getElementById("discover");
+     const calendarSection = document.getElementById("calendar");
+    const documentSection = document.getElementById("document");
+    const gallerySection = document.getElementById("gallery");
+    const aboutSection = document.getElementById("about");
+    const contactSection = document.getElementById("contact");
+
+    const scrollPosition = window.scrollY;
+    const offset = 70;
+
+    if (
+      scrollPosition >= homeSection.offsetTop - offset &&
+      scrollPosition < discoverSection.offsetTop - offset
+    ) {
+      setActive("Home");
+    } else if (
+      scrollPosition >= discoverSection.offsetTop - offset &&
+      scrollPosition < documentSection.offsetTop - offset 
+    ) {
+      setActive("Discover Heritage");
+    } else if (
+      scrollPosition >= documentSection.offsetTop - offset &&
+      scrollPosition < calendarSection.offsetTop - offset 
+    ) {
+      setActive("Document Your Trip");
+    } else if (
+      scrollPosition >= calendarSection.offsetTop - offset &&
+      scrollPosition < gallerySection.offsetTop - offset 
+    ) {
+      setActive("Cultural Calendar");
+    } else if (
+      scrollPosition >= gallerySection.offsetTop - offset &&
+      scrollPosition < aboutSection.offsetTop - offset 
+    ) {
+      setActive("Gallery");
+    } else if (
+      scrollPosition >= aboutSection.offsetTop - offset &&
+      scrollPosition < contactSection.offsetTop - offset
+    ) {
+      setActive("About Us");
+    } else if (scrollPosition >= contactSection.offsetTop - offset) {
+      setActive("Contact Us");
+    }
   };
 
   return (
-    <nav className={`fixed top-0 w-full z-50 bg-white transition-all duration-300 ${isScrolled ? 'shadow-md' : ''}`}>
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-16">
-          <div className="flex items-center">
-            <a href="#home" className="flex items-center">
-              <img src={logo} alt="Logo" className="h-11 w-13" />
-            </a>
-          </div>
-
-          {/* Hamburger icon for mobile */}
-          <div className="md:hidden">
-            <button onClick={toggleMenu} className="text-gray-800 focus:outline-none">
-              <svg
-                className="w-6 h-6"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16m-7 6h7" />
-              </svg>
-            </button>
-          </div>
-
-          {/* Navbar links for desktop */}
-          <div className="hidden md:flex space-x-8">
-            <a
-              href="#home"
-              className={`text-sm font-medium ${activeLink === 'home' ? 'text-blue-500 underline' : 'text-gray-500 hover:text-blue-500'}`}
-            >
-              Home
-            </a>
-            <a
-              href="#discover"
-              className={`text-sm font-medium ${activeLink === 'discover' ? 'text-blue-500 underline' : 'text-gray-500 hover:text-blue-500'}`}
-            >
-              Discover Heritage
-            </a>
-            <a
-              href="#document"
-              className={`text-sm font-medium ${activeLink === 'document' ? 'text-blue-500 underline' : 'text-gray-500 hover:text-blue-500'}`}
-            >
-              Document Your Trip
-            </a>
-            <a
-              href="#calendar"
-              className={`text-sm font-medium ${activeLink === 'calendar' ? 'text-blue-500 underline' : 'text-gray-500 hover:text-blue-500'}`}
-            >
-              Cultural Calendar
-            </a>
-            <a
-              href="#gallery"
-              className={`text-sm font-medium ${activeLink === 'gallery' ? 'text-blue-500 underline' : 'text-gray-500 hover:text-blue-500'}`}
-            >
-              Gallery
-            </a>
-            <a
-              href="#about"
-              className={`text-sm font-medium ${activeLink === 'about' ? 'text-blue-500 underline' : 'text-gray-500 hover:text-blue-500'}`}
-            >
-              About Us
-            </a>
-            <a
-              href="#contact"
-              className={`text-sm font-medium ${activeLink === 'contact' ? 'text-blue-500 underline' : 'text-gray-500 hover:text-blue-500'}`}
-            >
-              Contact Us
-            </a>
-          </div>
-
-          <div className="hidden md:block">
-            <a
-              href="#get-started"
-              className="text-white bg-red-500 hover:bg-red-600 px-4 py-2 rounded-md text-sm font-medium"
-            >
-              Get Started
-            </a>
-          </div>
-        </div>
+    <nav
+      className={`w-full flex justify-between items-center fixed z-50 bg-white px-8 py-4 ${
+        isScrolled ? "shadow-md" : ""
+      }`}
+    >
+      {/* Logo Section */}
+      <div>
+        {/* <Link to="/"> */}
+          <img
+            src={logo}
+            alt="Destinize Logo"
+            className="w-[120px] h-auto"
+            loading="lazy"
+          />
+        {/* </Link> */}
       </div>
 
-      {/* Mobile menu (visible when menuOpen is true) */}
-      {menuOpen && (
-        <div className="md:hidden bg-white shadow-md">
-          <div className="px-2 pt-2 pb-3 space-y-1">
-            <a
-              href="#home"
-              className={`block text-sm font-medium ${activeLink === 'home' ? 'text-blue-500' : 'text-gray-700 hover:text-blue-500'}`}
-              onClick={() => setMenuOpen(false)}
-            >
-              Home
-            </a>
-            <a
-              href="#discover"
-              className={`block text-sm font-medium ${activeLink === 'discover' ? 'text-blue-500' : 'text-gray-700 hover:text-blue-500'}`}
-              onClick={() => setMenuOpen(false)}
-            >
-              Discover Heritage
-            </a>
-            <a
-              href="#document"
-              className={`block text-sm font-medium ${activeLink === 'document' ? 'text-blue-500' : 'text-gray-700 hover:text-blue-500'}`}
-              onClick={() => setMenuOpen(false)}
-            >
-              Document Your Trip
-            </a>
-            <a
-              href="#calendar"
-              className={`block text-sm font-medium ${activeLink === 'calendar' ? 'text-blue-500' : 'text-gray-700 hover:text-blue-500'}`}
-              onClick={() => setMenuOpen(false)}
-            >
-              Cultural Calendar
-            </a>
-            <a
-              href="#gallery"
-              className={`block text-sm font-medium ${activeLink === 'gallery' ? 'text-blue-500' : 'text-gray-700 hover:text-blue-500'}`}
-              onClick={() => setMenuOpen(false)}
-            >
-              Gallery
-            </a>
-            <a
-              href="#about"
-              className={`block text-sm font-medium ${activeLink === 'about' ? 'text-blue-500' : 'text-gray-700 hover:text-blue-500'}`}
-              onClick={() => setMenuOpen(false)}
-            >
-              About Us
-            </a>
-            <a
-              href="#contact"
-              className={`block text-sm font-medium ${activeLink === 'contact' ? 'text-blue-500' : 'text-gray-700 hover:text-blue-500'}`}
-              onClick={() => setMenuOpen(false)}
-            >
-              Contact Us
-            </a>
-            <a
-              href="#get-started"
-              className="block text-white bg-red-500 hover:bg-blue-600 px-4 py-2 rounded-md text-sm font-medium"
-              onClick={() => setMenuOpen(false)}
-            >
-              Get Started
-            </a>
-          </div>
+      {/* Desktop Navigation Links */}
+      <ul className="list-none hidden lg:flex flex-row items-center space-x-6">
+        {navbar.map((nav) => (
+          <li
+            key={nav.id}
+            className={`font-medium text-[16px] cursor-pointer ${
+              active === nav.title ? "text-red-600" : "text-gray-500"
+            } hover:text-red-600`}
+            onClick={() => {
+              setActive(nav.title);
+              scrollToSection(nav.id);
+            }}
+          >
+            <a href={`#${nav.id}`}>{nav.title}</a>
+          </li>
+        ))}
+      </ul>
+
+      
+      {/* <Link to="/auth"> */}
+        <button className="hidden lg:block bg-red-500 text-white px-6 py-2 rounded-full shadow hover:bg-red-700">
+          Get Started
+        </button>
+      {/* </Link> */}
+
+      {/* Mobile Hamburger Menu */}
+      <div className="lg:hidden flex items-center">
+        <img
+          src={toggle ? close : menu}
+          alt="menu"
+          className="w-[28px] h-[28px] object-contain cursor-pointer"
+          onClick={() => setToggle(!toggle)}
+        />
+
+        {/* Mobile Dropdown Menu */}
+        <div
+          className={`${
+            !toggle ? "hidden" : "flex"
+          } p-6 bg-white absolute top-16 right-0 min-w-[140px] w-[200px] rounded-lg shadow-lg`}
+        >
+          <ul className="list-none flex flex-col space-y-4">
+            {navbar.map((nav) => (
+              <li
+                key={nav.id}
+                className={`font-medium text-[16px] cursor-pointer ${
+                  active === nav.title ? "text-red-600" : "text-gray-500"
+                } hover:text-red-600`}
+                onClick={() => {
+                  setActive(nav.title);
+                  scrollToSection(nav.id);
+                }}
+              >
+                <a href={`#${nav.id}`}>{nav.title}</a>
+              </li>
+            ))}
+            {/* <Link to="/auth"> */}
+              <button className="bg-red-600 text-white w-full py-2 rounded-lg shadow mt-4">
+                Get Started
+              </button>
+            {/* </Link> */}
+          </ul>
         </div>
-      )}
+      </div>
     </nav>
   );
 };
 
-export default Navbar;
-
-
-// import React, { useState, useEffect } from 'react';
-
-// const Navbar = () => {
-//   const [activeLink, setActiveLink] = useState('home');
-//   const [isScrolled, setIsScrolled] = useState(false);
-
-//   const handleScroll = () => {
-//     const scrollPosition = window.scrollY;
-//     if (scrollPosition > 50) {
-//       setIsScrolled(true);
-//     } else {
-//       setIsScrolled(false);
-//     }
-
-//     // Update active link based on scroll position
-//     const sections = document.querySelectorAll('section');
-//     sections.forEach((section) => {
-//       const sectionTop = section.offsetTop - 60;
-//       const sectionHeight = section.offsetHeight;
-//       if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
-//         setActiveLink(section.getAttribute('id'));
-//       }
-//     });
-//   };
-
-//   useEffect(() => {
-//     window.addEventListener('scroll', handleScroll);
-//     return () => {
-//       window.removeEventListener('scroll', handleScroll);
-//     };
-//   }, []);
-
-//   return (
-//     <nav className={`fixed top-0 w-full z-50 bg-white transition-all duration-300 ${isScrolled ? 'shadow-md' : ''}`}>
-//       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-//         <div className="flex justify-between items-center h-16">
-//           <div className="flex items-center">
-//             <a href="#home" className="flex items-center">
-//               <img src="/logo.png" alt="Logo" className="h-8 w-auto" />
-//               <span className="ml-3 text-xl font-semibold text-gray-800">Destinize</span>
-//             </a>
-//           </div>
-//           <div className="hidden md:flex space-x-8">
-//             <a
-//               href="#home"
-//               className={`text-sm font-medium ${activeLink === 'home' ? 'text-blue-500 underline' : 'text-gray-500 hover:text-blue-500'}`}
-//             >
-//               Home
-//             </a>
-//             <a
-//               href="#discover"
-//               className={`text-sm font-medium ${activeLink === 'discover' ? 'text-blue-500 underline' : 'text-gray-500 hover:text-blue-500'}`}
-//             >
-//               Discover Heritage
-//             </a>
-//             <a
-//               href="#document"
-//               className={`text-sm font-medium ${activeLink === 'document' ? 'text-blue-500 underline' : 'text-gray-500 hover:text-blue-500'}`}
-//             >
-//               Document Your Trip
-//             </a>
-//             <a
-//               href="#calendar"
-//               className={`text-sm font-medium ${activeLink === 'calendar' ? 'text-blue-500 underline' : 'text-gray-500 hover:text-blue-500'}`}
-//             >
-//               Cultural Calendar
-//             </a>
-//             <a
-//               href="#gallery"
-//               className={`text-sm font-medium ${activeLink === 'gallery' ? 'text-blue-500 underline' : 'text-gray-500 hover:text-blue-500'}`}
-//             >
-//               Gallery
-//             </a>
-//             <a
-//               href="#about"
-//               className={`text-sm font-medium ${activeLink === 'about' ? 'text-blue-500 underline' : 'text-gray-500 hover:text-blue-500'}`}
-//             >
-//               About Us
-//             </a>
-//             <a
-//               href="#contact"
-//               className={`text-sm font-medium ${activeLink === 'contact' ? 'text-blue-500 underline' : 'text-gray-500 hover:text-blue-500'}`}
-//             >
-//               Contact Us
-//             </a>
-//           </div>
-//           <div className="hidden md:block">
-//             <a
-//               href="#get-started"
-//               className="text-white bg-blue-500 hover:bg-blue-600 px-4 py-2 rounded-md text-sm font-medium"
-//             >
-//               Get Started
-//             </a>
-//           </div>
-//         </div>
-//       </div>
-//     </nav>
-//   );
-// };
-
-// export default Navbar;
+export default NavBar;

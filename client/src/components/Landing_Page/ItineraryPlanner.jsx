@@ -2,7 +2,7 @@ import React from 'react';
 
 const ItineraryPlanner = () => {
   return (
-    <section className="py-10 px-5 bg-gray-50">
+    <section id="document" className="py-10 px-5 bg-gray-50">
       <div className="container mx-auto flex flex-col lg:flex-row justify-between items-start lg:space-x-8">
         {/* Left Side: Content */}
         <div className="lg:w-1/2 bg-white p-6 shadow-md rounded-md">
