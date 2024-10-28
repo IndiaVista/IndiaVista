@@ -1,103 +1,68 @@
 import React from "react";
+import s1 from "../../assets/Landing_page/share1.avif"
+import s2 from "../../assets/Landing_page/share.jpg"
 
 const UploadGallery = () => {
-  return (
-    <section id="gallery" className="bg-gray-50 py-12 px-4 md:px-8 lg:px-16">
-      <div className="max-w-7xl mx-auto flex flex-col items-center">
-        {/* Main Heading Above the Container */}
-        <h2 className="text-2xl font-bold text-gray-800 mb-8 text-center">
-        Share your journey by uploading photos and videos from your visits to India’s Landmarks
-        </h2>
-
-        <div className="bg-gray-50 p-4 rounded-xl shadow-lg max-w-3xl w-full">
-          <h3 className="text-xl font-bold mb-6 text-gray-800 text-center">
-            Share Your Travel Experience
-          </h3>
-
-          {/* Upload Section */}
-          <div className="flex flex-col items-center mb-6">
-            <div className="w-full h-max border-4 border-dashed border-gray-300 rounded-lg p-2 flex flex-col items-center justify-center bg-white transition-shadow hover:shadow-md">
-              <div className="mb-2">
-                {/* SVG Upload Icon */}
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-10 w-10 text-gray-500"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                >
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4" />
-                </svg>
+    return (
+      <div id="gallery" className="flex flex-col md:flex-row items-center justify-center bg-white py-12 px-4 md:px-16 space-y-8 md:space-y-0 md:space-x-8">
+      <div className="bg-white shadow-lg rounded-lg md:w-1/3 w-full max-w-xs mx-auto md:mx-0 order-2 md:order-1">
+          <div className="p-4">
+              <div className="relative">
+                  <img
+                      src={s1} 
+                      alt="Heritage Insights"
+                      className="rounded-lg"
+                  />
+                  <div className="absolute top-4 left-4 text-white text-xs bg-black bg-opacity-50 p-1 rounded">
+                    Real Experiences
+                  </div>
               </div>
-              <p className="text-gray-500 text-sm mb-1">Drag and drop or</p>
-              <p className="text-blue-600 font-semibold text-sm cursor-pointer hover:text-blue-800">
-                Click to upload your photos or videos
-              </p>
-            </div>
+              <div className="mt-4 text-center">
+                  <h2 className="text-xl font-bold">Heritage Insights</h2>
+                  <p className="text-gray-500 text-sm my-2 text-justify">
+                  Gain unique insights into India’s landmarks and traditions through authentic photos and videos shared by real travelers. Discover culture and history from diverse perspectives.
+                  </p>
+              </div>
           </div>
-
-          {/* Pictures Section */}
-          <h3 className="text-lg font-semibold mb-4 text-gray-800 text-center">
-            Photos Uploaded by Others
-          </h3>
-          <div className="grid grid-cols-3 gap-2">
-            {/* Static media items (replace with actual images) */}
-            <div className="relative group">
-              <img
-                src="/path-to-image1.jpg"
-                alt="Uploaded Place 1"
-                className="w-28 h-28 object-cover rounded-md shadow-lg transform group-hover:scale-105 transition-all duration-300"
-              />
-            </div>
-            <div className="relative group">
-              <img
-                src="/path-to-image2.jpg"
-                alt="Uploaded Place 2"
-                className="w-28 h-28 object-cover rounded-md shadow-lg transform group-hover:scale-105 transition-all duration-300"
-              />
-            </div>
-            <div className="relative group">
-              <img
-                src="/path-to-image3.jpg"
-                alt="Uploaded Place 3"
-                className="w-28 h-28 object-cover rounded-md shadow-lg transform group-hover:scale-105 transition-all duration-300"
-              />
-            </div>
-          </div>
-
-          {/* Videos Section */}
-          <h3 className="text-lg font-semibold mt-6 mb-4 text-gray-800 text-center">
-            Videos Uploaded by Others
-          </h3>
-          <div className="grid grid-cols-3 gap-2">
-            {/* Static video items (replace with actual videos) */}
-            <div className="relative group">
-              <video
-                src="/path-to-video1.mp4"
-                controls
-                className="w-28 h-28 object-cover rounded-md shadow-lg transform group-hover:scale-105 transition-all duration-300"
-              ></video>
-            </div>
-            <div className="relative group">
-              <video
-                src="/path-to-video2.mp4"
-                controls
-                className="w-28 h-28 object-cover rounded-md shadow-lg transform group-hover:scale-105 transition-all duration-300"
-              ></video>
-            </div>
-            <div className="relative group">
-              <video
-                src="/path-to-video3.mp4"
-                controls
-                className="w-28 h-28 object-cover rounded-md shadow-lg transform group-hover:scale-105 transition-all duration-300"
-              ></video>
-            </div>
-          </div>
-        </div>
       </div>
-    </section>
-  );
+
+      <div className="md:w-1/2 w-full text-center md:text-left order-1 md:order-2">
+          <h1 className="text-4xl font-bold mb-4 text-center">
+              Capture Your Journey!
+          </h1>
+          <p className="text-gray-600 text-lg mb-6" style={{ textAlign: 'justify' }}>
+              Share your unforgettable moments from India’s breathtaking landmarks by uploading your photos and videos. Contribute to our collective story and inspire others to explore the vibrant heritage and traditions of our incredible country!
+          </p>
+          <a
+              href="/auth"
+              className="text-blue-600 font-semibold underline"
+          >
+              Share your Journey now &gt;
+          </a>
+      </div>
+
+      <div className="bg-white shadow-lg rounded-lg md:w-1/3 w-full max-w-xs mx-auto md:mx-0 order-3">
+          <div className="p-4">
+              <div className="relative">
+                  <img
+                      src={s2} 
+                      alt="Inspire Your Next Journey"
+                      className="rounded-lg"
+                  />
+                  <div className="absolute top-4 left-4 text-white text-xs bg-black bg-opacity-50 p-1 rounded">
+                    Explore & Inspire
+                  </div>
+              </div>
+              <div className="mt-4 text-center">
+                  <h2 className="text-xl font-bold">Inspire Your Next Journey</h2>
+                  <p className="text-gray-500 text-sm my-2 text-justify">
+                    Explore an ever-growing gallery of journeys. Let stories and images from fellow explorers spark ideas for your next cultural adventure.
+                  </p>
+              </div>
+          </div>
+      </div>
+  </div>
+);
 };
 
 export default UploadGallery;

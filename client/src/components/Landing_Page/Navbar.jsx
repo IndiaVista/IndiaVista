@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-// import { Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { scroller } from "react-scroll";
 import { close , menu  } from "../../constants/index.js"; 
-import logo from "../../assets/IndiaVista_logo.png"
+import logo from "../../assets/Landing_page/IndiaVista_logo.png"
 
 const NavBar = () => {
   const [active, setActive] = useState("Home");
@@ -121,11 +121,11 @@ const NavBar = () => {
       </ul>
 
       
-      {/* <Link to="/auth"> */}
+      <Link to="/auth">
         <button className="hidden lg:block bg-red-500 text-white px-6 py-2 rounded-full shadow hover:bg-red-700">
           Get Started
         </button>
-      {/* </Link> */}
+      </Link>
 
       {/* Mobile Hamburger Menu */}
       <div className="lg:hidden flex items-center">
@@ -157,11 +157,11 @@ const NavBar = () => {
                 <a href={`#${nav.id}`}>{nav.title}</a>
               </li>
             ))}
-            {/* <Link to="/auth"> */}
+            <Link to="/auth">
               <button className="bg-red-600 text-white w-full py-2 rounded-lg shadow mt-4">
                 Get Started
               </button>
-            {/* </Link> */}
+            </Link>
           </ul>
         </div>
       </div>

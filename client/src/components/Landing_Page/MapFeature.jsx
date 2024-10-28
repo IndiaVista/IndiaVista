@@ -1,7 +1,7 @@
 import React from "react";
 import "../../../src/index.css";
-import image1 from "../../assets/map.jpg";
-import image2 from "../../assets/nearby.jpg"
+import image1 from "../../assets/Landing_page/map.jpg";
+import image2 from "../../assets/Landing_page/nearby.jpg"
 
 function MapFeature() {
   return (

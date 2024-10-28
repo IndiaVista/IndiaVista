@@ -1,6 +1,6 @@
 import React from 'react';
-import AboutUsi from '../../assets/AboutUs.jpg'; // Assuming this is the image for the left column
-import BackgroundImage from '../../assets/Aboutbg.jpg'; // Assuming you have a background image
+import AboutUsi from '../../assets/Landing_page/AboutUs.jpg'; // Assuming this is the image for the left column
+import BackgroundImage from '../../assets/Landing_page/Aboutbg.jpg'; // Assuming you have a background image
 
 const AboutUs = () => {
   return (

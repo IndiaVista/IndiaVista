@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react';
-// import { useNavigate } from 'react-router-dom';
-import v1 from '../../assets/v1.mp4'; 
+import v1 from '../../assets/Landing_page/v1.mp4'; 
 import Typed from 'typed.js';
+import { Link } from 'react-router-dom';
 
 function HomePage () {
   const el = useRef(null); 
@@ -26,10 +26,6 @@ function HomePage () {
     };
   }, []);
 
-  const handleReadMore = () => {
-    // navigate('/login'); Uncomment this when you enable navigation
-  };
-
   return (
     <div id="home" className="relative w-full h-screen">
       <video 
@@ -49,12 +45,13 @@ function HomePage () {
           <span ref={el}></span>
         </h1>
         
+        <Link to="/auth">
         <button
-          onClick={handleReadMore}
           className="mt-40 px-6 py-3 bg-red-500 text-white rounded-md text-lg hover:bg-red-600 font-medium"
         >
           Read More
         </button>
+        </Link>
       </div>
     </div>
   );

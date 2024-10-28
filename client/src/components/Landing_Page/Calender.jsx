@@ -1,5 +1,5 @@
 import React from "react";
-import Calender from "../../assets/Calender.jpg";
+import Calender from "../../assets/Landing_page/Calender.jpg";
 
 const CulturalCalendar = () => {
   return (
