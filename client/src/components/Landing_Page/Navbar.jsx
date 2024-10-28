@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { scroller } from "react-scroll";
 import { close , menu  } from "../../constants/index.js"; 
 import logo from "../../assets/IndiaVista_logo.png"
-
+import Link from "react-scroll";
 const NavBar = () => {
   const [active, setActive] = useState("Home");
   const [toggle, setToggle] = useState(false);

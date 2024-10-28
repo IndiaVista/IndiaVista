@@ -13,6 +13,7 @@ function LandingPage() {
   
   return (
     <div>
+
         <Navbar/>
         <HomePage/>
         <MapFeature/>
