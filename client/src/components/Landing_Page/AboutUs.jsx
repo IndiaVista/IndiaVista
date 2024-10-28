@@ -4,7 +4,7 @@ import BackgroundImage from '../../assets/Aboutbg.jpg'; // Assuming you have a b
 
 const AboutUs = () => {
   return (
-    <div 
+    <div id="about" 
       className="relative p-8 font-sans h-screen bg-cover bg-center"
       style={{ backgroundImage: `url(${BackgroundImage})` }} // Background image for the entire section
     >

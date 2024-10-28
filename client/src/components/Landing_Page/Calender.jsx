@@ -3,12 +3,12 @@ import Calender from "../../assets/Calender.jpg";
 
 const CulturalCalendar = () => {
   return (
-    <div className="min-h-screen bg-white flex flex-col justify-center items-center">
+    <div id="calendar" className="min-h-screen bg-white flex flex-col justify-center items-center">
       {/* Header */}
       
 
       {/* Main Content */}
-      <div className="w-full max-w-6xl grid grid-cols-1 md:grid-cols-2 gap-20">
+      <div id="calendar" className="w-full max-w-6xl grid grid-cols-1 md:grid-cols-2 gap-20">
         {/* Left Column: Image */}
         <div className="flex flex-col justify-center">
         <h1 className="text-center text-4xl font-bold ">
