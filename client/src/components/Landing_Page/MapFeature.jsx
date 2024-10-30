@@ -6,6 +6,7 @@ import image2 from "../../assets/Landing_page/nearby.jpg"
 
 function MapFeature() {
   return (
+
     <div id="discover" className="bg-white w-full h-full flex flex-col items-center justify-center gap-5 p-6">
       <div className="text-black  font-bold text-5xl text-center">
 
