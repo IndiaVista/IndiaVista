@@ -1,12 +1,15 @@
 import React from "react";
 import "../../../src/index.css";
-import image1 from "../../assets/map.jpg";
-import image2 from "../../assets/nearby.jpg";
+
+
+import image1 from "../../assets/Landing_page/map.jpg";
+import image2 from "../../assets/Landing_page/nearby.jpg"
 
 function MapFeature() {
   return (
-    <div className="bg-white w-full h-full flex flex-col items-center justify-center gap-5 p-6">
-      <div className="text-black font-bold text-3xl md:text-5xl text-center">
+    <div id="discover" className="bg-white w-full h-full flex flex-col items-center justify-center gap-5 p-6">
+      <div className="text-black  font-bold text-5xl text-center">
+
         Discover India’s vibrant Heritage with
         <div className="text-blue-600 font-bold text-3xl md:text-5xl">
           Interactive Map

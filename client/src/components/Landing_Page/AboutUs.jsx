@@ -1,10 +1,10 @@
 import React from 'react';
-import AboutUsi from '../../assets/AboutUs.jpg'; // Assuming this is the image for the left column
-import BackgroundImage from '../../assets/Aboutbg.jpg'; // Assuming you have a background image
+import AboutUsi from '../../assets/Landing_page/AboutUs.jpg'; // Assuming this is the image for the left column
+import BackgroundImage from '../../assets/Landing_page/Aboutbg.jpg'; // Assuming you have a background image
 
 const AboutUs = () => {
   return (
-    <div 
+    <div id="about" 
       className="relative p-8 font-sans h-screen bg-cover bg-center"
       style={{ backgroundImage: `url(${BackgroundImage})` }} // Background image for the entire section
     >
