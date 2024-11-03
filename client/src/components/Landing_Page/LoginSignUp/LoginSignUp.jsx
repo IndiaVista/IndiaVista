@@ -5,6 +5,7 @@ import AuthErrorMessage from "../../AuthErrorMsg";
 import validate from "../../../common/validation";
 import { FiEye, FiEyeOff } from "react-icons/fi";
 import bgImg from "../../../assets/Landing_page/VisitIndia_.jpg"
+import { Link } from "react-router-dom";
 
 const initialForm = {
   name: "",
@@ -171,6 +172,7 @@ const LoginSignUp = () => {
             
           <Captcha message={setTrackState} trackState={trackState}/>
 
+          <Link to="/home">
           <div>
             <button
               type="submit"
@@ -179,6 +181,7 @@ const LoginSignUp = () => {
               {isregister ? "Register" : "Sign In"}
             </button>
           </div>
+          </Link>
 
           {!isregister && <div className="flex justify-center items-center mt-4 text-sm">
             <a className="text-blue-400 hover:underline">Forgot Password?</a>
