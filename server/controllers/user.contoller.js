@@ -1,12 +1,16 @@
-import { User } from "../models/user.model"
-import { asyncHandler } from "../utils/asyncHandler"
-import {ApiError} from "../utils/ApiError"
-import {ApiResponse} from "../utils/ApiResponse"
+import { User } from "../models/user.model.js"
+import { asyncHandler } from "../utils/asyncHandler.js"
+import {ApiError} from "../utils/ApiError.js"
+import {ApiResponse} from "../utils/ApiResponse.js"
 import jwt from "jsonwebtoken"
 
 const generateAccessAndRefreshTokens = async(userId) => {
     try {
-        const user = User.findById(userId)
+        const user = await User.findById(userId)
+
+        if (!user) {
+            throw new ApiError(404, "User not found");
+        }
     
         const accessToken = user.generateAccessToken()
         const refreshToken = user.generateRefreshToken()
@@ -22,7 +26,9 @@ const generateAccessAndRefreshTokens = async(userId) => {
 
 const registerUser = asyncHandler( async(req, res) => {
     const {fullName, email, password} = req.body
-
+    console.log(fullName)
+    console.log(email)
+    console.log(password)
     if(
         [fullName, email, password].some((field) => 
             field?.trim() === ""
@@ -30,12 +36,11 @@ const registerUser = asyncHandler( async(req, res) => {
     ){
         throw new ApiError(400,"All fiels is required")
     }
+    // const existedUser = User.findOne({email})
 
-    const existedUser = User.findOne({email})
-
-    if(existedUser){
-        throw new ApiError(409, "User with email or username already exist")
-    }
+    // if(existedUser){
+    //     throw new ApiError(409, "User with email or username already exist")
+    // }
 
     const user = await User.create({
         fullName,

@@ -1,13 +1,15 @@
-import {React, useState, useNavigate} from "react";
+import {React, useState} from "react";
 import logo from "../../../assets/Landing_page/IndiaVista_logo.png"
 import Captcha from "./Captcha";
 import AuthErrorMessage from "../../AuthErrorMsg";
 import validate from "../../../common/validation";
 import { FiEye, FiEyeOff } from "react-icons/fi";
 import bgImg from "../../../assets/Landing_page/VisitIndia_.jpg"
+import {useNavigate} from 'react-router-dom'
+import axios from 'axios'
 
 const initialForm = {
-  name: "",
+  fullName: "",
   email: "",
   password: "",
   confirmPassword: "",
@@ -20,6 +22,8 @@ const LoginSignUp = () => {
     const [trackState, setTrackState] = useState(false)
     const [error, setError] = useState({})
     const [passwordType, setPasswordType] = useState("password")
+    const navigate = useNavigate()
+    const [isLoading, setIsLoading] = useState(true)
   
     const handleChange = (e) => {
       setForm({ ...form, [e.target.name]:e.target.value})
@@ -55,6 +59,44 @@ const LoginSignUp = () => {
       setForm(initialForm);
       setIsregister((prevIsregister) => !prevIsregister);
     };
+
+    const handleSubmit = async(event) => {
+      event.preventDefault()
+      let submitable = true;
+
+    Object.values(error).forEach(e=>{
+      if(e){
+        submitable = false;
+        return ;
+      }
+    })
+    
+   if(submitable){
+     setIsLoading(true);
+
+    try {
+      console.log(isregister)
+      const res = isregister
+        ? await axios.post("http://localhost:8000/api/users/register", form)
+        : await axios.post("http://localhost:8000/api/users/signin", form);
+
+      const result = res.data;
+      console.log(result)
+
+      // localStorage.setItem("profile", JSON.stringify({ ...result }));
+
+      setIsLoading(false);
+      navigate("/");
+    } catch (error) {
+      // alert(error.response?.data?.message);
+      console.log("Error", error.response?.data?.message || error.message);
+
+      setIsLoading(false);
+    }}else{
+       alert("Please enter valid values");
+    }
+  };
+  
   
     // const googleSuccess = async (res) => {
     //   const result = jwt_decode(res?.credential);
@@ -92,13 +134,13 @@ const LoginSignUp = () => {
       {/* Other component code */}
     </div>
         <h1 className="text-3xl font-bold mb-6">{isregister ? "Register" : "Sign In"}</h1>
-        <form className="space-y-4">
+        <form onSubmit={handleSubmit} className="space-y-4">
           {isregister && <div>
             <input
               type="text"
-              name="name"
+              name="fullName"
               id="name"
-              value={form.name}
+              value={form.fullName}
               placeholder="Name"
               onChange={handleChange}
               className="w-full p-2 rounded bg-gray-700 focus:outline-none focus:ring-2 focus:ring-red-500"
@@ -108,7 +150,7 @@ const LoginSignUp = () => {
               aria-describedby="name-error"
               aria-invalid={error.nameError ? "true" : "false"}
             />
-            {(error.name && error.nameError)? <AuthErrorMessage message={error.nameError} name='name'/>:null}
+            {(error.fullName && error.nameError)? <AuthErrorMessage message={error.nameError} name='name'/>:null}
           </div>}
 
           <div>

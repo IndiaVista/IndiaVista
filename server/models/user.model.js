@@ -4,21 +4,21 @@ import bcrypt from "bcrypt";
 
 const userSchema = new Schema(
   {
-    username: {
-      type: String,
-      required: true,
-      unique: true,
-      lowercase: true,
-      trim: true,
-      index: true,
-    },
+    // username: {
+    //   type: String,
+    //   required: true,
+    //   unique: true,
+    //   lowercase: true,
+    //   trim: true,
+    //   index: true,
+    // },
     email: {
       type: String,
       required: true,
       unique: true,
       trim: true,
     },
-    fullname: {
+    fullName: {
       type: String,
       required: true,
       trim: true,
@@ -70,8 +70,7 @@ userSchema.methods.generateAccessToken = function () {
     {
       _id: this._id,
       email: this.email,
-      username: this.username,
-      fullname: this.fullname,
+      fullName: this.fullName,
     },
     process.env.ACCESS_TOKEN_SECRET,
     {

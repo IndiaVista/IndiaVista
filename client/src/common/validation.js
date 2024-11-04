@@ -6,7 +6,7 @@ const countryRegex = /^[A-Za-z]{4,}$/;
 const pincodeRegex = /^[0-9]+$/;
 
 const validate = {
-  name: (value) => {
+  fullName: (value) => {
       return value.trim().length < 6
         ? { name: true, nameError: "Name must be atleast 6 characters long" }
         : { name: false, nameError: false };
@@ -104,7 +104,7 @@ const validate = {
   },
 
   contactInitialVal: {
-    name: true,
+    FullName: true,
     nameError: null,
     email: true,
     emailError: null,
