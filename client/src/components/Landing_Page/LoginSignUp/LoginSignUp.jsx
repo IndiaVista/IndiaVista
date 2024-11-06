@@ -7,6 +7,7 @@ import { FiEye, FiEyeOff } from "react-icons/fi";
 import bgImg from "../../../assets/Landing_page/VisitIndia_.jpg"
 import {useNavigate} from 'react-router-dom'
 import axios from 'axios'
+import { Link } from "react-router-dom";
 
 const initialForm = {
   fullName: "",
@@ -86,7 +87,7 @@ const LoginSignUp = () => {
       // localStorage.setItem("profile", JSON.stringify({ ...result }));
 
       setIsLoading(false);
-      navigate("/");
+      navigate("/home");
     } catch (error) {
       // alert(error.response?.data?.message);
       console.log("Error", error.response?.data?.message || error.message);
@@ -213,7 +214,7 @@ const LoginSignUp = () => {
             
           <Captcha message={setTrackState} trackState={trackState}/>
 
-          <Link to="/home">
+          
           <div>
             <button
               type="submit"
@@ -222,7 +223,7 @@ const LoginSignUp = () => {
               {isregister ? "Register" : "Sign In"}
             </button>
           </div>
-          </Link>
+      
 
           {!isregister && <div className="flex justify-center items-center mt-4 text-sm">
             <a className="text-blue-400 hover:underline">Forgot Password?</a>
