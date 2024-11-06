@@ -135,15 +135,19 @@ const NavBar = () => {
           Search
         </button>
       </div>
-
+      <div className="flex gap-2 items-center">
+      <div className="font-sans font-medium font-10px">Sujata Randhaye</div> 
+      {/* {Fullname} in place of name  */}
       {/* Get Started Button */}
       <Link to="/auth" className="hidden lg:block">
+      
         <img
           src={icon} // Replace this with the correct path to your user profile icon
           alt="User Profile"
           className="w-8 h-8 rounded-full cursor-pointer"
         />
       </Link>
+      </div>
       {/* Mobile Hamburger Menu */}
       <div className="lg:hidden flex items-center">
         <img

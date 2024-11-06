@@ -14,66 +14,37 @@ function App() {
     const [slider, setSlider] = useState(null);
     const [thumbnail, setThumbnail] = useState(null);
 
-    // useEffect(() => {
-    //     const nextBtn = document.querySelector('.next');
-    //     const prevBtn = document.querySelector('.prev');
-    //     const sliderElement = document.querySelector('.slider');
-    //     const sliderList = sliderElement.querySelector('.list');
-    //     const thumbnailElement = sliderElement.querySelector('.thumbnail');
-    //     const thumbnailItems = thumbnailElement.querySelectorAll('.item');
-
-    //     // setSlider(sliderElement);
-    //     // setThumbnail(thumbnailElement);
-    //     // thumbnailElement.appendChild(thumbnailItems[0]); // Move the first thumbnail to the end
-
-    //     // Function for next button
-    //     nextBtn.onclick = function () {
-    //         moveSlider('next');
-    //     }
-
-    //     // Function for prev button
-    //     prevBtn.onclick = function () {
-    //         moveSlider('prev');
-    //     }
-
-    //     function moveSlider(direction) {
-    //         const sliderItems = sliderList.querySelectorAll('.item');
-    //         const thumbnailItems = thumbnailElement.querySelectorAll('.thumbnail .item');
-
-    //         if (direction === 'next') {
-    //             sliderList.appendChild(sliderItems[0]);
-    //             thumbnailElement.appendChild(thumbnailItems[0]);
-    //             sliderElement.classList.add('next');
-                
-    //         } else {
-    //             sliderList.prepend(sliderItems[sliderItems.length - 1]);
-    //             thumbnailElement.prepend(thumbnailItems[thumbnailItems.length - 1]);
-    //             sliderElement.classList.add('prev');
-    //         }
-
-    //         sliderElement.addEventListener('animationend', function () {
-    //             if (direction === 'next') {
-    //                 sliderElement.classList.remove('next');
-    //             } else {
-    //                 sliderElement.classList.remove('prev');
-    //             }
-    //         }, { once: true }); // Remove the event listener after it's triggered once
-    //     }
-    // }, []); // Empty dependency array ensures this effect runs once after initial render
-
     useEffect(() => {
+        const nextBtn = document.querySelector('.next');
+        const prevBtn = document.querySelector('.prev');
         const sliderElement = document.querySelector('.slider');
         const sliderList = sliderElement.querySelector('.list');
         const thumbnailElement = sliderElement.querySelector('.thumbnail');
+        const thumbnailItems = thumbnailElement.querySelectorAll('.item');
+
+        // setSlider(sliderElement);
+        // setThumbnail(thumbnailElement);
+        // thumbnailElement.appendChild(thumbnailItems[0]); // Move the first thumbnail to the end
+
+        // Function for next button
+        nextBtn.onclick = function () {
+            moveSlider('next');
+        }
+
+        // Function for prev button
+        prevBtn.onclick = function () {
+            moveSlider('prev');
+        }
 
         function moveSlider(direction) {
             const sliderItems = sliderList.querySelectorAll('.item');
-            const thumbnailItems = thumbnailElement.querySelectorAll('.item');
+            const thumbnailItems = thumbnailElement.querySelectorAll('.thumbnail .item');
 
             if (direction === 'next') {
                 sliderList.appendChild(sliderItems[0]);
                 thumbnailElement.appendChild(thumbnailItems[0]);
                 sliderElement.classList.add('next');
+                
             } else {
                 sliderList.prepend(sliderItems[sliderItems.length - 1]);
                 thumbnailElement.prepend(thumbnailItems[thumbnailItems.length - 1]);
@@ -81,21 +52,51 @@ function App() {
             }
 
             sliderElement.addEventListener('animationend', function () {
-                sliderElement.classList.remove(direction === 'next' ? 'next' : 'prev');
-            }, { once: true });
+                if (direction === 'next') {
+                    sliderElement.classList.remove('next');
+                } else {
+                    sliderElement.classList.remove('prev');
+                }
+            }, { once: true }); // Remove the event listener after it's triggered once
         }
+    }, []); // Empty dependency array ensures this effect runs once after initial render
 
-        // Automatically move slider every 5 seconds
-        const interval = setInterval(() => {
-            moveSlider('next');
-        }, 5000);
+    // useEffect(() => {
+    //     const sliderElement = document.querySelector('.slider');
+    //     const sliderList = sliderElement.querySelector('.list');
+    //     const thumbnailElement = sliderElement.querySelector('.thumbnail');
 
-        // Clear interval on component unmount
-        return () => clearInterval(interval);
-    }, []);
+    //     function moveSlider(direction) {
+    //         const sliderItems = sliderList.querySelectorAll('.item');
+    //         const thumbnailItems = thumbnailElement.querySelectorAll('.item');
+
+    //         if (direction === 'next') {
+    //             sliderList.appendChild(sliderItems[0]);
+    //             thumbnailElement.appendChild(thumbnailItems[0]);
+    //             sliderElement.classList.add('next');
+    //         } else {
+    //             sliderList.prepend(sliderItems[sliderItems.length - 1]);
+    //             thumbnailElement.prepend(thumbnailItems[thumbnailItems.length - 1]);
+    //             sliderElement.classList.add('prev');
+    //         }
+
+    //         sliderElement.addEventListener('animationend', function () {
+    //             sliderElement.classList.remove(direction === 'next' ? 'next' : 'prev');
+    //         }, { once: true });
+    //     }
+
+    //     // Automatically move slider every 5 seconds
+    //     const interval = setInterval(() => {
+    //         moveSlider('next');
+    //     }, 5000);
+
+    //     // Clear interval on component unmount
+    //     return () => clearInterval(interval);
+    // }, []);
     return (
         <>
-           <div className="slider">
+           <div id='home' 
+           className="slider">
   <div className="list">
     {/* Taj Mahal */}
     <div className="item">
