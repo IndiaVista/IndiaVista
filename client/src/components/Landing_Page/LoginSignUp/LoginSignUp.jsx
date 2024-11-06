@@ -213,6 +213,7 @@ const LoginSignUp = () => {
             
           <Captcha message={setTrackState} trackState={trackState}/>
 
+          <Link to="/home">
           <div>
             <button
               type="submit"
@@ -221,6 +222,7 @@ const LoginSignUp = () => {
               {isregister ? "Register" : "Sign In"}
             </button>
           </div>
+          </Link>
 
           {!isregister && <div className="flex justify-center items-center mt-4 text-sm">
             <a className="text-blue-400 hover:underline">Forgot Password?</a>
