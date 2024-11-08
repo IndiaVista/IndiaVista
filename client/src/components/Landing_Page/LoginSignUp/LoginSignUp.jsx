@@ -256,15 +256,13 @@ const LoginSignUp = () => {
             </button>
           </div>
 
-          {!isregister && (
-            <Link to="/forget-password">
-              <div className="flex justify-center items-center mt-4 text-sm">
-                <a className="text-blue-400 hover:underline">
-                  Forgot Password?
-                </a>
-              </div>
-            </Link>
-          )}
+          {!isregister && 
+          <Link to="/forget-password">
+          <div className="flex justify-center items-center mt-4 text-sm">
+            <a className="text-blue-400 hover:underline">Forgot Password?</a>
+          </div>
+          </Link>
+          }
         </form>
 
         <div className="mt-6 text-center text-sm">
