@@ -7,8 +7,8 @@ import { FiEye, FiEyeOff } from "react-icons/fi";
 import bgImg from "../../../assets/Landing_page/VisitIndia_.jpg";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
-import { apiConnector } from "../../services/apiConnector";
-import { endpoints } from "../../services/apis";
+import { apiConnector } from "../../../services/apiConnector.js";
+import { endpoints } from "../../../services/apis.js";
 
 const {
   SIGNUP_API,
