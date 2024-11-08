@@ -6,8 +6,14 @@ import validate from "../../../common/validation";
 import { FiEye, FiEyeOff } from "react-icons/fi";
 import bgImg from "../../../assets/Landing_page/VisitIndia_.jpg";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
 import { Link } from "react-router-dom";
+import { apiConnector } from "../../services/apiConnector";
+import { endpoints } from "../../services/apis";
+
+const {
+  SIGNUP_API,
+  LOGIN_API,
+} = endpoints
 
 const initialForm = {
   fullName: "",
@@ -84,11 +90,10 @@ const LoginSignUp = () => {
       try {
         console.log(isregister);
         const res = isregister
-          ? await axios.post("http://localhost:8000/api/users/register", form)
-          : await axios.post("http://localhost:8000/api/users/signin", form);
+          ? await apiConnector("POST", SIGNUP_API, form)
+          : await apiConnector("POST", LOGIN_API,  form);
 
         const result = res.data;
-        console.log(result);
 
         // localStorage.setItem("profile", JSON.stringify({ ...result }));
 
