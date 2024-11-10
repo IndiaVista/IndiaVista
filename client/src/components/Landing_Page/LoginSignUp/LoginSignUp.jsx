@@ -7,8 +7,9 @@ import { FiEye, FiEyeOff } from "react-icons/fi";
 import bgImg from "../../../assets/Landing_page/VisitIndia_.jpg";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
-import { apiConnector } from "../../../services/apiConnector.js";
-import { endpoints } from "../../../services/apis.js";
+import { apiConnector } from "../../services/apiConnector";
+import { endpoints } from "../../services/apis";
+import { toast } from 'react-toastify';
 
 const {
   SIGNUP_API,
@@ -95,18 +96,22 @@ const LoginSignUp = () => {
 
         const result = res.data;
 
-        // localStorage.setItem("profile", JSON.stringify({ ...result }));
+        toast.success(isregister? "User registered in successfully!" : "User logged in successfully!");
+
+        localStorage.setItem("profile", JSON.stringify({ ...result }));
 
         setIsLoading(false);
-        navigate("/home");
+        navigate("/home")
       } catch (error) {
-        // alert(error.response?.data?.message);
-        console.log("Error", error.response?.data?.message || error.message);
-
+        if (error.response?.data?.message) {
+          toast.error(error.response?.data?.message); 
+        } else {
+          toast.error("An error occurred. Please try again.");
+        }
         setIsLoading(false);
       }
     } else {
-      alert("Please enter valid values");
+      toast.error("Please enter valid values");
     }
   };
 
@@ -267,7 +272,7 @@ const LoginSignUp = () => {
 
         <div className="mt-6 text-center text-sm">
           <span className="text-gray-400">
-            {isregister ? "Already a user?" : "Dont't have an account?"}{" "}
+            {isregister ? "Already a user?" : "Don't have an account?"}{" "}
           </span>
           <a
             className="text-blue-400 cursor-pointer hover:underline"

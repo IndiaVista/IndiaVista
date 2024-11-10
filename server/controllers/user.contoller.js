@@ -26,9 +26,6 @@ const generateAccessAndRefreshTokens = async(userId) => {
 
 const registerUser = asyncHandler( async(req, res) => {
     const {fullName, email, password} = req.body
-    console.log(fullName)
-    console.log(email)
-    console.log(password)
     if(
         [fullName, email, password].some((field) => 
             field?.trim() === ""
@@ -36,11 +33,10 @@ const registerUser = asyncHandler( async(req, res) => {
     ){
         throw new ApiError(400,"All fiels is required")
     }
-    // const existedUser = User.findOne({email})
-
-    // if(existedUser){
-    //     throw new ApiError(409, "User with email or username already exist")
-    // }
+    const existedUser = await User.findOne({email})
+    if(existedUser){
+        throw new ApiError(409, "User with email or username already exist")
+    }
 
     const user = await User.create({
         fullName,
@@ -74,10 +70,11 @@ const loginUser = asyncHandler( async(req, res) => {
         throw new ApiError(404, "User does not exist")
     }
 
-    const isPasswordValid = user.isPasswordCorrect(password)
+    const isPasswordValid = await user.isPasswordCorrect(password)
+    console.log("isValid Password", isPasswordValid)
 
     if(!isPasswordValid){
-        throw new ApiError(401, "Password incorrect")
+        throw new ApiError(401, "Email or Password incorrect")
     }
 
     const {accessToken, refreshToken} = await generateAccessAndRefreshTokens(user._id)
