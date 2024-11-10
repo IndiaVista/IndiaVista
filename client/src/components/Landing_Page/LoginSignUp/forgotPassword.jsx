@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux"
 import { Link } from "react-router-dom"
 import { useNavigate,useLocation } from "react-router-dom"
 import { toast } from "react-hot-toast"
-import { apiConnector } from "../../../services/apiConnector"
+import { apiConnector } from "../../../services/apiConnector.js"
 import { endpoints } from "../../../services/apis.js";
 
 

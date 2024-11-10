@@ -3,7 +3,7 @@ import { Routes, Route } from "react-router-dom";
 import LandingPage from './pages/LandingPage/LandingPage'
 import LoginSignUp from './components/Landing_Page/LoginSignUp/LoginSignUp';
 import Homep from './pages/Homepage/home';
-import ForgotPassword from './components/Landing_Page/LoginSignUp/forgotPassword.jsx';
+import ForgotPassword from './components/Landing_Page/LoginSignUp/ForgotPassword.jsx';
 import UpdatePassword from "./components/Landing_Page/LoginSignUp/updatePassword.jsx"
 
 function App() {
