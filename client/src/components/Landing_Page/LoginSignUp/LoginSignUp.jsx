@@ -1,11 +1,11 @@
-import { React, useState } from "react";
+import { React, useState,useEffect } from "react";
 import logo from "../../../assets/Landing_page/IndiaVista_logo.png";
 import Captcha from "./Captcha";
 import AuthErrorMessage from "../../AuthErrorMsg";
 import validate from "../../../common/validation";
 import { FiEye, FiEyeOff } from "react-icons/fi";
 import bgImg from "../../../assets/Landing_page/VisitIndia_.jpg";
-import { useNavigate } from "react-router-dom";
+import { useNavigate,useLocation } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { apiConnector } from "../../services/apiConnector";
 import { endpoints } from "../../services/apis";
@@ -68,12 +68,22 @@ const LoginSignUp = () => {
       setPasswordType("password");
     }
   };
+  const location = useLocation();
+
+  useEffect(() => {
+    if (location.state && location.state.isregister === false) {
+      setIsregister(false); // Ensure it switches to login if isRegister is false
+    }
+  }, [location.state]);
 
   const switchMode = () => {
     setForm(initialForm);
     setIsregister((prevIsregister) => !prevIsregister);
   };
-
+  const handleBackToLogin = () => {
+      navigate('/auth', { state: { isregister: false } }); // Navigate to login view
+    
+  }
   const handleSubmit = async (event) => {
     event.preventDefault();
     let submitable = true;
@@ -93,15 +103,24 @@ const LoginSignUp = () => {
         const res = isregister
           ? await apiConnector("POST", SIGNUP_API, form)
           : await apiConnector("POST", LOGIN_API,  form);
-
+        console.log(res.data)
         const result = res.data;
+
 
         toast.success(isregister? "User registered in successfully!" : "User logged in successfully!");
 
         localStorage.setItem("profile", JSON.stringify({ ...result }));
 
         setIsLoading(false);
-        navigate("/home")
+        if(isregister)
+        {
+          handleBackToLogin()
+          navigate("/auth");
+        }
+        else{
+          navigate("/home")
+        }
+
       } catch (error) {
         if (error.response?.data?.message) {
           toast.error(error.response?.data?.message); 
@@ -262,7 +281,7 @@ const LoginSignUp = () => {
           </div>
 
           {!isregister && 
-          <Link to="/forget-password">
+          <Link to="/forget-password" state={{ fromLogin: true }}>
           <div className="flex justify-center items-center mt-4 text-sm">
             <a className="text-blue-400 hover:underline">Forgot Password?</a>
           </div>
