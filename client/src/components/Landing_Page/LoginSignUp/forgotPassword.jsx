@@ -2,23 +2,62 @@ import { useState } from "react"
 import { BiArrowBack } from "react-icons/bi"
 import { useDispatch, useSelector } from "react-redux"
 import { Link } from "react-router-dom"
+import { useNavigate,useLocation } from "react-router-dom"
+import { toast } from "react-hot-toast"
+import { apiConnector } from "../../../services/apiConnector"
+import { endpoints } from "../../../services/apis.js";
 
-import { getPasswordResetToken } from "../services/operations/authAPI"
 
+const {
+  RESETPASSTOKEN_API,
+}=endpoints
 function ForgotPassword() {
   const [email, setEmail] = useState("")
   const [emailSent, setEmailSent] = useState(false)
-  const dispatch = useDispatch()
-  const { loading } = useSelector((state) => state.auth)
+  const [isLoading,setIsLoading]=useState(false)
 
+  const getPasswordResetToken= async (email, setEmailSent)=> {
+      const toastId = toast.loading("Loading...")
+      setIsLoading(true)
+      try {
+        const response = await apiConnector("POST", RESETPASSTOKEN_API, {
+          email,
+        })
+  
+        console.log("RESETPASSTOKEN RESPONSE............", response)
+  
+        if (!response.data.success) {
+          throw new Error(response.data.message)
+        }
+  
+        toast.success("Reset Email Sent")
+        setEmailSent(true)
+      } catch (error) {
+        console.log("RESETPASSTOKEN ERROR............", error)
+        toast.error("Failed To Send Reset Email")
+      }
+      toast.dismiss(toastId)
+      setIsLoading(false)
+  }
   const handleOnSubmit = (e) => {
     e.preventDefault()
-    dispatch(getPasswordResetToken(email, setEmailSent))
+    getPasswordResetToken(email, setEmailSent)
   }
+
+  const navigate = useNavigate();
+  const location = useLocation();
+  //Used to change the isregister state variable in Loginsignup to navigate to login page 
+  const handleBackToLogin = () => {
+    const fromLogin = location?.state?.fromLogin;
+    if (fromLogin) {
+      navigate('/auth', { state: { isregister: false } }); // Navigate to login view
+    }
+  };
+  
 
   return (
     <div className="grid min-h-[calc(100vh-3.5rem)] place-items-center">
-      {loading ? (
+      {isLoading ? (
         <div className="spinner"></div>
       ) : (
         <div className="max-w-[500px] p-4 lg:p-8">
@@ -55,11 +94,9 @@ function ForgotPassword() {
             </button>
           </form>
           <div className="mt-6 flex items-center justify-between">
-            <Link to="/login">
-              <p className="flex items-center gap-x-2 text-richblack-5">
-                <BiArrowBack /> Back To Login
-              </p>
-            </Link>
+          <button onClick={handleBackToLogin} className="flex items-center gap-x-2 text-richblack-5">
+              <BiArrowBack /> Back To Login
+            </button>
           </div>
         </div>
       )}
