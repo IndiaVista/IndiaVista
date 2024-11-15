@@ -7,8 +7,8 @@ import { FiEye, FiEyeOff } from "react-icons/fi";
 import bgImg from "../../../assets/Landing_page/VisitIndia_.jpg";
 import { useNavigate,useLocation } from "react-router-dom";
 import { Link } from "react-router-dom";
-import { apiConnector } from "../../services/apiConnector";
-import { endpoints } from "../../services/apis";
+import { apiConnector } from "../../../services/apiConnector.js";
+import { endpoints } from "../../../services/apis.js";
 import { toast } from 'react-toastify';
 
 const {
@@ -109,7 +109,7 @@ const LoginSignUp = () => {
 
         toast.success(isregister? "User registered in successfully!" : "User logged in successfully!");
 
-        localStorage.setItem("profile", JSON.stringify({ ...result }));
+        localStorage.setItem("profile", JSON.stringify(res.data.token));
 
         setIsLoading(false);
         if(isregister)
