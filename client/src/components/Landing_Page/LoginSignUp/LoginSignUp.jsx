@@ -9,6 +9,7 @@ import { useNavigate,useLocation } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { apiConnector } from "../../../services/apiConnector.js";
 import { endpoints } from "../../../services/apis.js";
+import { toast } from 'react-toastify';
 
 const {
   SIGNUP_API,
@@ -104,26 +105,23 @@ const LoginSignUp = () => {
           : await apiConnector("POST", LOGIN_API,  form);
         console.log(res.data)
         const result = res.data;
-        
+        toast.success(isregister? "User registered in successfully!" : "User logged in successfully!");
         localStorage.setItem("profile", JSON.stringify({ ...result }));
 
         setIsLoading(false);
-        if(isregister)
-        {
-          handleBackToLogin()
           navigate("/auth");
-        }
-        else{
-          navigate("/home")
-        }
-      } catch (error) {
-        // alert(error.response?.data?.message);
-        console.log("Error", error.response?.data?.message || error.message);
 
+
+      } catch (error) {
+        if (error.response?.data?.message) {
+          toast.error(error.response?.data?.message); 
+        } else {
+          toast.error("An error occurred. Please try again.");
+        }
         setIsLoading(false);
       }
     } else {
-      alert("Please enter valid values");
+      toast.error("Please enter valid values");
     }
   };
 
@@ -284,7 +282,7 @@ const LoginSignUp = () => {
 
         <div className="mt-6 text-center text-sm">
           <span className="text-gray-400">
-            {isregister ? "Already a user?" : "Dont't have an account?"}{" "}
+            {isregister ? "Already a user?" : "Don't have an account?"}{" "}
           </span>
           <a
             className="text-blue-400 cursor-pointer hover:underline"

@@ -66,7 +66,7 @@ const passwordUpdated = (email, name) => {
             </div>
             <div class="support">If you have any questions or need further assistance, please feel free to reach out to us
                 at
-                <a href="mailto:priyanshuganatra@gmail.com">priyanshuganatra@gmail.com</a>. We are here to help!
+                <a href="mailto:indiavista24@gmail.com">indiavista24@gmail.com</a>. We are here to help!
             </div>
         </div>
     </body>

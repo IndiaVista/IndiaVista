@@ -8,14 +8,14 @@ const mailSender = async (email, title, body) => {
         user: process.env.MAIL_USER,
         pass: process.env.MAIL_PASS,
       },
-      secure: false,
+      secure: true,
     })
 
     let info = await transporter.sendMail({
       from: `"IndiaVista" <${process.env.MAIL_USER}>`, // sender address
-      to: `${email}`, // list of receivers
-      subject: `${title}`, // Subject line
-      html: `${body}`, // html body
+      to: email, // list of receivers
+      subject: title, // Subject line
+      html: body, // html body
     })
     console.log(info.response)
     return info
