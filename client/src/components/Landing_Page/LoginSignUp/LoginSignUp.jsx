@@ -112,7 +112,7 @@ const LoginSignUp = () => {
         localStorage.setItem("profile", JSON.stringify(res.data.token));
 
 
-        
+        setIsLoading(false)
         if(isregister)
         {
           
