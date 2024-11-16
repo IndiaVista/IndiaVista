@@ -15,7 +15,7 @@ createRoot(document.getElementById('root')).render(
     <BrowserRouter>
     <ToastContainer /> 
       <App />
-      <Toaster />
+      {/* <Toaster /> */}
     </BrowserRouter>
   </StrictMode>,
 )
