@@ -114,7 +114,7 @@ const LoginSignUp = () => {
         setIsLoading(false);
         if(isregister)
         {
-          handleBackToLogin()
+          
           navigate("/auth");
         }
         else{
