@@ -8,6 +8,7 @@ import { User } from "../models/user.model.js"
 import mailSender from "../utils/mailSender.js"
 import passwordUpdated from "../mail/templates/passwordUpdated.js"
 
+
 // require("dotenv").config()
 
 const generateAccessAndRefreshTokens = async(userId) => {
@@ -57,7 +58,7 @@ const registerUser = asyncHandler( async(req, res) => {
     if(!createdUser){
         throw new ApiError(500, "Something went wrong while registering the user")
     }
-
+    
     return res.status(201).json(
         new ApiResponse(200, createdUser, "User registered successfully")
     )
@@ -182,17 +183,23 @@ const refreshAcessToken = asyncHandler( async(req, res) => {
 const changePassword = async (req, res) => {
     try {
       // Get user data from req.user
-      const userDetails = await User.findById(req.user._id)
-  
-      // Get old password, new password, and confirm new password from req.body
-      const { oldPassword, newPassword } = req.body
+      const { email, newPassword,confirmNewPassword} = req.body;
+  console.log(confirmNewPassword)
+  console.log(newPassword)
+    // Validate inputs
+    if (!email || !confirmNewPassword || !newPassword) {
+      return res.status(400).json({ success: false, message: "All fields are required" });
+    }
+
+    // Find the user by email
+    const userDetails = await User.findOne({ email });
+    if (!userDetails) {
+      return res.status(404).json({ success: false, message: "User not found" });
+    }
   
       // Validate old password
-      const isPasswordMatch = await bcrypt.compare(
-        oldPassword,
-        userDetails.password
-      )
-      if (!isPasswordMatch) {
+    
+      if (!(newPassword==confirmNewPassword)) {
         // If old password does not match, return a 401 (Unauthorized) error
         return res
           .status(401)
@@ -201,20 +208,17 @@ const changePassword = async (req, res) => {
   
       // Update password
       const encryptedPassword = await bcrypt.hash(newPassword, 10)
-      const updatedUserDetails = await User.findByIdAndUpdate(
-        req.user._id,
-        { password: encryptedPassword },
-        { new: true }
-      )
-  
+      userDetails.password = encryptedPassword;
+        await userDetails.save();
+      
       // Send notification email
       try {
         const emailResponse = await mailSender(
-          updatedUserDetails.email,
+            userDetails.email,
           "Password for your account has been updated",
           passwordUpdated(
-            updatedUserDetails.email,
-            `Password updated successfully for ${updatedUserDetails.firstName} ${updatedUserDetails.lastName}`
+            userDetails.email,
+            `Password updated successfully for ${userDetails.firstName} ${userDetails.lastName}`
           )
         )
         // console.log("Email sent successfully:", emailResponse.response)
