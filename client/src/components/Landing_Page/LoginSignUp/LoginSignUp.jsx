@@ -113,14 +113,7 @@ const LoginSignUp = () => {
 
 
         setIsLoading(false)
-        if(isregister)
-        {
-          
           navigate("/auth");
-        }
-        else{
-          navigate("/home")
-        }
 
       } catch (error) {
         if (error.response?.data?.message) {
