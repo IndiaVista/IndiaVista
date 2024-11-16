@@ -4,6 +4,7 @@ import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai"
 import { useNavigate } from "react-router-dom"
 import { toast } from "react-hot-toast"
 import { apiConnector } from "../../../services/apiConnector"
+
 import { useParams } from "react-router-dom";
 // import { changePassword } from "../../../../services/operations/SettingsAPI"
 import IconBtn from "../../../common/IconBtn"
@@ -37,6 +38,7 @@ function UpdatePassword() {
         throw new Error(response.data.message)
       }
       toast.success("Password Changed Successfully")
+      navigate("/auth", { state: { isregister: false } })
     } catch (error) {
       console.log("CHANGE_PASSWORD_API API ERROR............", error)
       toast.error(error.response.data.message)
@@ -135,18 +137,17 @@ function UpdatePassword() {
             </div>
           </div>
         </div>
-        <div className="flex justify-end gap-2">
-          <button
-            onClick={() => {
-              navigate("/home")
-            }}
-            className="cursor-pointer rounded-md bg-richblack-700 py-2 px-5 font-semibold text-richblack-50"
-          >
-            Cancel
-          </button>
-          <IconBtn type="submit" text="Update" />
-        </div>
+        <IconBtn type="submit" text="Update" />
       </form>
+      <div className="flex justify-end gap-2">
+        <button
+          onClick={() => navigate("/auth", { state: { isregister: false } })}
+          className="cursor-pointer rounded-md bg-richblack-700 py-2 px-5 font-semibold text-richblack-50"
+        >
+          Cancel
+        </button>
+        
+      </div>
     </>
   )
 }
