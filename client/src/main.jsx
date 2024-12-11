@@ -6,13 +6,15 @@ import App from './App.jsx'
 import './index.css'
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Homep from './pages/Homepage/home.jsx'
-import { Toaster } from "react-hot-toast";
+// import { Toaster } from "react-hot-toast";
+import {ToastContainer} from "react-toastify"
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <BrowserRouter>
+    <ToastContainer/>
       <App />
-      <Toaster />
+      {/* <Toaster /> */}
     </BrowserRouter>
   </StrictMode>,
 )
