@@ -16,5 +16,25 @@ app.use(cookieParser());
 import userRouter from './routes/user.routes.js'
 app.use("/api/users", userRouter)
 
+app.use((err, req, res, next) => {
+    console.error(err); // Log the error for debugging
+
+    if (err instanceof ApiError) {
+        return res.status(err.statusCode).json({
+            success: false,
+            message: err.message,
+            errors: err.errors || [],
+            statusCode: err.statusCode
+        });
+    }
+
+    // If it's not a custom ApiError, return a generic server error
+    res.status(500).json({
+        success: false,
+        message: "Something went wrong on the server",
+        statusCode: 500
+    });
+});
+
 //http://localhost:8000/api/v1/users/register
 export {app}
