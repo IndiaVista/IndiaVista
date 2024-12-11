@@ -70,20 +70,20 @@ const LoginSignUp = () => {
   };
   const location = useLocation();
 
-  useEffect(() => {
-    if (location.state && location.state.isregister === false) {
-      setIsregister(false); // Ensure it switches to login if isRegister is false
-    }
-  }, [location.state]);
+  // useEffect(() => {
+  //   if (location.state && location.state.isregister === false) {
+  //     setIsregister(false); // Ensure it switches to login if isRegister is false
+  //   }
+  // }, [location.state]);
 
   const switchMode = () => {
     setForm(initialForm);
     setIsregister((prevIsregister) => !prevIsregister);
   };
-  const handleBackToLogin = () => {
-      navigate('/auth', { state: { isregister: false } }); // Navigate to login view
+  // const handleBackToLogin = () => {
+  //     navigate('/auth', { state: { isregister: false } }); // Navigate to login view
     
-  }
+  // }
   const handleSubmit = async (event) => {
     event.preventDefault();
     let submitable = true;
@@ -109,12 +109,12 @@ const LoginSignUp = () => {
 
         toast.success(isregister? "User registered in successfully!" : "User logged in successfully!");
 
-        // localStorage.setItem("profile", JSON.stringify({ ...result }));
+        localStorage.setItem("profile", JSON.stringify(res.data.token));
 
-        setIsLoading(false);
-        navigate("/home")
+        setIsLoading(false)
+       navigate("/home")
 
-      } catch (error) {
+      }catch (error) {
         if (error.response?.data?.message) {
           toast.error(error.response?.data?.message); 
         } else {
@@ -274,7 +274,7 @@ const LoginSignUp = () => {
           </div>
 
           {!isregister && 
-          <Link to="/forget-password" >
+          <Link to="/forget-password">
           <div className="flex justify-center items-center mt-4 text-sm">
             <a className="text-blue-400 hover:underline">Forgot Password?</a>
           </div>

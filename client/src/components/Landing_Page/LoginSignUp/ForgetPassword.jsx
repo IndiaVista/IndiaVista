@@ -3,7 +3,7 @@ import { BiArrowBack } from "react-icons/bi"
 import { useDispatch, useSelector } from "react-redux"
 import { Link } from "react-router-dom"
 import { useNavigate,useLocation } from "react-router-dom"
-import { toast } from "react-hot-toast"
+import { toast } from "react-toastify"
 import { apiConnector } from "../../../services/apiConnector.js"
 import { endpoints } from "../../../services/apis.js";
 
@@ -30,13 +30,23 @@ function ForgotPassword() {
           throw new Error(response.data.message)
         }
   
-        toast.success("Reset Email Sent")
+        toast.update(toastId, {
+          render: "Reset Email Sent",
+          type: "success",
+          isLoading: false,
+          autoClose: 3000,
+        });
         setEmailSent(true)
       } catch (error) {
         console.log("RESETPASSTOKEN ERROR............", error)
-        toast.error("Failed To Send Reset Email")
+        toast.update(toastId, {
+          render: "Failed To Send Reset Email",
+          type: "error",
+          isLoading: false,
+          autoClose: 3000,
+        });
       }
-      toast.dismiss(toastId)
+      
       setIsLoading(false)
   }
   const handleOnSubmit = (e) => {
@@ -46,13 +56,13 @@ function ForgotPassword() {
 
   const navigate = useNavigate();
   const location = useLocation();
-  //Used to change the isregister state variable in Loginsignup to navigate to login page 
-  const handleBackToLogin = () => {
-    const fromLogin = location?.state?.fromLogin;
-    if (fromLogin) {
-      navigate('/auth', { state: { isregister: false } }); // Navigate to login view
-    }
-  };
+  // //Used to change the isregister state variable in Loginsignup to navigate to login page 
+  // const handleBackToLogin = () => {
+  //   const fromLogin = location?.state?.fromLogin;
+  //   if (fromLogin) {
+  //     navigate('/auth', { state: { isregister: false } }); // Navigate to login view
+  //   }
+  // };
   
 
   return (
@@ -94,7 +104,7 @@ function ForgotPassword() {
             </button>
           </form>
           <div className="mt-6 flex items-center justify-between">
-          <button onClick={handleBackToLogin} className="flex items-center gap-x-2 text-richblack-5">
+          <button  className="flex items-center gap-x-2 text-richblack-5">
               <BiArrowBack /> Back To Login
             </button>
           </div>

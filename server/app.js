@@ -18,7 +18,6 @@ import userRouter from './routes/user.routes.js'
 console.log("I am in App.js of server")
 app.use("/api/users", userRouter)
 
-// Error-handling middleware (must be last)
 app.use((err, req, res, next) => {
     console.error(err); // Log the error for debugging
 

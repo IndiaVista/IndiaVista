@@ -2,7 +2,7 @@ import React, { useState } from "react"
 import { useForm } from "react-hook-form"
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai"
 import { useNavigate } from "react-router-dom"
-import { toast } from "react-hot-toast"
+import { toast } from "react-toastify"
 import { apiConnector } from "../../../services/apiConnector"
 
 import { useParams } from "react-router-dom";
@@ -81,7 +81,7 @@ function UpdatePassword() {
             <div className="relative flex flex-col gap-2 lg:w-[48%]">
               
               <label htmlFor="newPassword" className="lable-style">
-                Current Password
+                New Password
               </label>
               <input
                 type={showNewPassword ? "text" : "password"}
@@ -103,13 +103,13 @@ function UpdatePassword() {
               </span>
               {errors.newPassword && (
                 <span className="-mt-1 text-[12px] text-yellow-100">
-                  Please enter your Current Password.
+                  Please enter your New Password.
                 </span>
               )}
             </div>
             <div className="relative flex flex-col gap-2 lg:w-[48%]">
               <label htmlFor="confirmNewPassword" className="lable-style">
-                New Password
+                Confirm New Password
               </label>
               <input
                 type={showConfirmNewPassword ? "text" : "password"}
@@ -131,7 +131,7 @@ function UpdatePassword() {
               </span>
               {errors.confirmNewPassword && (
                 <span className="-mt-1 text-[12px] text-yellow-100">
-                  Please enter your New Password.
+                  Please enter your Confirmed New Password.
                 </span>
               )}
             </div>
