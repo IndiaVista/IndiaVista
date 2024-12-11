@@ -105,10 +105,11 @@ const LoginSignUp = () => {
           : await apiConnector("POST", LOGIN_API,  form);
 
         const result = res.data;
+        console.log(result)
 
         toast.success(isregister? "User registered in successfully!" : "User logged in successfully!");
 
-        localStorage.setItem("profile", JSON.stringify({ ...result }));
+        // localStorage.setItem("profile", JSON.stringify({ ...result }));
 
         setIsLoading(false);
         navigate("/home")
@@ -273,7 +274,7 @@ const LoginSignUp = () => {
           </div>
 
           {!isregister && 
-          <Link to="/forget-password" state={{ fromLogin: true }}>
+          <Link to="/forget-password" >
           <div className="flex justify-center items-center mt-4 text-sm">
             <a className="text-blue-400 hover:underline">Forgot Password?</a>
           </div>

@@ -15,6 +15,7 @@ app.use(express.static("public"));   //To access local files in public
 app.use(cookieParser());
 
 import userRouter from './routes/user.routes.js'
+console.log("I am in App.js of server")
 app.use("/api/users", userRouter)
 
 // Error-handling middleware (must be last)

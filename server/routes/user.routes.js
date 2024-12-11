@@ -7,6 +7,7 @@ const router = Router()
 console.log("route")
 
 router.route("/register").post(registerUser)
+console.log("I am in userRoute of server")
 router.route("/signin").post(loginUser)
 console.log("route2")
 router.route("/change-password").post(changePassword)
