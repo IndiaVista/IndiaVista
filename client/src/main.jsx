@@ -7,6 +7,7 @@ import './index.css'
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Homep from './pages/Homepage/home.jsx'
 // import { Toaster } from "react-hot-toast";
+import 'react-toastify/dist/ReactToastify.css';
 import {ToastContainer} from "react-toastify"
 
 createRoot(document.getElementById('root')).render(

@@ -2,7 +2,7 @@ import React, { useState } from "react"
 import { useForm } from "react-hook-form"
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai"
 import { useNavigate } from "react-router-dom"
-import { toast } from "react-hot-toast"
+import { toast } from "react-toastify"
 import { apiConnector } from "../../../services/apiConnector"
 
 import { useParams } from "react-router-dom";
