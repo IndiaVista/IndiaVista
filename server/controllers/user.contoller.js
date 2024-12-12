@@ -36,7 +36,6 @@ const registerUser = asyncHandler( async(req, res) => {
     console.log(fullName)
     console.log(email)
     console.log(password)
-
     if(
         [fullName, email, password].some((field) => 
             field?.trim() === ""
@@ -44,7 +43,8 @@ const registerUser = asyncHandler( async(req, res) => {
     ){
         throw new ApiError(400,"All fiels is required")
     }
-    // const existedUser = await User.findOne({email})
+    // const existedUser = User.findOne({email})
+
     // if(existedUser){
     //     throw new ApiError(409, "User with email or username already exist")
     // }
@@ -70,8 +70,7 @@ const registerUser = asyncHandler( async(req, res) => {
 
 const loginUser = asyncHandler( async(req, res) => {
     const {email, password} = req.body
-    console.log(email)
-    console.log(password)
+
     if(!email){
         throw new ApiError(400, "email is required")
     }
@@ -82,11 +81,10 @@ const loginUser = asyncHandler( async(req, res) => {
         throw new ApiError(404, "User does not exist")
     }
 
-    const isPasswordValid = await user.isPasswordCorrect(password)
-    console.log("isValid Password", isPasswordValid)
+    const isPasswordValid = user.isPasswordCorrect(password)
 
     if(!isPasswordValid){
-        throw new ApiError(401, "Email or Password incorrect")
+        throw new ApiError(401, "Password incorrect")
     }
 
     const {accessToken, refreshToken} = await generateAccessAndRefreshTokens(user._id)
@@ -210,11 +208,16 @@ const changePassword = async (req, res) => {
           .status(401)
           .json({ success: false, message: "The password is incorrect" })
       }
+
+      const previouspass=userDetails.password
+      console.log("prev pass:"+ previouspass)
   
       // Update password
-      const encryptedPassword = await bcrypt.hash(newPassword, 10)
-      userDetails.password = encryptedPassword;
-        await userDetails.save();
+      await userDetails.updateOne(
+        {
+            password:newPassword
+        }
+      )
       
       // Send notification email
       try {
