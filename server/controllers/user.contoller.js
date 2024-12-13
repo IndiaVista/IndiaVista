@@ -43,11 +43,11 @@ const registerUser = asyncHandler( async(req, res) => {
     ){
         throw new ApiError(400,"All fiels is required")
     }
-    // const existedUser = User.findOne({email})
+    const existedUser = await User.findOne({email})
 
-    // if(existedUser){
-    //     throw new ApiError(409, "User with email or username already exist")
-    // }
+    if(existedUser){
+        throw new ApiError(409, "User with email or username already exist")
+    }
 
     const user = await User.create({
         fullName,
@@ -81,7 +81,7 @@ const loginUser = asyncHandler( async(req, res) => {
         throw new ApiError(404, "User does not exist")
     }
 
-    const isPasswordValid = user.isPasswordCorrect(password)
+    const isPasswordValid = await user.isPasswordCorrect(password)
 
     if(!isPasswordValid){
         throw new ApiError(401, "Password incorrect")
@@ -200,25 +200,24 @@ const changePassword = async (req, res) => {
       return res.status(404).json({ success: false, message: "User not found" });
     }
   
-      // Validate old password
+      // Validate  password
     
       if (!(newPassword==confirmNewPassword)) {
-        // If old password does not match, return a 401 (Unauthorized) error
+        
         return res
           .status(401)
           .json({ success: false, message: "The password is incorrect" })
       }
 
-      const previouspass=userDetails.password
-      console.log("prev pass:"+ previouspass)
+    //   const previouspass=userDetails.password
+    //   console.log("prev pass:"+ previouspass)
   
       // Update password
-      await userDetails.updateOne(
-        {
-            password:newPassword
-        }
-      )
+      const salt = await bcrypt.genSalt(10); // Adjust salt rounds if necessary
+        const hashedPassword = await bcrypt.hash(newPassword, salt);
+        await userDetails.updateOne({ password: hashedPassword });
       
+    
       // Send notification email
       try {
         const emailResponse = await mailSender(
