@@ -1,5 +1,6 @@
 import React from 'react';
 import FeatureCard from './FeatureCard';
+import { useNavigate } from 'react-router-dom';
 
 const features = [
   {
@@ -12,7 +13,7 @@ const features = [
     title: 'Heritage Map',
     description: 'Uncover the richness of our cultural heritage with an interactive map showcasing heritage sites.',
     buttonText: 'Open Map',
-    onButtonClick: () => { /* navigate to the heritage map page */ }
+    onButtonClick: (navigate) =>  navigate("/") 
   },
   {
     svgIcon: (
@@ -24,7 +25,7 @@ const features = [
     title: 'Cultural Calendar',
     description: 'Stay connected with upcoming events and festivals through our detailed Cultural Calendar.',
     buttonText: 'View Calendar',
-    onButtonClick: () => { /* navigate to the cultural calendar page */ }
+    onButtonClick: (navigate) =>  navigate("/home/calendar") 
   },
   {
     svgIcon: (
@@ -98,7 +99,7 @@ const features = [
     title: 'Journey Planner',
     description: 'Document your travels and create personalized itineraries for future adventures.',
     buttonText: 'Plan Your Trip',
-    onButtonClick: () => { /* navigate to the journey planner page */ }
+    onButtonClick: (navigate) =>  navigate("/") 
   },
   {
     svgIcon: (
@@ -110,11 +111,12 @@ const features = [
     title: 'Heritage Gallery',
     description: 'Explore stunning images and videos of our cultural heritage and contribute your own.',
     buttonText: 'Visit Gallery',
-    onButtonClick: () => { /* navigate to the heritage gallery page */ }
+    onButtonClick:(navigate) =>  navigate("/") 
   }
 ];
 
 function FeatureContainer() {
+  const navigate = useNavigate()
   return (
     <div id='features'
     className="flex justify-center items-center min-h-screen mt-36 bg-gray-100">
@@ -126,7 +128,7 @@ function FeatureContainer() {
             title={feature.title}
             description={feature.description}
             buttonText={feature.buttonText}
-            onButtonClick={feature.onButtonClick}
+            onButtonClick={() => feature.onButtonClick(navigate)} 
           />
         ))}
       </div>
