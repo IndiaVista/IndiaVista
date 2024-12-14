@@ -16,7 +16,7 @@ function App() {
       <Route path="/auth" element={<LoginSignUp/>}/>
 
       <Route path="/home" element={<Homep/>}/>
-      <Route path="/home/calendar" element={<Calendar/>}/>
+      
       <Route path="/home/calendar/date-info/:date" element={<DateInfoPage/>} />
       {/* </Route> */}
       
