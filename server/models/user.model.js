@@ -49,6 +49,12 @@ const userSchema = new Schema(
     refreshToken: {
       type: String,
     },
+    token: {
+      type: String,
+    },
+    resetPasswordExpires: {
+      type: Date,
+    },
   },
   { timestamps: true }
 );
@@ -59,12 +65,23 @@ userSchema.pre("save", async function (next) {
   if (!this.isModified("password")) return next();
 
   this.password = await bcrypt.hash(this.password, 10);
+
+  console.log("New password:"+this.password)
   next();
 });
 
+// userSchema.methods.isPasswordCorrect = async function (password) {
+//   console.log(password +"input")
+//   console.log(this.password +"model")
+//   return await bcrypt.compare(password, this.password);
+// };
+
 userSchema.methods.isPasswordCorrect = async function (password) {
+  console.log("Stored password hash:",this.password);
+  console.log("Input password:", password);
   return await bcrypt.compare(password, this.password);
 };
+
 userSchema.methods.generateAccessToken = function () {
   return jwt.sign(
     {

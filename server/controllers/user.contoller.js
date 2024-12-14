@@ -1,8 +1,15 @@
-import { User } from "../models/user.model.js"
+
 import { asyncHandler } from "../utils/asyncHandler.js"
 import {ApiError} from "../utils/ApiError.js"
 import {ApiResponse} from "../utils/ApiResponse.js"
 import jwt from "jsonwebtoken"
+import bcrypt from "bcrypt"
+import { User } from "../models/user.model.js"
+import mailSender from "../utils/mailSender.js"
+import passwordUpdated from "../mail/templates/passwordUpdated.js"
+
+
+// require("dotenv").config()
 
 const generateAccessAndRefreshTokens = async(userId) => {
     try {
@@ -26,6 +33,9 @@ const generateAccessAndRefreshTokens = async(userId) => {
 
 const registerUser = asyncHandler( async(req, res) => {
     const {fullName, email, password} = req.body
+    console.log(fullName)
+    console.log(email)
+    console.log(password)
     if(
         [fullName, email, password].some((field) => 
             field?.trim() === ""
@@ -34,6 +44,7 @@ const registerUser = asyncHandler( async(req, res) => {
         throw new ApiError(400,"All fiels is required")
     }
     const existedUser = await User.findOne({email})
+
     if(existedUser){
         throw new ApiError(409, "User with email or username already exist")
     }
@@ -51,7 +62,7 @@ const registerUser = asyncHandler( async(req, res) => {
     if(!createdUser){
         throw new ApiError(500, "Something went wrong while registering the user")
     }
-
+    
     return res.status(201).json(
         new ApiResponse(200, createdUser, "User registered successfully")
     )
@@ -73,7 +84,7 @@ const loginUser = asyncHandler( async(req, res) => {
     const isPasswordValid = await user.isPasswordCorrect(password)
 
     if(!isPasswordValid){
-        throw new ApiError(401, "Email or Password incorrect")
+        throw new ApiError(401, "Password incorrect")
     }
 
     const {accessToken, refreshToken} = await generateAccessAndRefreshTokens(user._id)
@@ -172,4 +183,74 @@ const refreshAcessToken = asyncHandler( async(req, res) => {
     }
 });
 
-export {registerUser, loginUser, logoutUser, refreshAcessToken}
+const changePassword = async (req, res) => {
+    try {
+      // Get user data from req.user
+      const { email, newPassword,confirmNewPassword} = req.body;
+  console.log(confirmNewPassword)
+  console.log(newPassword)
+    // Validate inputs
+    if (!email || !confirmNewPassword || !newPassword) {
+      return res.status(400).json({ success: false, message: "All fields are required" });
+    }
+
+    // Find the user by email
+    const userDetails = await User.findOne({ email });
+    if (!userDetails) {
+      return res.status(404).json({ success: false, message: "User not found" });
+    }
+  
+      // Validate  password
+    
+      if (!(newPassword==confirmNewPassword)) {
+        
+        return res
+          .status(401)
+          .json({ success: false, message: "The password is incorrect" })
+      }
+
+    //   const previouspass=userDetails.password
+    //   console.log("prev pass:"+ previouspass)
+  
+      // Update password
+      const salt = await bcrypt.genSalt(10); // Adjust salt rounds if necessary
+        const hashedPassword = await bcrypt.hash(newPassword, salt);
+        await userDetails.updateOne({ password: hashedPassword });
+      
+    
+      // Send notification email
+      try {
+        const emailResponse = await mailSender(
+            userDetails.email,
+          "Password for your account has been updated",
+          passwordUpdated(
+            userDetails.email,
+            `Password updated successfully for ${userDetails.firstName} ${userDetails.lastName}`
+          )
+        )
+        // console.log("Email sent successfully:", emailResponse.response)
+      } catch (error) {
+        // If there's an error sending the email, log the error and return a 500 (Internal Server Error) error
+        console.error("Error occurred while sending email:", error)
+        return res.status(500).json({
+          success: false,
+          message: "Error occurred while sending email",
+          error: error.message,
+        })
+      }
+  
+      // Return success response
+      return res
+        .status(200)
+        .json({ success: true, message: "Password updated successfully" })
+    } catch (error) {
+      // If there's an error updating the password, log the error and return a 500 (Internal Server Error) error
+      console.error("Error occurred while updating password:", error)
+      return res.status(500).json({
+        success: false,
+        message: "Error occurred while updating password",
+        error: error.message,
+      })
+    }
+  }
+export {registerUser, loginUser, logoutUser, refreshAcessToken,changePassword}

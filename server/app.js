@@ -5,7 +5,7 @@ import { ApiError } from "./utils/ApiError.js";
 const app = express();
 
 app.use(cors({
-    origin:'http://localhost:5173',
+    origin:process.env.CORS_ORIGIN||'http://localhost:5173',
     credentials:true,
 }));
 
@@ -15,9 +15,9 @@ app.use(express.static("public"));   //To access local files in public
 app.use(cookieParser());
 
 import userRouter from './routes/user.routes.js'
+console.log("I am in App.js of server")
 app.use("/api/users", userRouter)
 
-// Error-handling middleware (must be last)
 app.use((err, req, res, next) => {
     console.error(err); // Log the error for debugging
 
@@ -40,3 +40,4 @@ app.use((err, req, res, next) => {
 
 //http://localhost:8000/api/v1/users/register
 export {app}
+
