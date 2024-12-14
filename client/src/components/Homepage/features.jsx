@@ -13,7 +13,7 @@ const features = [
     title: 'Heritage Map',
     description: 'Uncover the richness of our cultural heritage with an interactive map showcasing heritage sites.',
     buttonText: 'Open Map',
-    onButtonClick: (navigate) =>  navigate("/") 
+    onButtonClick: (navigate) =>  navigate("/home/map") 
   },
   {
     svgIcon: (
