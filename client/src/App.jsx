@@ -7,6 +7,7 @@ import Calendar from "./components/Homepage/Feature_Page/Calendar/CalendarPage.j
 import DateInfoPage from "./components/Homepage/Feature_Page/Calendar/DateInfoPage.jsx"
 import ForgotPassword from './components/Landing_Page/LoginSignUp/ForgetPassword.jsx';
 import UpdatePassword from "./components/Landing_Page/LoginSignUp/updatePassword.jsx"
+import Map from './components/Homepage/Feature_Page/Map/map.jsx';
 
 function App() {
 
@@ -16,7 +17,8 @@ function App() {
       <Route path="/auth" element={<LoginSignUp/>}/>
 
       <Route path="/home" element={<Homep/>}/>
-      
+      <Route path="/home/map" element={<Map/>}/>
+      <Route path="/home/calendar" element={<Calendar/>} />
       <Route path="/home/calendar/date-info/:date" element={<DateInfoPage/>} />
       {/* </Route> */}
       
