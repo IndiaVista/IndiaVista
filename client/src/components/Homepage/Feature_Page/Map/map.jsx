@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState,useEffect } from "react";
 import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
 import L from "leaflet";
 import osm from "./osm-provider.js";
@@ -6,6 +6,9 @@ import img from "../../../../assets/MapImages/location.png"
 import "leaflet/dist/leaflet.css";
 import "./index.css";
 import cities from "./cities.json";
+import axios from 'axios'
+import MarkerClusterGroup from "react-leaflet-markercluster";
+import 'react-leaflet-markercluster/styles'
 
 
 const markerIcon = new L.icon({
@@ -24,6 +27,57 @@ const Map = () => {
   ];
 
   const DEFAULT_COORDINATES = { lat: 20.5937, lng: 78.9629 }; // Center of India
+  
+  const [geodata,setGeodata]=useState(null);
+
+  useEffect(() => {
+    const fetchGeoData = async () => {
+      const cachedData = localStorage.getItem("geoData");
+  
+      if (cachedData) {
+        setGeodata(JSON.parse(cachedData));
+      } else {
+        const overpassQuery = `
+          [out:json];
+          area["name"="India"]->.searchArea;
+          (
+            node["heritage"](area.searchArea);
+            way["heritage"](area.searchArea);
+            relation["heritage"](area.searchArea);
+            node["historic"](area.searchArea);
+            way["historic"](area.searchArea);
+            relation["historic"](area.searchArea);
+
+            // Tourist attractions
+  node["tourism"="attraction"](area.searchArea);
+  way["tourism"="attraction"](area.searchArea);
+  relation["tourism"="attraction"](area.searchArea);
+  
+  // Temples
+  node["amenity"="place_of_worship"]["religion"="hindu"](area.searchArea);
+  way["amenity"="place_of_worship"]["religion"="hindu"](area.searchArea);
+  relation["amenity"="place_of_worship"]["religion"="hindu"](area.searchArea);
+          );
+          out body;
+        `;
+  
+        const url = `https://overpass-api.de/api/interpreter?data=${encodeURIComponent(
+          overpassQuery
+        )}`;
+  
+        try {
+          const response = await axios.get(url);
+          console.log(response.data.elements);
+          setGeodata(response.data);
+          localStorage.setItem("geoData", JSON.stringify(response.data));
+        } catch (error) {
+          console.error("Error fetching GeoJSON data:", error);
+        }
+      }
+    };
+  
+    fetchGeoData();
+  }, []);
   return (
     <>
       <div className="row m-24">
@@ -32,6 +86,7 @@ const Map = () => {
           <p>Loading Basic map using layer from maptiler</p>
           <div className="col">
             <MapContainer
+               className="markercluster-map"
               center={DEFAULT_COORDINATES}
               zoom={ZOOM_LEVEL}
               ref={mapRef}
@@ -46,16 +101,31 @@ const Map = () => {
                 url={osm.maptiler.url}
                 attribution={osm.maptiler.attribution}
               />
-                {cities.map((city, index) => (
-                  <Marker
-                    position={[city.lat, city.lng]}
-                    key={index}
-                    icon={markerIcon}
-                  >
-                    <Popup>{city.city}</Popup>
-                  </Marker>
-                ))}
+                <MarkerClusterGroup>
+                {geodata && geodata.elements && geodata.elements.map((element, index) => {
+                // Check if the element has valid coordinates (lat, lon)
+                if (element.lat && element.lon) {
+                  return (
+                    <Marker
+                      key={element.id}
+                      position={[element.lat, element.lon]}
+                      icon={markerIcon}
+                    >
+                      <Popup>{element.tags.name || "Unnamed Site"}</Popup>
+                    </Marker>
+                  );
+                }
+                return null; // Return null if no coordinates available
+              })}
               
+                </MarkerClusterGroup>
+                <Marker
+                position={[20.5937,78.9629]}
+                icon={markerIcon}
+
+                >
+                  <Popup>styling popup</Popup>
+                </Marker>
             </MapContainer>
           </div>
         </div>
