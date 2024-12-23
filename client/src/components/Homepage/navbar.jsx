@@ -4,6 +4,7 @@ import { scroller } from "react-scroll";
 import { close, menu } from "../../constants/index.js";
 import logo from "../../assets/Landing_page/IndiaVista_logo.png";
 import icon from "../../assets/HomeImages/icon.jpg";
+import { useNavigate } from "react-router-dom";
 
 const NavBar = () => {
   const [active, setActive] = useState("Home");
@@ -17,7 +18,7 @@ const NavBar = () => {
     { label: "Option 2", value: "option2" },
     { label: "Option 3", value: "option3" },
   ];
-
+  const navigate=useNavigate();
   useEffect(() => {
     window.addEventListener("scroll", handleScroll);
     return () => {
@@ -76,13 +77,13 @@ const NavBar = () => {
               <>
                 <a href={`#${nav.id}`}>{nav.title}</a>
                 <ul className="absolute left-0 mt-2 w-40 bg-white shadow-lg rounded-md opacity-0 group-hover:opacity-100 group-hover:block transition-opacity duration-200">
-                  <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">
+                  <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer" onClick={()=>navigate("/home/map")}>
                     Way to Map
                   </li>
                   <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">
                     Places Near You
                   </li>
-                  <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">
+                  <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer" onClick={()=>navigate("/home/heritage")}>
                     Heritage Sites
                   </li>
                   <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">

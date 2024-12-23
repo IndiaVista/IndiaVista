@@ -7,8 +7,9 @@ import Calendar from "./components/Homepage/Feature_Page/Calendar/CalendarPage.j
 import DateInfoPage from "./components/Homepage/Feature_Page/Calendar/DateInfoPage.jsx"
 import ForgotPassword from './components/Landing_Page/LoginSignUp/ForgetPassword.jsx';
 import UpdatePassword from "./components/Landing_Page/LoginSignUp/updatePassword.jsx"
-import Map from './components/Homepage/Feature_Page/Map/map.jsx';
-
+import Map from './components/Homepage/Feature_Page/Map/marker_map/map.jsx';
+import SitesPage from './components/Homepage/Feature_Page/Map/Sites/sitesPage.jsx';
+import Site from './components/Homepage/Feature_Page/Map/Sites/site.jsx';
 function App() {
 
   return (
@@ -20,9 +21,9 @@ function App() {
       <Route path="/home/map" element={<Map/>}/>
       <Route path="/home/calendar" element={<Calendar/>} />
       <Route path="/home/calendar/date-info/:date" element={<DateInfoPage/>} />
-      {/* </Route> */}
-      
-
+      <Route path="/home/heritage" element={<SitesPage/>}/>
+      <Route path="/home/heritage/heritage-site/:id" element={<Site />} />
+      {/* <Route path="/home/map/heritage/heritage-site/:id" element={<Site />} /> */}
       <Route path="/forget-password" element={<ForgotPassword/>}/>
       <Route
           path="update-password/:token"
