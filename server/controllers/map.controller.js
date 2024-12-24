@@ -83,7 +83,42 @@ const getSite=asyncHandler(async(req,res)=>{
 
 })
 
-const getPaginatedData=asyncHandler(async(req,res)=>{
-  
+//To get only paginated sites
+const getPaginatedSites=asyncHandler(async(req,res)=>{
+  const sites=await Site.find({});
+
+  //getting no. of pages and page limit from req.query
+  const page=parseInt(req.query.page)  //ex page=1 limit=5
+  const limit=parseInt(req.query.limit)
+  console.log(page+"  "+limit)
+  //setting startindex and lastindex to be displayed
+  const startindex=(page-1)*limit;
+  console.log(startindex)
+  const lastindex=(page)*limit;
+  console.log(lastindex)
+
+
+  const results={}
+
+  results.totalSites=sites.length
+  results.pagecount=Math.ceil(sites.length/limit)
+  //to set next page of selected page
+  if(lastindex<sites.length)
+    {
+    results.next={
+      page:page+1
+    }  
+  }
+  //to set previous page of selected page
+  if(startindex>0)
+  {
+    results.prev={
+      page:page-1
+    }
+  }
+  results.result=sites.slice(startindex,lastindex)
+  return res.status(201).json(
+    new ApiResponse(200,results,"Data fetched successfully!")
+  )
 })
-export { insertSiteData ,getSitesData,getSite};
+export { insertSiteData ,getSitesData,getSite,getPaginatedSites};

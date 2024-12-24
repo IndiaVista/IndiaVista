@@ -9,4 +9,5 @@ export const endpoints = {
   MAP_SITES_API:BASE_URL+"/map/sites",
   MAP_SITESDATA_API:BASE_URL+"/map/sites-data",
   MAP_GET_SITE:BASE_URL+"/map/getsite/:sr_no",
+  PAGINATED_SITES:BASE_URL+"/map/getPaginatedSites",
 }

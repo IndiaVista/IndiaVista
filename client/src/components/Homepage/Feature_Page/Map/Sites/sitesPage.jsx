@@ -1,41 +1,53 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 // import cities from "../cities.json";
 import ReactPaginate from "react-paginate";
 import { useNavigate } from "react-router-dom";
 import { apiConnector } from "../../../../../services/apiConnector";
 import { endpoints } from "../../../../../services/apis";
-const{
-  MAP_SITESDATA_API
-}=endpoints
+const {
+  // MAP_SITESDATA_API
+  PAGINATED_SITES,
+} = endpoints;
 const SitesPage = () => {
-  // const [currentPage, setCurrentPage] = useState(1);
-  // const recordsPerPage = 5;
-  // const lastIndex = currentPage * recordsPerPage;
-  // const firstIndex = lastIndex - recordsPerPage;
-  // const records = cities.slice(firstIndex, lastIndex);
-  // const npage = Math.ceil(cities.length / recordsPerPage);
-  // const numbers = [...Array(npage + 1).keys()].slice(1);
-  const [cities,setCities]=useState([])
-  const [loading,setLoading]=useState(true)
-  const [error,setError]=useState(null)
-  const navigate=useNavigate();
+  const currentPage = useRef(1);
+  const [limit, setLimit] = useState(10);
+  const [pagecount, setPageCount] = useState(1);
+  const [cities, setCities] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const navigate = useNavigate();
+  useEffect(() => {
+    currentPage.current = 1;
+    getPaginatedSites();
+  }, []);
+  //when clicking any page no.
   function handlePageClick(e) {
     console.log(e);
+    currentPage.current = e.selected + 1;
+    getPaginatedSites();
   }
-  useEffect(()=>{
-      const fetchData=async()=>{
-        try {
-          const response=await apiConnector("GET",MAP_SITESDATA_API);
-          console.log(response.data.data)
-          setCities(response.data.data)
-          setLoading(false)
-        } catch (error) {
-          setError(error.message);
-          setLoading(false)
-        }
-      }
-      fetchData()
-    },[])
+  const getPaginatedSites = async () => {
+    try {
+      // console.log(currentPage)
+      // console.log(limit)
+      //to pass any query
+      const response = await apiConnector("GET", PAGINATED_SITES, null, null, {
+        page: currentPage.current,
+        limit: limit,
+      });
+      console.log(response.data.data);
+      setCities(response.data.data.result);
+      setPageCount(response.data.data.pagecount);
+      setLoading(false);
+    } catch (error) {
+      setError(error.message);
+      setLoading(false);
+    }
+  };
+  function changeLimit() {
+    currentPage.current = 1; //to set it to 1st page whenever we change limit
+    getPaginatedSites();
+  }
   return (
     <div className="p-4 sm:p-8">
       <div className="overflow-x-auto">
@@ -67,7 +79,12 @@ const SitesPage = () => {
                 <td className="border border-gray-300 px-4 py-2">
                   {city.sr_no}
                 </td>
-                <td className="border border-gray-300 px-4 py-2" onClick={()=>navigate(`/home/heritage/heritage-site/${city.sr_no}`)}>
+                <td
+                  className="border border-gray-300 px-4 py-2"
+                  onClick={() =>
+                    navigate(`/home/heritage/heritage-site/${city.sr_no}`)
+                  }
+                >
                   {city.name}
                 </td>
                 <td className="border border-gray-300 px-4 py-2">
@@ -80,25 +97,34 @@ const SitesPage = () => {
             ))}
           </tbody>
         </table>
+        {/* Taken from react-paginate CSS from github */}
         <ReactPaginate
-  breakLabel="..."
-  nextLabel="next >"
-  onPageChange={handlePageClick}
-  pageRangeDisplayed={5}
-  pageCount={8}
-  previousLabel="< previous"
-  renderOnZeroPageCount={null}
-  marginPagesDisplayed={2}
-  containerClassName="flex justify-center space-x-2 mt-4"
-  pageClassName="border border-gray-300 rounded px-3 py-1"
-  pageLinkClassName="text-blue-600 hover:text-blue-800"
-  previousClassName="border border-gray-300 rounded px-3 py-1"
-  previousLinkClassName="text-gray-500 hover:text-gray-700"
-  nextClassName="border border-gray-300 rounded px-3 py-1"
-  nextLinkClassName="text-gray-500 hover:text-gray-700"
-  activeClassName="bg-blue-500 text-white"
-/>
+          breakLabel="..."
+          nextLabel="next >"
+          onPageChange={handlePageClick}
+          pageRangeDisplayed={5}
+          pageCount={pagecount}
+          previousLabel="< previous"
+          renderOnZeroPageCount={null}
+          marginPagesDisplayed={2}
+          containerClassName="flex justify-center space-x-2 mt-4"
+          pageClassName="border border-gray-300 rounded px-3 py-1"
+          pageLinkClassName="text-blue-600 hover:text-blue-800"
+          previousClassName="border border-gray-300 rounded px-3 py-1"
+          previousLinkClassName="text-gray-500 hover:text-gray-700"
+          nextClassName="border border-gray-300 rounded px-3 py-1"
+          nextLinkClassName="text-gray-500 hover:text-gray-700"
+          activeClassName="bg-blue-500 text-white"
+          forcePage={currentPage.current - 1} //to set it to 1st page whenever we change limit
+        />
 
+        {/* to change limit of records */}
+        <input
+          className="border-black border-2"
+          placeholder="Limit"
+          onChange={(e) => setLimit(e.target.value)}
+        />
+        <button onClick={changeLimit}>Set Limit</button>
       </div>
     </div>
   );

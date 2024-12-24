@@ -16,8 +16,8 @@ const Site = () => {
     const fetchdata=async()=>{
       try {
         // console.log("I am in site"+sr_no)
-        // const response = await apiConnector("GET", MAP_GET_SITE.replace(":sr_no", sr_no));
-        const response = await apiConnector("GET", MAP_GET_SITE,null,null,{sr_no});
+        // const response = await apiConnector("GET", MAP_GET_SITE.replace(":sr_no", sr_no)); //passin with path params
+        const response = await apiConnector("GET", MAP_GET_SITE,null,null,{sr_no}); //passing as query
         console.log("me:"+response.data.data)
         setSite(response.data.data)
       } catch (error) {
