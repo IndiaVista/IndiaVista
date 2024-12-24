@@ -1,7 +1,12 @@
-import React, { useState } from "react";
-import cities from "../cities.json";
+import React, { useState,useEffect } from "react";
+// import cities from "../cities.json";
 import ReactPaginate from "react-paginate";
 import { useNavigate } from "react-router-dom";
+import { apiConnector } from "../../../../../services/apiConnector";
+import { endpoints } from "../../../../../services/apis";
+const{
+  MAP_SITESDATA_API
+}=endpoints
 const SitesPage = () => {
   // const [currentPage, setCurrentPage] = useState(1);
   // const recordsPerPage = 5;
@@ -10,10 +15,27 @@ const SitesPage = () => {
   // const records = cities.slice(firstIndex, lastIndex);
   // const npage = Math.ceil(cities.length / recordsPerPage);
   // const numbers = [...Array(npage + 1).keys()].slice(1);
+  const [cities,setCities]=useState([])
+  const [loading,setLoading]=useState(true)
+  const [error,setError]=useState(null)
   const navigate=useNavigate();
   function handlePageClick(e) {
     console.log(e);
   }
+  useEffect(()=>{
+      const fetchData=async()=>{
+        try {
+          const response=await apiConnector("GET",MAP_SITESDATA_API);
+          console.log(response.data.data)
+          setCities(response.data.data)
+          setLoading(false)
+        } catch (error) {
+          setError(error.message);
+          setLoading(false)
+        }
+      }
+      fetchData()
+    },[])
   return (
     <div className="p-4 sm:p-8">
       <div className="overflow-x-auto">

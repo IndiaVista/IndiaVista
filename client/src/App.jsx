@@ -22,7 +22,7 @@ function App() {
       <Route path="/home/calendar" element={<Calendar/>} />
       <Route path="/home/calendar/date-info/:date" element={<DateInfoPage/>} />
       <Route path="/home/heritage" element={<SitesPage/>}/>
-      <Route path="/home/heritage/heritage-site/:id" element={<Site />} />
+      <Route path="/home/heritage/heritage-site/:sr_no" element={<Site />} />
       {/* <Route path="/home/map/heritage/heritage-site/:id" element={<Site />} /> */}
       <Route path="/forget-password" element={<ForgotPassword/>}/>
       <Route
