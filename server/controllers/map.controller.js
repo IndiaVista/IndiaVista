@@ -121,4 +121,5 @@ const getPaginatedSites=asyncHandler(async(req,res)=>{
     new ApiResponse(200,results,"Data fetched successfully!")
   )
 })
+
 export { insertSiteData ,getSitesData,getSite,getPaginatedSites};

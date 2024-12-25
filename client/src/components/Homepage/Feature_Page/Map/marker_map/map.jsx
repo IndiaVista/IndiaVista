@@ -12,7 +12,7 @@ import "react-leaflet-markercluster/styles";
 import PopupContentStructure from "./popupContentStructure.jsx";
 import { useNavigate } from "react-router-dom";
 import { apiConnector } from "../../../../../services/apiConnector.js";
-import { endpoints } from "../../../../../services/apis.js";
+import { mapEndpoints } from "../../../../../services/apis.js";
 // const Temp={
 //   name:"abc",
 //   description:"jdjdnm",
@@ -22,7 +22,7 @@ import { endpoints } from "../../../../../services/apis.js";
 const{
   MAP_SITES_API,
   MAP_SITESDATA_API
-}=endpoints
+}=mapEndpoints
 const markerIcon = new L.icon({
   iconUrl: img,
   iconSize: [35, 45],

@@ -3,11 +3,10 @@ import React, { useState, useEffect, useRef } from "react";
 import ReactPaginate from "react-paginate";
 import { useNavigate } from "react-router-dom";
 import { apiConnector } from "../../../../../services/apiConnector";
-import { endpoints } from "../../../../../services/apis";
+import {mapEndpoints } from "../../../../../services/apis";
 const {
-  // MAP_SITESDATA_API
   PAGINATED_SITES,
-} = endpoints;
+} = mapEndpoints;
 const SitesPage = () => {
   const currentPage = useRef(1);
   const [limit, setLimit] = useState(10);

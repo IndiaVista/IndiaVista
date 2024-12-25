@@ -2,11 +2,11 @@ import React ,{useState,useEffect} from 'react'
 import { useParams } from 'react-router-dom'
 // import cities from '../cities.json'
 import { apiConnector } from '../../../../../services/apiConnector';
-import { endpoints } from '../../../../../services/apis';
+import { mapEndpoints} from '../../../../../services/apis';
 
 const{
   MAP_GET_SITE
-}=endpoints
+}=mapEndpoints
 const Site = () => {
   const params=useParams();
   const {sr_no}=params;
