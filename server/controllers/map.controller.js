@@ -122,4 +122,11 @@ const getPaginatedSites=asyncHandler(async(req,res)=>{
   )
 })
 
-export { insertSiteData ,getSitesData,getSite,getPaginatedSites};
+const CreateIternary=asyncHandler(async(req,res)=>{
+  const {selectedPlaces}=req.body;
+  console.log(selectedPlaces)
+  return res.status(201).json(
+    new ApiResponse(200,selectedPlaces,"Itinerary created successfully!")
+  )
+})
+export { insertSiteData ,getSitesData,getSite,getPaginatedSites,CreateIternary};

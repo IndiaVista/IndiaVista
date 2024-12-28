@@ -12,4 +12,5 @@ export const mapEndpoints={
   MAP_SITESDATA_API:BASE_URL+"/map/sites-data",
   MAP_GET_SITE:BASE_URL+"/map/getsite/:sr_no",
   PAGINATED_SITES:BASE_URL+"/map/getPaginatedSites",
+  CREATE_ITERNARY:BASE_URL+"/map/create-Iternary"
 }

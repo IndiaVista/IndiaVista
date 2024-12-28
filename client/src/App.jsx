@@ -10,6 +10,7 @@ import UpdatePassword from "./components/Landing_Page/LoginSignUp/updatePassword
 import Map from './components/Homepage/Feature_Page/Map/marker_map/map.jsx';
 import SitesPage from './components/Homepage/Feature_Page/Map/Sites/sitesPage.jsx';
 import Site from './components/Homepage/Feature_Page/Map/Sites/site.jsx';
+import ItineraryPlanner from './components/Homepage/Feature_Page/JourneyPlanner/journeyPlanner.jsx';
 function App() {
 
   return (
@@ -24,6 +25,7 @@ function App() {
       <Route path="/home/heritage" element={<SitesPage/>}/>
       <Route path="/home/heritage/heritage-site/:sr_no" element={<Site />} />
       {/* <Route path="/home/map/heritage/heritage-site/:id" element={<Site />} /> */}
+      <Route path="/home/iternary" element={<ItineraryPlanner/>}/>
       <Route path="/forget-password" element={<ForgotPassword/>}/>
       <Route
           path="update-password/:token"
