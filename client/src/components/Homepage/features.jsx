@@ -99,7 +99,7 @@ const features = [
     title: 'Journey Planner',
     description: 'Document your travels and create personalized itineraries for future adventures.',
     buttonText: 'Plan Your Trip',
-    onButtonClick: (navigate) =>  navigate("/") 
+    onButtonClick: (navigate) =>  navigate("/home/iternary") 
   },
   {
     svgIcon: (

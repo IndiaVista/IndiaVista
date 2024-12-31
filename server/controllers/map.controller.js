@@ -6,6 +6,7 @@ import { fileURLToPath } from "url";
 import { Site } from "../models/heritage.model.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
 
+
 // Setup __dirname
 
 // __filename: The absolute path of the current module (e.g., /path/to/your/file.js).
@@ -121,5 +122,6 @@ const getPaginatedSites=asyncHandler(async(req,res)=>{
     new ApiResponse(200,results,"Data fetched successfully!")
   )
 })
+
 
 export { insertSiteData ,getSitesData,getSite,getPaginatedSites};

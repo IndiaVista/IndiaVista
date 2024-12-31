@@ -1,0 +1,28 @@
+.leaflet-container{
+    height: 100vh; /* Full-screen height */
+    width: 100%;   /* Full width */
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    margin: "20px"
+}
+/* Add this to your main CSS file or within a <style> tag in your component */
+@keyframes heartbeat {
+    0%, 100% {
+      transform: scale(1);
+    }
+    25%, 75% {
+      transform: scale(1.1);
+    }
+    /* 50% {
+      transform: scale(1.2);
+    } */
+  }
+  
+  .heartbeat {
+    animation: heartbeat 1.5s ease-in-out infinite;
+  }
+  .heartbeat-delay {
+    animation: heartbeat 1.5s ease-in-out infinite;
+    animation-delay: 0.75s; /* Adjust the delay as needed */
+  }

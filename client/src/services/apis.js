@@ -13,3 +13,6 @@ export const mapEndpoints={
   MAP_GET_SITE:BASE_URL+"/map/getsite/:sr_no",
   PAGINATED_SITES:BASE_URL+"/map/getPaginatedSites",
 }
+export const iternaryEndpoints={
+  CREATE_ITERNARY:BASE_URL+"/itinerary/create-itinerary"
+}
