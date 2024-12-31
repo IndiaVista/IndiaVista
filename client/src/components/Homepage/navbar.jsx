@@ -111,7 +111,7 @@ const NavBar = () => {
       </ul>
 
       {/* Search Bar */}
-      <div className="flex items-center space-x-4 md:max-w-md lg:flex hidden">
+      <div className="flex items-center space-x-4 md:max-w-md lg:flex ">
         {/* Dropdown Filter */}
         <div className="relative w-32">
           {/* Dropdown Button */}
