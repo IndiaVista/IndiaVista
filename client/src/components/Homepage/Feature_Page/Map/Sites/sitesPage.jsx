@@ -50,6 +50,7 @@ const SitesPage = () => {
   return (
     <div className="p-4 sm:p-8">
       <div className="overflow-x-auto">
+        <h3 className="text-center font-bold text-5xl pb-3">List of Heritage Sites in India</h3>
         <table className="w-full table-auto border-collapse border border-gray-200">
           <thead className="bg-gray-100">
             <tr>
