@@ -3,6 +3,7 @@ import cors from 'cors'
 import cookieParser from "cookie-parser"
 import userRouter from './routes/user.routes.js'
 import mapRouter from './routes/map.routes.js'
+import IternaryRoutes from './routes/itinerary.routes.js'
 import { ApiError } from "./utils/ApiError.js";
 import bodyParser from "body-parser"
 
@@ -22,8 +23,11 @@ app.use(cookieParser());
 
 
 console.log("I am in App.js of server")
+
+
 app.use("/api/users", userRouter)
 app.use("/api/map",mapRouter)
+app.use("/api/itinerary",IternaryRoutes)
 app.use((err, req, res, next) => {
     console.error(err); // Log the error for debugging
 

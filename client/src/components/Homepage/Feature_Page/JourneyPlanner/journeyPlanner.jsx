@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect } from "react";
-import { MapContainer, Marker,  TileLayer,Tooltip } from "react-leaflet";
+import { MapContainer, Marker, TileLayer, Tooltip } from "react-leaflet";
 import L, { icon } from "leaflet";
 import osm from "../Map/marker_map/osm-provider.js";
 import img from "../../../../assets/MapImages/location.png";
@@ -47,7 +47,7 @@ const ItineraryPlanner = () => {
     [6.74678, 68.14712], // Southwest corner
     [35.51333, 97.39556], // Northeast corner
   ];
-  const [canSelect,setCanSelect]=useState(true)
+  const [canSelect, setCanSelect] = useState(true);
   const [selectedPlaces, setSelectedPlaces] = useState([]);
 
   const DEFAULT_COORDINATES = { lat: 20.5937, lng: 78.9629 }; // Center of India
@@ -55,8 +55,8 @@ const ItineraryPlanner = () => {
   useEffect(() => {
     //on clicking new marker the error of selecting date and time should appear
     //if not selected
-    
-    console.log(canSelect)
+
+    console.log(canSelect);
     const fetchData = async () => {
       try {
         const response = await apiConnector("GET", MAP_SITESDATA_API);
@@ -71,41 +71,34 @@ const ItineraryPlanner = () => {
     fetchData();
   }, []);
 
-  
-
   //Handle Place selection
   const handlePlaceSelection = (place) => {
     // The prev parameter is used to access the previous state of selectedPlaces.
     setSelectedPlaces((prev) => {
-        //finding if the place is already in selected places
+      //finding if the place is already in selected places
       const isSelected = prev.some((item) => item.sr_no === place.sr_no);
 
       if (isSelected) {
         // Remove the place if present already on clicking
-        setCanSelect(true)
+        setCanSelect(true);
         return prev.filter((item) => item.sr_no !== place.sr_no);
-        
       } else {
-        //dont allow to add if date and time of prev site is 
+        //dont allow to add if date and time of prev site is
         //not set
         if (prev.length > 0) {
-            const lastElement = prev[prev.length - 1];
-            if(lastElement.date==="" || lastElement.time===""){
-               setCanSelect(false)
-               return [...prev]
-            }
+          const lastElement = prev[prev.length - 1];
+          if (lastElement.date === "" || lastElement.time === "") {
+            setCanSelect(false);
+            return [...prev];
           }
-          console.log(canSelect)
-          setCanSelect(true)
-        // Add the place if not present already on clicking 
+        }
+        console.log(canSelect);
+        setCanSelect(true);
+        // Add the place if not present already on clicking
         return [...prev, { ...place, date: "", time: "" }];
-       
       }
-      
     });
-    
   };
-
 
   return (
     <div className="flex flex-col md:flex-row gap-4 ">
@@ -140,7 +133,7 @@ const ItineraryPlanner = () => {
                   icon={
                     //checking whether the selctedPlaces has any place which is present in all sites
                     //if it any of the site return true then its icon is set to iternaryIcon
-                    selectedPlaces.some((item) => item.sr_no === site.sr_no)  
+                    selectedPlaces.some((item) => item.sr_no === site.sr_no)
                       ? iternaryIcon
                       : markerIcon
                   }
@@ -148,7 +141,7 @@ const ItineraryPlanner = () => {
                     click: () => handlePlaceSelection(site),
                   }}
                 >
-                    {/* Tooltip:The Tooltip appears when you hover over the marker.
+                  {/* Tooltip:The Tooltip appears when you hover over the marker.
                         The direction prop specifies where the tooltip appears relative
                          to the marker (e.g., top, bottom, left, right). */}
                   <Tooltip
@@ -169,13 +162,13 @@ const ItineraryPlanner = () => {
       </div>
       {/* Sidebar where all your selected places appears */}
       <div className="w-full md:w-1/3 p-4 bg-gray-100 border rounded-lg">
-     <SideBar 
-     selectedPlaces={selectedPlaces}
-     setSelectedPlaces={setSelectedPlaces}
-     handlePlaceSelection={handlePlaceSelection}
-     canSelect={canSelect}
-     setCanSelect={setCanSelect}
-     />
+        <SideBar
+          selectedPlaces={selectedPlaces}
+          setSelectedPlaces={setSelectedPlaces}
+          handlePlaceSelection={handlePlaceSelection}
+          canSelect={canSelect}
+          setCanSelect={setCanSelect}
+        />
       </div>
     </div>
   );

@@ -6,6 +6,7 @@ import { fileURLToPath } from "url";
 import { Site } from "../models/heritage.model.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
 
+
 // Setup __dirname
 
 // __filename: The absolute path of the current module (e.g., /path/to/your/file.js).
@@ -122,11 +123,5 @@ const getPaginatedSites=asyncHandler(async(req,res)=>{
   )
 })
 
-const CreateIternary=asyncHandler(async(req,res)=>{
-  const {selectedPlaces}=req.body;
-  console.log(selectedPlaces)
-  return res.status(201).json(
-    new ApiResponse(200,selectedPlaces,"Itinerary created successfully!")
-  )
-})
-export { insertSiteData ,getSitesData,getSite,getPaginatedSites,CreateIternary};
+
+export { insertSiteData ,getSitesData,getSite,getPaginatedSites};
