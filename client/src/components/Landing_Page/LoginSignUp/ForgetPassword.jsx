@@ -6,7 +6,6 @@ import { toast } from "react-toastify"
 import { apiConnector } from "../../../services/apiConnector.js"
 import { endpoints } from "../../../services/apis.js";
 
-
 const {
   RESETPASSTOKEN_API,
 }=endpoints
