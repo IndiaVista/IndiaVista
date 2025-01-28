@@ -30,7 +30,7 @@ const Map = () => {
   const [center, setCenter] = useState({ lat: 21.089908, lng: 79.153971 });
   const ZOOM_LEVEL = 5;
   const INDIA_BOUNDS = [
-    [6.74678, 68.14712],
+[6.74678, 68.14712],
     [35.51333, 97.39556],
   ];
   const navigate = useNavigate();
@@ -98,7 +98,7 @@ const Map = () => {
                           location={site.location}
                           onNavigate={handleNavigateToSite}
                         />
-                      </div>
+                          </div>
                     </Popup>
                   </Marker>
                 ))

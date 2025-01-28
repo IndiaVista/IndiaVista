@@ -131,7 +131,6 @@
 
 // export default DownloadPdf;
 
-
 import React, { useEffect, useState } from "react";
 import {
   Page,
@@ -240,42 +239,45 @@ const DownloadPdf = ({ iternary }) => {
         <p>Loading...</p>
       ) : (
         <>
-          <h2>{miternary?.iternaryName || "Unnamed Iternary"}</h2>
-          <p>
-            Created on:{" "}
-            {miternary?.createdAt
-              ? new Date(miternary.createdAt).toLocaleDateString()
-              : "N/A"}
-          </p>
-          <ul>
-            {miternary?.places?.map((place, index) => (
-              <li key={index}>
-                <h4>{place.name || "Unnamed Place"}</h4>
-                <p>
-                  <strong>Location:</strong> {place.location || "N/A"}
-                </p>
-                <p>
-                  <strong>Description:</strong> {place.description || "N/A"}
-                </p>
-                <p>
-                  <strong>Start Time:</strong> {place.startTime || "N/A"}
-                </p>
-                <p>
-                  <strong>End Time:</strong> {place.endTime || "N/A"}
-                </p>
-                {place.image_link && (
-                  <img
-                    src={place.image_link}
-                    alt={place.name || "Place Image"}
-                    style={{ maxWidth: "200px", borderRadius: "10px" }}
-                  />
-                )}
-              </li>
-            ))}
-          </ul>
+          <div className="bg-red-500 text-center">
+            <h2>{miternary?.iternaryName || "Unnamed Iternary"}</h2>
+            <p>
+              Created on:{" "}
+              {miternary?.createdAt
+                ? new Date(miternary.createdAt).toLocaleDateString()
+                : "N/A"}
+            </p>
+            <ul>
+              {miternary?.places?.map((place, index) => (
+                <li key={index}>
+                  <h4>{place.name || "Unnamed Place"}</h4>
+                  <p>
+                    <strong>Location:</strong> {place.location || "N/A"}
+                  </p>
+                  <p>
+                    <strong>Description:</strong> {place.description || "N/A"}
+                  </p>
+                  <p>
+                    <strong>Start Time:</strong> {place.startTime || "N/A"}
+                  </p>
+                  <p>
+                    <strong>End Time:</strong> {place.endTime || "N/A"}
+                  </p>
+                  {place.image_link && (
+                    <img
+                      src={place.image_link}
+                      alt={place.name || "Place Image"}
+                      style={{ maxWidth: "200px", borderRadius: "10px" }}
+                    />
+                  )}
+                </li>
+              ))}
+            </ul>
+          </div>
         </>
       )}
       {/* Pdf download button */}
+      <div className="text-center">
       <PDFDownloadLink
         document={
           <ItineraryDocument itinerary={iternary} fileName="itinerary.pdf" />
@@ -289,6 +291,7 @@ const DownloadPdf = ({ iternary }) => {
           )
         }
       </PDFDownloadLink>
+      </div>
     </div>
   );
 };
