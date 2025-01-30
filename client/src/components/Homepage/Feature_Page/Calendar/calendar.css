@@ -1,0 +1,60 @@
+.react-calendar {
+    height: 100% !important;  /* Ensure the calendar uses 100% height */
+    width: 100% !important;   /* Ensure the calendar uses 100% width */
+    display: flex;
+    flex-direction: column;
+}
+
+.react-calendar__month-view {
+    display: flex;
+    flex-direction: column;
+    height: 100% !important;  /* Allow the month view to take full height */
+}
+
+.react-calendar__month-view__weekdays {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr); /* Adjust to 7 columns for days of the week */
+}
+
+.react-calendar__tile {
+    height: auto;
+    border-radius: 0.5rem;
+    cursor: pointer;
+}
+
+.react-calendar__tile--active {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.react-calendar__tile:hover {
+    background-color: #f1f4f9;
+}
+
+.highlighted {
+    background-color: #6ef973; /* Green for highlighted (accessible) dates */
+    color: white;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.unavailable {
+    background-color: #e0e0dd; /* Light red for unavailable dates */
+    color: #131212;
+    cursor: not-allowed; /* Red disable cursor for non-clickable dates */
+    transition: all 0.3s ease;
+}
+
+.react-calendar__tile.highlighted:hover {
+    background-color: #15ec20 !important; /* Lighter green on hover */
+}
+
+.unavailable:hover {
+    pointer-events: none; /* Prevent hover effect on non-clickable dates */
+}
+
+.react-calendar__tile--disabled {
+    background-color: #ddd; /* Disabled tile background */
+    color: #bbb;
+    pointer-events: none; /* Make non-matching dates non-clickable */
+    cursor: not-allowed; /* Red disable cursor for non-clickable dates */
+}

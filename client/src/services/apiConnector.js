@@ -36,4 +36,3 @@ export const apiConnector = (method, url, bodyData, headers, params) => {
     params: params ? params : null,
   });
 };
-
