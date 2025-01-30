@@ -4,10 +4,6 @@ import img1 from "../../assets/HomeImages/img1.jpg";
 import img2 from "../../assets/HomeImages/img2.jpg";
 import img3 from "../../assets/HomeImages/img3.jpg";
 import img4 from "../../assets/HomeImages/img4.jpg";
-
-
-
-
 import './page1.css';
 
 function App() {

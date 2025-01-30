@@ -18,7 +18,7 @@ const { MAP_SITES_API, MAP_SITESDATA_API } = mapEndpoints;
 const markerIcon = new L.icon({
   iconUrl: img,
   iconSize: [35, 45],
-  iconAnchor: [17, 46],
+  iconAnchor: [17, 46], //right-bottom
   popupAnchor: [0, -46],
 });
 
@@ -74,10 +74,11 @@ const Map = () => {
             attribution={osm.maptiler.attribution}
           />
           <MarkerClusterGroup
-            showCoverageOnHover={false}
-            spiderfyOnMaxZoom={true}
-            zoomToBoundsOnClick={true}
-            removeOutsideVisibleBounds={true}
+            showCoverageOnHover={false}  //show area covered by cluster markers
+            spiderfyOnMaxZoom={true}    //spread markers in cluster on zoom
+            zoomToBoundsOnClick={true}  //zoom and spreads cluster on click
+            removeOutsideVisibleBounds={true}  //Markers that are outside the current visible bounds of the 
+                                              //map (i.e., not visible in the current viewport) are removed from the DOM.
           >
             {!loading
               ? cities.map((site, index) => (
