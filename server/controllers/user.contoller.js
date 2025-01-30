@@ -1,4 +1,3 @@
-
 import { asyncHandler } from "../utils/asyncHandler.js"
 import {ApiError} from "../utils/ApiError.js"
 import {ApiResponse} from "../utils/ApiResponse.js"
@@ -33,9 +32,7 @@ const generateAccessAndRefreshTokens = async(userId) => {
 
 const registerUser = asyncHandler( async(req, res) => {
     const {fullName, email, password} = req.body
-    console.log(fullName)
-    console.log(email)
-    console.log(password)
+    
     if(
         [fullName, email, password].some((field) => 
             field?.trim() === ""
@@ -187,8 +184,7 @@ const changePassword = async (req, res) => {
     try {
       // Get user data from req.user
       const { email, newPassword,confirmNewPassword} = req.body;
-  console.log(confirmNewPassword)
-  console.log(newPassword)
+
     // Validate inputs
     if (!email || !confirmNewPassword || !newPassword) {
       return res.status(400).json({ success: false, message: "All fields are required" });

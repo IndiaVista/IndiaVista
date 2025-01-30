@@ -8,11 +8,12 @@ import { endpoints } from "../../../services/apis.js";
 
 const {
   RESETPASSTOKEN_API,
-}=endpoints
+} = endpoints
+
 function ForgotPassword() {
   const [email, setEmail] = useState("")
   const [emailSent, setEmailSent] = useState(false)
-  const [isLoading,setIsLoading]=useState(false)
+  const [isLoading,setIsLoading] = useState(false)
 
   const getPasswordResetToken= async (email, setEmailSent)=> {
       const toastId = toast.loading("Loading...")
