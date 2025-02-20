@@ -8,7 +8,7 @@ import { faCheckCircle } from "@fortawesome/free-solid-svg-icons";
 
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { format } from "date-fns";
+import { format } from 'date-fns';
 
 const { CREATE_ITERNARY } = iternaryEndpoints;
 const SideBar = ({
@@ -18,64 +18,36 @@ const SideBar = ({
   canSelect,
   setCanSelect,
 }) => {
-  const [name, setName] = useState("");
-  const [nameError, setNameError] = useState(false);
   const [created, setCreated] = useState(false);
-  const [selected, setSelected] = useState(true);
   const saveItinerary = async () => {
-    if (selectedPlaces.length === 0) {
-      setSelected(false);
+    console.log("SAVE IT");
+    if (
+      selectedPlaces &&
+      selectedPlaces[selectedPlaces.length - 1].date === "" &&
+      selectedPlaces[selectedPlaces.length - 1].time === ""
+    ) {
+      setCanSelect(false);
     } else {
-      // console.log("SAVE IT");
-      // Check if all selected places have a valid date and time
-      const hasMissingDateTime = selectedPlaces.some(
-        (place) => !place.date || !place.time
-      );
-
-      if (hasMissingDateTime) {
-        setCanSelect(false); // Prevent further place selection
-        return;
-      }
-      if (!name) {
-        setNameError(true);
-        return;
-      }
       setCanSelect(true);
       setCreated(true);
       try {
+        const name="abc"
         const response = await apiConnector("POST", CREATE_ITERNARY, {
-          selectedPlaces: selectedPlaces,
-          name: name,
+          selectedPlaces:selectedPlaces,
+          name:name
         });
         setSelectedPlaces([]);
-        setName("");
         console.log(response.data);
       } catch (error) {
         console.log(error.message);
       }
     }
   };
-  const handleNameChange = (e) => {
-    setName(e.target.value);
-    setNameError(false);
-  };
 
   return (
     <div>
-      {/* Name of Iternary */}
-
-      <label className="text-2xl font-bold text-center">
-        Name your Itinerary:{" "}
-        <input
-          type="text"
-          required="true"
-          placeholder="Itinerary name"
-          value={name}
-          onChange={(e) => handleNameChange(e)}
-          className="mt-4 border-spacing-1 border-b-2 font-normal"
-        />
-      </label>
       {/* Sidebar Section */}
+
       {created ? (
         <div className="flex flex-col justify-center items-center p-10">
           <FontAwesomeIcon
@@ -94,11 +66,11 @@ const SideBar = ({
           </button>
         </div>
       ) : (
-        <div className="mt-10">
+        <div>
           <h3 className="text-lg font-semibold mb-4">Selected Places</h3>
 
-          {selectedPlaces.length === 0 && !selected ? (
-            <p className="text-red-600">
+          {selectedPlaces.length === 0 ? (
+            <p>
               No places selected yet. Click on markers to add them to your
               itinerary.
             </p>
@@ -126,31 +98,25 @@ const SideBar = ({
                       />
                     </label>
                     <label className="ml-4">
-                      Time:{" "}
-                      <DatePicker
-                        selected={
-                          place.time
-                            ? new Date(`1970-01-01T${place.time}`)
-                            : null
-                        }
-                        onChange={(date) =>
-                          setSelectedPlaces((prev) => {
-                            const updated = [...prev];
-                            updated[index].time = date
-                              ? format(date, "HH:mm")
-                              : "";
-                            return updated;
-                          })
-                        }
-                        showTimeSelect
-                        showTimeSelectOnly
-                        timeIntervals={1}
-                        timeCaption="Time"
-                        dateFormat="h:mm aa"
-                        placeholderText="Select Time"
-                        className="border border-gray-300 rounded p-1"
-                      />
-                    </label>
+                  Time:{" "}
+                  <DatePicker
+                    selected={place.time ? new Date(`1970-01-01T${place.time}`) : null}
+                    onChange={(date) =>
+                      setSelectedPlaces((prev) => {
+                        const updated = [...prev];
+                        updated[index].time = date ? format(date, 'HH:mm') : "";
+                        return updated;
+                      })
+                    }
+                    showTimeSelect
+                    showTimeSelectOnly
+                    timeIntervals={15}
+                    timeCaption="Time"
+                    dateFormat="h:mm aa"
+                    placeholderText="Select Time"
+                    className="border border-gray-300 rounded p-1"
+                  />
+                </label>
                   </div>
                   <button
                     className="text-red-500 mt-2"
@@ -172,27 +138,12 @@ const SideBar = ({
               Add more to your Itinerary
             </div>
           )}
-
           <button
-            className={`mt-4 px-4 py-2 rounded-lg w-full ${
-              !name ||
-              selectedPlaces.some((place) => !place.date || !place.time)
-                ? "bg-blue-500 text-white-500 cursor-not-allowed"
-                : "bg-blue-500 text-white"
-            }`}
+            className="mt-4 bg-blue-500 text-white px-4 py-2 rounded-lg w-full"
             onClick={saveItinerary}
-            // disabled={
-            //   !name ||
-            //   selectedPlaces.some((place) => !place.date || !place.time)
-            // }
           >
             Save Itinerary
           </button>
-        </div>
-      )}
-      {nameError && (
-        <div className="text-red-500 mt-4 text-center">
-          Please enter itinerary name!
         </div>
       )}
     </div>
