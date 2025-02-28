@@ -12,7 +12,8 @@ import SitesPage from './components/Homepage/Feature_Page/Map/Sites/sitesPage.js
 import Site from './components/Homepage/Feature_Page/Map/Sites/site.jsx';
 import ItineraryPlanner from './components/Homepage/Feature_Page/JourneyPlanner/journeyPlanner.jsx';
 import Preview from './components/Homepage/Feature_Page/JourneyPlanner/preview.jsx'
-import DownloadPdf from './components/Homepage/Feature_Page/JourneyPlanner/DownloadPdf.jsx';
+import {DownloadPdf} from './components/Homepage/Feature_Page/JourneyPlanner/DownloadPdf.jsx';
+import {ItineraryDocument}  from './components/Homepage/Feature_Page/JourneyPlanner/DownloadPdf.jsx';
 function App() {
 
   return (
@@ -43,7 +44,7 @@ function App() {
         />
       
     </Routes>
-    <DownloadPdf/></>
+    </>
 
 
 

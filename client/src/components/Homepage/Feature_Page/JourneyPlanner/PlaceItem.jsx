@@ -179,7 +179,7 @@ const PlaceItem = ({
               <input
                 type="number"
                 id="duration"
-                value={duration || 0}
+                value={place.duration || 0}
                 readOnly
                 className=" border-collapse border-gray-600 border-2 border-radius-4 "
               />
