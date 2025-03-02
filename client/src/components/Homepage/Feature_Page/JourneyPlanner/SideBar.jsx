@@ -83,14 +83,15 @@ const SideBar = ({
       {/* Name of Iternary */}
 
       <label className="text-2xl font-bold text-center">
-        Name your Itinerary:{" "}
+        Name your Itinerary {" "}
+        <br />
         <input
           type="text"
           required="true"
           placeholder="Itinerary name"
           value={name}
           onChange={(e) => handleNameChange(e)}
-          className="mt-4 border-spacing-1 border-b-2 font-normal"
+          className="mt-4 border-spacing-1 border-b-2 font-normal  sm:w-[234px]"
         />
       </label>
       {/* Sidebar Section */}

@@ -137,7 +137,7 @@ const ItineraryPlanner = () => {
   return (
     <div className="flex flex-col md:flex-row gap-4 ">
       {/* Map Section */}
-      <div className="flex-1 w-[50vw] h-[110vh] border border-gray-300 rounded-lg shadow-lg p-10">
+      <div className="flex-1 w-screen h-[110vh] border border-gray-300 rounded-lg shadow-lg p-10">
         <MapContainer
           className="w-full"
           center={DEFAULT_COORDINATES}
