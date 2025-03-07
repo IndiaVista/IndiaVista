@@ -110,7 +110,7 @@ const LoginSignUp = () => {
         toast.success(isregister? "User registered in successfully!" : "User logged in successfully!",
           {
             position: "top-right", // Position of the toast
-            autoClose: 1500,      // Delay time in milliseconds (3 seconds)
+            autoClose: 1500,      // Delay time in milliseconds 
             hideProgressBar: false,
             closeOnClick: true,
             pauseOnHover: true,

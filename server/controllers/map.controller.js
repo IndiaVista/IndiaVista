@@ -7,20 +7,13 @@ import { Site } from "../models/heritage.model.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
 
 
-// Setup __dirname
-
-// __filename: The absolute path of the current module (e.g., /path/to/your/file.js).
-// __dirname: The directory of the current module (e.g., /path/to/your).
-// fileURLToPath(import.meta.url):
-// The fileURLToPath function from the url module is used to convert the file:// URL into a file system path (string format).
-// So, if import.meta.url is file:///path/to/your/file.js, fileURLToPath converts it into /path/to/your/file.js.
 
 const __filename = fileURLToPath(import.meta.url);  //The full path of the current file.
 const __dirname = path.dirname(__filename);  // The directory containing the current file.
 
 const insertSiteData = asyncHandler(async (req, res) => {
   const jsonPath = path.join(__dirname, "data", "cities.json");
-  console.log(jsonPath);
+  // console.log(jsonPath);
 
   if (!jsonPath) {
     throw new ApiError(500, "Path not found");
@@ -63,15 +56,8 @@ const getSitesData=asyncHandler(async(req,res)=>{
 
 })
 
-const getSite=asyncHandler(async(req,res)=>{
-  // const {sr_no}=req.params;   
-  // PATH parameter
-  //when sent as const 
-  // response = await apiConnector("GET", MAP_GET_SITE.replace(":sr_no", sr_no)); 
+const getSite=asyncHandler(async(req,res)=>{ 
   const {sr_no}=req.query;   
-  //query Parameter 
-  //when sent as 
-  // const response = await apiConnector("GET", MAP_GET_SITE,null,null,{sr_no});
   
   const site=await Site.findOne({sr_no});
   // console.log("I am :"+site)

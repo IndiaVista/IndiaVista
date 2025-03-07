@@ -6,9 +6,9 @@ import {Iternary} from "../models/Iternary.model.js"
 const CreateIternary=asyncHandler(async(req,res)=>{
     const {selectedPlaces,name}=req.body;
     const user=req.user
-    console.log(selectedPlaces)
-    console.log(name)
-    console.log(user)
+    // console.log(selectedPlaces)
+    // console.log(name)
+    // console.log(user)
 
     if (!name || typeof name !== "string") {
       throw new ApiError(400, "Invalid itinerary name");
@@ -45,7 +45,7 @@ const CreateIternary=asyncHandler(async(req,res)=>{
   const GetItinerary=asyncHandler(async(req,res)=>{
     const {name}=req.query;
     const itinerary=await Iternary.findOne({iternaryName:name})
-    console.log(itinerary)
+    // console.log(itinerary)
     if(!itinerary)
     {
       throw new ApiError(404,"Itinerary does not exist")

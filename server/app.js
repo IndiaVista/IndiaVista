@@ -4,6 +4,7 @@ import cookieParser from "cookie-parser"
 import userRouter from './routes/user.routes.js'
 import mapRouter from './routes/map.routes.js'
 import IternaryRoutes from './routes/itinerary.routes.js'
+import calendarRoutes from './routes/calendar.routes.js'
 import { ApiError } from "./utils/ApiError.js";
 import bodyParser from "body-parser"
 
@@ -19,9 +20,7 @@ app.use(express.urlencoded({extended:true,limit:"5mb"}));
 app.use(express.static("public"));   
 app.use(cookieParser());
 
-import userRouter from './routes/user.routes.js'
-import calendarRoutes from './routes/calendar.routes.js'
-import mapRouter from './routes/map.routes.js'
+
 
 console.log("I am in App.js of server")
 
