@@ -107,7 +107,17 @@ const LoginSignUp = () => {
         const result = res.data;
         console.log(document.cookie);
 
-        toast.success(isregister? "User registered in successfully!" : "User logged in successfully!");
+        toast.success(isregister? "User registered in successfully!" : "User logged in successfully!",
+          {
+            position: "top-right", // Position of the toast
+            autoClose: 1500,      // Delay time in milliseconds (3 seconds)
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+          }
+        );
         console.log(res.data.token)
         localStorage.setItem("profile", JSON.stringify(res.data));
 
