@@ -1,6 +1,5 @@
 const BASE_URL = import.meta.env.VITE_APP_BASE_URL
 
-// AUTH ENDPOINTS
 export const endpoints = {
   SIGNUP_API: BASE_URL + "/users/register",
   LOGIN_API: BASE_URL + "/users/signin",
@@ -16,4 +15,9 @@ export const mapEndpoints={
 export const iternaryEndpoints={
   CREATE_ITERNARY:BASE_URL+"/itinerary/create-Itinerary",
   GET_ITINERARY:BASE_URL+"/itinerary/get-Itinerary"
+}
+export const calendarEndpoints = {
+  // CALENDAR_API: BASE_URL + `/events?date=${date}`
+  CALENDAR_API: BASE_URL + "/events/findEvent",
+  SAVEEVENTSTODB_API : BASE_URL + "/events/saveEventData"
 }
