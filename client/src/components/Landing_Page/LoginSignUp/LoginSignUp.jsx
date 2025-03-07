@@ -102,13 +102,14 @@ const LoginSignUp = () => {
         console.log(isregister);
         const res = isregister
           ? await apiConnector("POST", SIGNUP_API, form)
-          : await apiConnector("POST", LOGIN_API,  form);
+          : await apiConnector("POST", LOGIN_API,  form,null);
         console.log(res.data)
         const result = res.data;
+        console.log(document.cookie);
 
         toast.success(isregister? "User registered in successfully!" : "User logged in successfully!");
-
-        localStorage.setItem("profile", JSON.stringify(res.data.token));
+        console.log(res.data.token)
+        localStorage.setItem("profile", JSON.stringify(res.data));
 
         setIsLoading(false)
        navigate("/home")

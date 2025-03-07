@@ -94,7 +94,8 @@ const loginUser = asyncHandler( async(req, res) => {
 
     const options = {
         httpOnly: true,
-        secure: true
+        secure: process.env.NODE_ENV === 'production', // Set to true in production
+        sameSite:"Lax"
     }
 
     return res
@@ -105,7 +106,9 @@ const loginUser = asyncHandler( async(req, res) => {
         new ApiResponse(
             200,
             {
-                user: loggedInUser, accessToken, refreshToken
+                user: loggedInUser,
+                 accessToken,
+                  refreshToken
             },
             "User logged in successfully"
         )

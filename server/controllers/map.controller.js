@@ -15,8 +15,8 @@ import { asyncHandler } from "../utils/asyncHandler.js";
 // The fileURLToPath function from the url module is used to convert the file:// URL into a file system path (string format).
 // So, if import.meta.url is file:///path/to/your/file.js, fileURLToPath converts it into /path/to/your/file.js.
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+const __filename = fileURLToPath(import.meta.url);  //The full path of the current file.
+const __dirname = path.dirname(__filename);  // The directory containing the current file.
 
 const insertSiteData = asyncHandler(async (req, res) => {
   const jsonPath = path.join(__dirname, "data", "cities.json");
@@ -26,6 +26,7 @@ const insertSiteData = asyncHandler(async (req, res) => {
     throw new ApiError(500, "Path not found");
   }
 
+  //reads data in file and parses it to a JS object
   const data = JSON.parse(fs.readFileSync(jsonPath, "utf8"));
 
   // Check if data already exists
@@ -102,7 +103,7 @@ const getPaginatedSites=asyncHandler(async(req,res)=>{
   const results={}
 
   results.totalSites=sites.length
-  results.pagecount=Math.ceil(sites.length/limit)
+  results.pagecount=Math.ceil(sites.length/limit)  //dividing no. of sites per page
   //to set next page of selected page
   if(lastindex<sites.length)
     {

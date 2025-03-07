@@ -14,5 +14,6 @@ export const mapEndpoints={
   PAGINATED_SITES:BASE_URL+"/map/getPaginatedSites",
 }
 export const iternaryEndpoints={
-  CREATE_ITERNARY:BASE_URL+"/itinerary/create-itinerary"
+  CREATE_ITERNARY:BASE_URL+"/itinerary/create-Itinerary",
+  GET_ITINERARY:BASE_URL+"/itinerary/get-Itinerary"
 }

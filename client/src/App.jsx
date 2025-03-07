@@ -11,9 +11,14 @@ import Map from './components/Homepage/Feature_Page/Map/marker_map/map.jsx';
 import SitesPage from './components/Homepage/Feature_Page/Map/Sites/sitesPage.jsx';
 import Site from './components/Homepage/Feature_Page/Map/Sites/site.jsx';
 import ItineraryPlanner from './components/Homepage/Feature_Page/JourneyPlanner/journeyPlanner.jsx';
+import Preview from './components/Homepage/Feature_Page/JourneyPlanner/preview.jsx'
+import {DownloadPdf} from './components/Homepage/Feature_Page/JourneyPlanner/DownloadPdf.jsx';
+import {ItineraryDocument}  from './components/Homepage/Feature_Page/JourneyPlanner/DownloadPdf.jsx';
 function App() {
 
   return (
+    <>
+    
     <Routes>
       <Route path="/" element={<LandingPage/>}/>
       <Route path="/auth" element={<LoginSignUp/>}/>
@@ -33,9 +38,13 @@ function App() {
               <UpdatePassword />
           }
         />
+        <Route
+        path='/iternary/preview'
+        element={<Preview/>}
+        />
       
     </Routes>
-    
+    </>
 
 
 

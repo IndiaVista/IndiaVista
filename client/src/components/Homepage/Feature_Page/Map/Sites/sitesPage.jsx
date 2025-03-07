@@ -18,6 +18,8 @@ const SitesPage = () => {
   useEffect(() => {
     currentPage.current = 1;
     getPaginatedSites();
+    console.log(pagecount)
+    console.log(limit)
   }, []);
   //when clicking any page no.
   function handlePageClick(e) {
@@ -77,7 +79,7 @@ const SitesPage = () => {
                 } hover:bg-gray-200`}
               >
                 <td className="border border-gray-300 px-4 py-2">
-                  {city.sr_no}
+                {(currentPage.current - 1) * limit + i + 1}
                 </td>
                 <td
                   className="border border-gray-300 px-4 py-2"
