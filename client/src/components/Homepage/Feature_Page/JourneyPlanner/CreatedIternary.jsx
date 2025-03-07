@@ -10,14 +10,14 @@ const CreatedIternary = ({ setCreated, iternary }) => {
 
   useEffect(() => {
 
-    // const simulateLoading = async () => {
-    //   await new Promise(resolve => setTimeout(resolve, 3000)); // 3-second delay
-    //   setLoading(!iternary);
-    // };
+    const simulateLoading = async () => {
+      await new Promise(resolve => setTimeout(resolve, 3000)); // 3-second delay
+      setLoading(!iternary);
+    };
 
-    // simulateLoading();
+    simulateLoading();
 
-    setLoading(!iternary);  // If `iternary` exists, set loading to false
+    // setLoading(!iternary);  // If `iternary` exists, set loading to false
   }, [iternary]);
 
   return (

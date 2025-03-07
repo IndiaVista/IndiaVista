@@ -28,13 +28,8 @@ const SideBar = ({
     console.log(iternary)
   }, [createdName]);
   const saveItinerary = async () => {
-    console.log("SAVE IT");
-    if (
-      selectedPlaces &&
-      selectedPlaces[selectedPlaces.length - 1].date === "" &&
-      selectedPlaces[selectedPlaces.length - 1].time === ""
-    ) {
-      setCanSelect(false);
+    if (selectedPlaces.length === 0) {
+      setSelected(false);
     } else {
       // Check if all selected places have a valid date and time
       const hasMissingDateTime = selectedPlaces.some(
@@ -52,10 +47,9 @@ const SideBar = ({
       setCanSelect(true);
       setCreated(true);
       try {
-        const name="abc"
         const response = await apiConnector("POST", CREATE_ITERNARY, {
-          selectedPlaces:selectedPlaces,
-          name:name
+          selectedPlaces: selectedPlaces,
+          name: name,
         });
         console.log("Full response:", response);
         if (response.data && response.data.data.iternary.iternaryName) {
@@ -79,6 +73,10 @@ const SideBar = ({
       }
     }
   };
+  const handleNameChange = (e) => {
+    setName(e.target.value);
+    setNameError(false);
+  };
 
   return (
     <div>
@@ -92,17 +90,16 @@ const SideBar = ({
           required="true"
           placeholder="Itinerary name"
           value={name}
-          onChange={(e) => handleChange(e)}
+          onChange={(e) => handleNameChange(e)}
           className="mt-4 border-spacing-1 border-b-2 font-normal  sm:w-[234px]"
         />
       </label>
       {/* Sidebar Section */}
-
       {created ? (
         
         <CreatedIternary setCreated={setCreated} iternary={iternary} />
       ) : (
-        <div>
+        <div className="mt-10">
           <h3 className="text-lg font-semibold mb-4">Selected Places</h3>
 
           {selectedPlaces.length === 0  ? (
@@ -138,6 +135,11 @@ const SideBar = ({
           >
             Save Itinerary
           </button>
+        </div>
+      )}
+      {nameError && (
+        <div className="text-red-500 mt-4 text-center">
+          Please enter itinerary name!
         </div>
       )}
     </div>
