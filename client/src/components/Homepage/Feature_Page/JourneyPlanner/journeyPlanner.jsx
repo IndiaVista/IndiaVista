@@ -12,6 +12,9 @@ import { mapEndpoints } from "../../../../services/apis.js";
 import icon2 from "../../../../assets/MapImages/iternary.png";
 import "leaflet-routing-machine";
 import SideBar from "./SideBar.jsx";
+import Lottie from "lottie-react";
+import Map from '../../../../assets/Loaders/Map.json'
+
 
 //To get data of sites 
 const { MAP_SITESDATA_API } = mapEndpoints;
@@ -63,8 +66,10 @@ const ItineraryPlanner = () => {
 
   //Gets map data
   useEffect(() => {
+    
     const fetchData = async () => {
       try {
+        // await new Promise(resolve => setTimeout(resolve, 3000));
         const response = await apiConnector("GET", MAP_SITESDATA_API);
         setCities(response.data.data);
         setLoading(false);
@@ -138,67 +143,52 @@ const ItineraryPlanner = () => {
     <div className="flex flex-col md:flex-row gap-4 ">
       {/* Map Section */}
       <div className="flex-1 w-screen h-[110vh] border border-gray-300 rounded-lg shadow-lg p-10">
-        <MapContainer
-          className="w-full"
-          center={DEFAULT_COORDINATES}
-          zoom={ZOOM_LEVEL}
-          //the user cannot zoom out to a level where they see the entire world at a glance.
-          minZoom={5}   
-          //the user cannot zoom in too closely to see extreme details.
-          maxZoom={19}
-          maxBounds={INDIA_BOUNDS}
-          //The scrollWheelZoom property in the MapContainer component of react-leaflet determines
-          // whether the user can zoom in and out of the map using their mouse scroll wheel or 
-          // touchpad gestures.
-          scrollWheelZoom={true}
-          whenCreated={(mapInstance) => (mapRef.current = mapInstance)} // Set mapRef
+      <MapContainer
+  className="w-full"
+  center={DEFAULT_COORDINATES}
+  zoom={ZOOM_LEVEL}
+  minZoom={5}
+  maxZoom={19}
+  maxBounds={INDIA_BOUNDS}
+  scrollWheelZoom={true}
+  whenCreated={(mapInstance) => (mapRef.current = mapInstance)} // Set mapRef
+>
+  <TileLayer url={osm.maptiler.url} attribution={osm.maptiler.attribution} />
+
+  {/* Show Lottie Loader If Loading */}
+  {loading && (
+    <div className="absolute inset-0 flex justify-center items-center bg-white bg-opacity-70 z-[1000]">
+      <Lottie animationData={Map} loop={true} className="h-32 w-32" />
+    </div>
+  )}
+
+  {!loading && (
+    <MarkerClusterGroup
+      showCoverageOnHover={false}
+      spiderfyOnMaxZoom={true}
+      zoomToBoundsOnClick={true}
+      removeOutsideVisibleBounds={true}
+    >
+      {cities.map((site, index) => (
+        <Marker
+          key={index}
+          position={[site.latitude, site.longitude]}
+          icon={
+            selectedPlaces.some((item) => item.sr_no === site.sr_no)
+              ? iternaryIcon
+              : markerIcon
+          }
+          eventHandlers={{ click: () => handlePlaceSelection(site) }}
         >
-          <TileLayer
-            url={osm.maptiler.url}
-            attribution={osm.maptiler.attribution}
-          />
-          <MarkerClusterGroup
-            showCoverageOnHover={false}  //show area covered
-            spiderfyOnMaxZoom={true}  
-            zoomToBoundsOnClick={true}
-            removeOutsideVisibleBounds={true}
-          >
-            {!loading ? (
-              cities.map((site, index) => (
-                <Marker
-                  key={index}
-                  position={[site.latitude, site.longitude]}
-                  icon={
-                    //checking whether the selctedPlaces has any place which is present in all sites
-                    //if it any of the site return true then its icon is set to iternaryIcon
-                    //to set icon
-                    selectedPlaces.some((item) => item.sr_no === site.sr_no)
-                      ? iternaryIcon
-                      : markerIcon
-                  }
-                  eventHandlers={{
-                    click: () => handlePlaceSelection(site),
-                  }}
-                  
-                >
-                  {/* Tooltip:The Tooltip appears when you hover over the marker.
-                        The direction prop specifies where the tooltip appears relative
-                         to the marker (e.g., top, bottom, left, right). */}
-                  <Tooltip
-                    direction="top"
-                    offset={[0, -40]}
-                    opacity={1}
-                    permanent
-                  >
-                    {site.name}
-                  </Tooltip>
-                </Marker>
-              ))
-            ) : (
-              <div>"Loading...."</div>
-            )}
-          </MarkerClusterGroup>
-        </MapContainer>
+          <Tooltip direction="top" offset={[0, -40]} opacity={1} permanent>
+            {site.name}
+          </Tooltip>
+        </Marker>
+      ))}
+    </MarkerClusterGroup>
+  )}
+</MapContainer>
+
       </div>
       {/* Sidebar where all your selected places appears */}
       <div className="w-full md:w-1/3 p-4 bg-gray-100 border rounded-lg">

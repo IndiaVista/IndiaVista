@@ -8,7 +8,7 @@ const Preview = () => {
     const iternary = location.state || {}; // Prevent undefined errors
     
   useEffect(()=>{
-    console.log(iternary)
+    // console.log(iternary)
   },[iternary])
 
   return (

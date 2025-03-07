@@ -102,7 +102,7 @@ const SideBar = ({
         <div className="mt-10">
           <h3 className="text-lg font-semibold mb-4">Selected Places</h3>
 
-          {selectedPlaces.length === 0 && !selected ? (
+          {selectedPlaces.length === 0  ? (
             <p className="text-red-600">
               No places selected yet. Click on markers to add them to your
               itinerary.
@@ -128,8 +128,8 @@ const SideBar = ({
             className={`mt-4 px-4 py-2 rounded-lg w-full ${
               !name ||
               selectedPlaces.some((place) => !place.date || !place.time)
-                ? "bg-blue-500 text-white-500 cursor-not-allowed"
-                : "bg-blue-500 text-white"
+                ? "bg-blue-500 text-white-500 "
+                : "bg-blue-500 text-white cursor-not-allowed"
             }`}
             onClick={saveItinerary}
           >
