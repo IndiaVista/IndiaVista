@@ -92,7 +92,7 @@ const SideBar = ({
           required="true"
           placeholder="Itinerary name"
           value={name}
-          onChange={(e) => handleNameChange(e)}
+          onChange={(e) => handleChange(e)}
           className="mt-4 border-spacing-1 border-b-2 font-normal  sm:w-[234px]"
         />
       </label>
