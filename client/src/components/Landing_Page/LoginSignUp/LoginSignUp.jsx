@@ -1,4 +1,4 @@
-import { React, useState,useEffect } from "react";
+import { React, useState } from "react";
 import logo from "../../../assets/Landing_page/IndiaVista_logo.png";
 import Captcha from "./Captcha";
 import AuthErrorMessage from "../../AuthErrorMsg";
@@ -68,22 +68,12 @@ const LoginSignUp = () => {
       setPasswordType("password");
     }
   };
-  const location = useLocation();
-
-  // useEffect(() => {
-  //   if (location.state && location.state.isregister === false) {
-  //     setIsregister(false); // Ensure it switches to login if isRegister is false
-  //   }
-  // }, [location.state]);
 
   const switchMode = () => {
     setForm(initialForm);
     setIsregister((prevIsregister) => !prevIsregister);
   };
-  // const handleBackToLogin = () => {
-  //     navigate('/auth', { state: { isregister: false } }); // Navigate to login view
-    
-  // }
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     let submitable = true;
@@ -99,13 +89,9 @@ const LoginSignUp = () => {
       setIsLoading(true);
 
       try {
-        console.log(isregister);
         const res = isregister
           ? await apiConnector("POST", SIGNUP_API, form)
           : await apiConnector("POST", LOGIN_API,  form,null);
-        console.log(res.data)
-        const result = res.data;
-        console.log(document.cookie);
 
         toast.success(isregister? "User registered in successfully!" : "User logged in successfully!",
           {
@@ -136,26 +122,6 @@ const LoginSignUp = () => {
       toast.error("Please enter valid values");
     }
   };
-
-  // const googleSuccess = async (res) => {
-  //   const result = jwt_decode(res?.credential);
-  //   localStorage.setItem(
-  //     "profile",
-  //     JSON.stringify({
-  //       result
-  //     })
-  //   );
-
-  //   try {
-  //     navigateTo("/home");
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-  // };
-
-  // const googleError = () => {
-  //   alert("Google Sign In was unsuccessful. Try again later");
-  // };
 
   return (
     <div
