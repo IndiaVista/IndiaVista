@@ -20,10 +20,7 @@ app.use(express.urlencoded({extended:true,limit:"5mb"}));
 app.use(express.static("public"));   
 app.use(cookieParser());
 
-
-
 console.log("I am in App.js of server")
-
 
 app.use("/api/users", userRouter)
 app.use("/api/map",mapRouter)

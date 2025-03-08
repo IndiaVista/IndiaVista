@@ -87,18 +87,19 @@ const LoginSignUp = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     let submitable = true;
-
+    console.log(form)
     Object.values(error).forEach((e) => {
       if (e) {
         submitable = false;
         return;
       }
     });
-
+    console.log(e)
     if (submitable) {
       setIsLoading(true);
 
       try {
+        
         console.log(isregister);
         const res = isregister
           ? await apiConnector("POST", SIGNUP_API, form)

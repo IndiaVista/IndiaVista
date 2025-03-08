@@ -32,7 +32,9 @@ const generateAccessAndRefreshTokens = async(userId) => {
 
 const registerUser = asyncHandler( async(req, res) => {
     const {fullName, email, password} = req.body
-    
+    console.log(fullName)
+    console.log(email)
+    console.log(password)
     if(
         [fullName, email, password].some((field) => 
             field?.trim() === ""
@@ -79,7 +81,7 @@ const loginUser = asyncHandler( async(req, res) => {
     }
 
     const isPasswordValid = await user.isPasswordCorrect(password)
-
+    
     if(!isPasswordValid){
         throw new ApiError(401, "Password incorrect")
     }
