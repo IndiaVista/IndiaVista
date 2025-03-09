@@ -5,6 +5,9 @@ import { close, menu } from "../../constants/index.js";
 import logo from "../../assets/Landing_page/IndiaVista_logo.png";
 import icon from "../../assets/HomeImages/icon.jpg";
 import { useNavigate } from "react-router-dom";
+import { toast } from 'react-toastify';
+import { apiConnector } from '../../services/apiConnector';
+import { endpoints } from '../../services/apis';
 
 const NavBar = () => {
   const [active, setActive] = useState("Home");
@@ -12,13 +15,37 @@ const NavBar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [filter, setFilter] = useState("Filter by");
   const [isOpen, setIsOpen] = useState(false);
+  const [userInitial, setUserInitial] = useState("");
+  const [showDropdown, setShowDropdown] = useState(false);
 
+  const handleLogout = async () => {
+    try {
+      await apiConnector("POST", endpoints.LOGOUT_API);
+      localStorage.removeItem("profile");
+      toast.success("Logged out successfully");
+      navigate("/auth");
+    } catch (error) {
+      console.error("Logout error:", error);
+      toast.error("Error logging out");
+    }
+  };
+
+  useEffect(() => {
+    // Get user data from localStorage
+    const profile = localStorage.getItem("profile");
+    if (profile) {
+      const userData = JSON.parse(profile);
+      // Get first letter of the full name
+      const initial = userData.user?.fullName?.charAt(0)?.toUpperCase() || "U";
+      setUserInitial(initial);
+    }
+  }, []);
   const options = [
     { label: "Option 1", value: "option1" },
     { label: "Option 2", value: "option2" },
     { label: "Option 3", value: "option3" },
   ];
-  const navigate=useNavigate();
+  const navigate = useNavigate();
   useEffect(() => {
     window.addEventListener("scroll", handleScroll);
     return () => {
@@ -77,13 +104,19 @@ const NavBar = () => {
               <>
                 <a href={`#${nav.id}`}>{nav.title}</a>
                 <ul className="absolute left-0 mt-2 w-40 bg-white shadow-lg rounded-md opacity-0 group-hover:opacity-100 group-hover:block transition-opacity duration-200">
-                  <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer" onClick={()=>navigate("/home/map")}>
+                  <li
+                    className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
+                    onClick={() => navigate("/home/map")}
+                  >
                     Way to Map
                   </li>
                   <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">
                     Places Near You
                   </li>
-                  <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer" onClick={()=>navigate("/home/heritage")}>
+                  <li
+                    className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
+                    onClick={() => navigate("/home/heritage")}
+                  >
                     Heritage Sites
                   </li>
                   <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">
@@ -171,18 +204,22 @@ const NavBar = () => {
           Search
         </button>
       </div>
-      <div className="flex gap-2 items-center">
-        <div className="font-sans font-medium font-10px">Sujata Randhaye</div>
-        {/* {Fullname} in place of name  */}
-        {/* Get Started Button */}
-        <Link to="/auth" className="hidden lg:block">
-          <img
-            src={icon} // Replace this with the correct path to your user profile icon
-            alt="User Profile"
-            className="w-8 h-8 rounded-full cursor-pointer"
-          />
-        </Link>
+      <div className="flex gap-4 items-center justify-center">
+        <div className="relative">
+          <div className="w-10 h-10 rounded-full bg-orange-600 text-white flex items-center justify-center font-semibold text-lg hover:bg-orange-700 transition-colors duration-200">
+            {userInitial}
+          </div>
+        </div>
+        <div className="absolute right-0  mr-20 w-20 bg-gray-100 rounded-md shadow-lg py-1 z-50">
+          <button
+            onClick={handleLogout}
+            className="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-100"
+          >
+            Logout
+          </button>
+        </div>
       </div>
+      
       {/* Mobile Hamburger Menu */}
       <div className="lg:hidden flex items-center">
         <img

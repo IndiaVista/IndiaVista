@@ -32,6 +32,12 @@ const LoginSignUp = () => {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(true);
 
+    const location=useLocation();
+useEffect(() => {
+  if (location.state?.loginMode) {
+    setIsregister(false);
+  }
+}, [location]);
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
 
@@ -68,95 +74,77 @@ const LoginSignUp = () => {
       setPasswordType("password");
     }
   };
-  const location = useLocation();
-
-  // useEffect(() => {
-  //   if (location.state && location.state.isregister === false) {
-  //     setIsregister(false); // Ensure it switches to login if isRegister is false
-  //   }
-  // }, [location.state]);
 
   const switchMode = () => {
     setForm(initialForm);
     setIsregister((prevIsregister) => !prevIsregister);
   };
-  // const handleBackToLogin = () => {
-  //     navigate('/auth', { state: { isregister: false } }); // Navigate to login view
-    
-  // }
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     let submitable = true;
-    console.log(form)
+
     Object.values(error).forEach((e) => {
       if (e) {
         submitable = false;
         return;
       }
     });
-    console.log(e)
+
     if (submitable) {
       setIsLoading(true);
-
       try {
-        
-        console.log(isregister);
-        const res = isregister
-          ? await apiConnector("POST", SIGNUP_API, form)
-          : await apiConnector("POST", LOGIN_API,  form,null);
-        console.log(res.data)
-        const result = res.data;
-        console.log(document.cookie);
-
-        toast.success(isregister? "User registered in successfully!" : "User logged in successfully!",
-          {
-            position: "top-right", // Position of the toast
-            autoClose: 1500,      // Delay time in milliseconds 
+        if (isregister) {
+          // Handle Registration
+          const res = await apiConnector("POST", SIGNUP_API, form);
+          toast.success("User registered successfully!", {
+            position: "top-right",
+            autoClose: 1500,
             hideProgressBar: false,
             closeOnClick: true,
             pauseOnHover: true,
             draggable: true,
-            progress: undefined,
-          }
-        );
-        console.log(res.data.token)
-        localStorage.setItem("profile", JSON.stringify(res.data));
-
-        setIsLoading(false)
-       navigate("/home")
-
-      }catch (error) {
-        if (error.response?.data?.message) {
-          toast.error(error.response?.data?.message); 
+          });
+          
+          // Navigate to success page after registration
+          setTimeout(() => {
+            navigate("/success");
+          }, 1500);
         } else {
-          toast.error("An error occurred. Please try again.");
+          // Handle Login
+          const res = await apiConnector("POST", LOGIN_API, {
+            email: form.email,
+            password: form.password
+          });
+          
+          toast.success("Login successful!", {
+            position: "top-right",
+            autoClose: 1500,
+          });
+          console.log(res)
+          
+ // Store user data correctly
+ if (res.data && res.data.data) {
+  localStorage.setItem("profile", JSON.stringify({
+    user: res.data.data.user,
+    token: res.data.data.accessToken
+  }));
+} else {
+  throw new Error("Invalid response format");
+}
+
+          navigate("/home");
         }
         setIsLoading(false);
+      } catch (error) {
+        setIsLoading(false);
+        toast.error(error.response?.data?.message || "An error occurred. Please try again.");
       }
     } else {
       toast.error("Please enter valid values");
     }
-  };
-
-  // const googleSuccess = async (res) => {
-  //   const result = jwt_decode(res?.credential);
-  //   localStorage.setItem(
-  //     "profile",
-  //     JSON.stringify({
-  //       result
-  //     })
-  //   );
-
-  //   try {
-  //     navigateTo("/home");
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-  // };
-
-  // const googleError = () => {
-  //   alert("Google Sign In was unsuccessful. Try again later");
-  // };
+};
+  
 
   return (
     <div

@@ -14,6 +14,7 @@ import ItineraryPlanner from './components/Homepage/Feature_Page/JourneyPlanner/
 import Preview from './components/Homepage/Feature_Page/JourneyPlanner/preview.jsx'
 import {DownloadPdf} from './components/Homepage/Feature_Page/JourneyPlanner/DownloadPdf.jsx';
 import {ItineraryDocument}  from './components/Homepage/Feature_Page/JourneyPlanner/DownloadPdf.jsx';
+import SuccessPage from "../src/components/Landing_Page/LoginSignUp/SuccessPage.jsx"
 function App() {
 
   return (
@@ -22,7 +23,7 @@ function App() {
     <Routes>
       <Route path="/" element={<LandingPage/>}/>
       <Route path="/auth" element={<LoginSignUp/>}/>
-
+      <Route path='/success' element={<SuccessPage/>}/>
       <Route path="/home" element={<Homep/>}/>
       <Route path="/home/map" element={<Map/>}/>
       <Route path="/home/calendar" element={<Calendar/>} />

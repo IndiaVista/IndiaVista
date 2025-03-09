@@ -26,6 +26,12 @@ function UpdatePassword() {
     handleSubmit,
     formState: { errors },
   } = useForm()
+  const handleBackLogin = () => {
+    // Navigate to auth page with login mode
+    navigate("/auth", { 
+        state: { loginMode: true }
+    });
+};
   const changePassword=async(token, formData)=>{
     const toastId = toast.loading("Loading...")
     try {
@@ -38,7 +44,7 @@ function UpdatePassword() {
         throw new Error(response.data.message)
       }
       toast.success("Password Changed Successfully")
-      navigate("/auth", { state: { isregister: false } })
+      handleBackLogin()
     } catch (error) {
       console.log("CHANGE_PASSWORD_API API ERROR............", error)
       toast.error(error.response.data.message)

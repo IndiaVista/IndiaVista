@@ -52,16 +52,17 @@ function ForgotPassword() {
     e.preventDefault()
     getPasswordResetToken(email, setEmailSent)
   }
+  
 
   const navigate = useNavigate();
   const location = useLocation();
-  // //Used to change the isregister state variable in Loginsignup to navigate to login page 
-  // const handleBackToLogin = () => {
-  //   const fromLogin = location?.state?.fromLogin;
-  //   if (fromLogin) {
-  //     navigate('/auth', { state: { isregister: false } }); // Navigate to login view
-  //   }
-  // };
+  
+  const handleBackLogin = () => {
+    // Navigate to auth page with login mode
+    navigate("/auth", { 
+        state: { loginMode: true }
+    });
+};
   
 
   return (
@@ -103,7 +104,9 @@ function ForgotPassword() {
             </button>
           </form>
           <div className="mt-6 flex items-center justify-between">
-          <button  className="flex items-center gap-x-2 text-richblack-5">
+          <button  className="flex items-center gap-x-2 text-richblack-5"
+          onClick={handleBackLogin}
+          >
               <BiArrowBack /> Back To Login
             </button>
           </div>
