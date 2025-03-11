@@ -152,8 +152,8 @@ const pincodeRegex = /^[0-9]+$/;
 const validate = {
   fullName: (value) => {
     return value.trim().length < 6
-      ? { name: true, nameError: "Name must be at least 6 characters long" }
-      : { name: false, nameError: false };
+      ? { fullName: true, nameError: "Name must be at least 6 characters long" }
+      : { fullName: false, nameError: false };
   },
 
   email: (value) => {
@@ -229,6 +229,11 @@ const validate = {
       ? { lastname: true, lastnameError: "Last name must be at least 3 characters long" }
       : { lastname: false, lastnameError: false };
   },
+  username: (value)=>{
+    return value.trim().length==0
+    ?{username:true,captchaError:"Complete Captcha"}
+    :{username:false, captchaError:false}
+  }
 };
 
 export default validate;

@@ -141,7 +141,7 @@ useEffect(() => {
         toast.error(error.response?.data?.message || "An error occurred. Please try again.");
       }
     } else {
-      toast.error("Please enter valid values");
+      toast.error("Please complete all required fields values");
     }
 };
   
@@ -184,7 +184,7 @@ useEffect(() => {
                 aria-invalid={error.nameError ? "true" : "false"}
               />
               {error.fullName && error.nameError ? (
-                <AuthErrorMessage message={error.nameError} name="name" />
+                <AuthErrorMessage message={error.nameError} name="fullName" />
               ) : null}
             </div>
           )}
@@ -267,6 +267,8 @@ useEffect(() => {
             <button
               type="submit"
               className="w-full py-3 rounded-xl bg-red-600 hover:bg-red-700 transition duration-200 font-bold"
+              disabled={!trackState}
+              style={{cursor:`${trackState ? "pointer": "not-allowed"}`}}
             >
               {isregister ? "Register" : "Sign In"}
             </button>
