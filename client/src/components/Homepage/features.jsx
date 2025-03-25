@@ -99,7 +99,7 @@ const features = [
     title: 'Journey Planner',
     description: 'Document your travels and create personalized itineraries for future adventures.',
     buttonText: 'Plan Your Trip',
-    onButtonClick: (navigate) =>  navigate("/home/iternary") 
+    // onButtonClick: (navigate) =>  navigate("/home/iternary") 
   },
   {
     svgIcon: (
@@ -111,7 +111,7 @@ const features = [
     title: 'Heritage Gallery',
     description: 'Explore stunning images and videos of our cultural heritage and contribute your own.',
     buttonText: 'Visit Gallery',
-    onButtonClick:(navigate) =>  navigate("/") 
+    // onButtonClick:(navigate) =>  navigate("/") 
   }
 ];
 
