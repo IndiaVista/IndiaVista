@@ -15,6 +15,7 @@ import Preview from './components/Homepage/Feature_Page/JourneyPlanner/preview.j
 import {DownloadPdf} from './components/Homepage/Feature_Page/JourneyPlanner/DownloadPdf.jsx';
 import {ItineraryDocument}  from './components/Homepage/Feature_Page/JourneyPlanner/DownloadPdf.jsx';
 import SuccessPage from "../src/components/Landing_Page/LoginSignUp/SuccessPage.jsx"
+import Dashboard from './components/Homepage/Dashboard/Dashboard.jsx';
 function App() {
 
   return (
@@ -43,7 +44,10 @@ function App() {
         path='/iternary/preview'
         element={<Preview/>}
         />
-      
+      <Route
+      path='/home/dash'
+      element={<Dashboard/>}
+      />
     </Routes>
     </>
 

@@ -56,4 +56,45 @@ const CreateIternary=asyncHandler(async(req,res)=>{
       new ApiResponse(200,{itinerary},"Itinerary fetched Successfully!!")
     )
   })
-  export {CreateIternary,GetItinerary}
+
+  const GetUserItineraries = asyncHandler(async (req, res) => {
+    const user = req.user;
+    
+    const itineraries = await Iternary.find({ owner: user._id })
+      .sort({ createdAt: -1 }); // Sort by creation date, newest first
+    
+    if (!itineraries || itineraries.length === 0) {
+      return res.status(200).json(
+        new ApiResponse(200, { itineraries: [] }, "No itineraries found for this user")
+      );
+    }
+
+    return res.status(200).json(
+      new ApiResponse(200, { itineraries }, "User itineraries fetched successfully")
+    );
+  });
+
+  const DeleteItinerary = asyncHandler(async (req, res) => {
+    const { itineraryId } = req.params;
+    const user = req.user;
+
+    // Check if itinerary exists
+    const itinerary = await Iternary.findById(itineraryId);
+    if (!itinerary) {
+        throw new ApiError(404, "Itinerary not found");
+    }
+
+    // Check if user owns the itinerary
+    if (itinerary.owner.toString() !== user._id.toString()) {
+        throw new ApiError(403, "You don't have permission to delete this itinerary");
+    }
+
+    // Delete the itinerary
+    await Iternary.findByIdAndDelete(itineraryId);
+
+    return res.status(200).json(
+        new ApiResponse(200, null, "Itinerary deleted successfully")
+    );
+  });
+
+  export {CreateIternary, GetItinerary, GetUserItineraries, DeleteItinerary}

@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, replace } from "react-router-dom";
 import { scroller } from "react-scroll";
 import { close, menu } from "../../constants/index.js";
 import logo from "../../assets/Landing_page/IndiaVista_logo.png";
 import icon from "../../assets/HomeImages/icon.jpg";
 import { useNavigate } from "react-router-dom";
-import { toast } from 'react-toastify';
-import { apiConnector } from '../../services/apiConnector';
-import { endpoints } from '../../services/apis';
+import { toast } from "react-toastify";
+import { apiConnector } from "../../services/apiConnector";
+import { endpoints } from "../../services/apis";
 
 const NavBar = () => {
   const [active, setActive] = useState("Home");
@@ -206,9 +206,12 @@ const NavBar = () => {
       </div>
       <div className="flex gap-4 items-center justify-center">
         <div className="relative">
-          <div className="w-10 h-10 rounded-full bg-orange-600 text-white flex items-center justify-center font-semibold text-lg hover:bg-orange-700 transition-colors duration-200">
+          <Link
+            to="/home/dash"
+            className="w-10 h-10 rounded-full bg-orange-600 text-white flex items-center justify-center font-semibold text-lg hover:bg-orange-700 transition-colors duration-200 cursor-pointer"
+          >
             {userInitial}
-          </div>
+          </Link>
         </div>
         <div className="absolute right-0  mr-20 w-20 bg-gray-100 rounded-md shadow-lg py-1 z-50">
           <button
@@ -219,7 +222,7 @@ const NavBar = () => {
           </button>
         </div>
       </div>
-      
+
       {/* Mobile Hamburger Menu */}
       <div className="lg:hidden flex items-center">
         <img
