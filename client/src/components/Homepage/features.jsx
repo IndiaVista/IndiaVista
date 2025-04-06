@@ -111,7 +111,7 @@ const features = [
     title: 'Heritage Gallery',
     description: 'Explore stunning images and videos of our cultural heritage and contribute your own.',
     buttonText: 'Visit Gallery',
-    // onButtonClick:(navigate) =>  navigate("/") 
+    onButtonClick:(navigate) =>  navigate("/home/gallery") 
   }
 ];
 

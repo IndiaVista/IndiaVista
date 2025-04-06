@@ -16,6 +16,8 @@ import {DownloadPdf} from './components/Homepage/Feature_Page/JourneyPlanner/Dow
 import {ItineraryDocument}  from './components/Homepage/Feature_Page/JourneyPlanner/DownloadPdf.jsx';
 import SuccessPage from "../src/components/Landing_Page/LoginSignUp/SuccessPage.jsx"
 import Dashboard from './components/Homepage/Dashboard/Dashboard.jsx';
+import Gallery from './components/Homepage/Feature_Page/Gallery/Gallery.jsx';
+
 function App() {
 
   return (
@@ -48,6 +50,8 @@ function App() {
       path='/home/dash'
       element={<Dashboard/>}
       />
+
+        <Route path="/home/gallery" element={<Gallery/>} />
     </Routes>
     </>
 

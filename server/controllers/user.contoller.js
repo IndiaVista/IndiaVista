@@ -7,9 +7,6 @@ import { User } from "../models/user.model.js"
 import mailSender from "../utils/mailSender.js"
 import passwordUpdated from "../mail/templates/passwordUpdated.js"
 
-
-// require("dotenv").config()
-
 const generateAccessAndRefreshTokens = async(userId) => {
     try {
         const user = await User.findById(userId)
@@ -32,9 +29,6 @@ const generateAccessAndRefreshTokens = async(userId) => {
 
 const registerUser = asyncHandler( async(req, res) => {
     const {fullName, email, password} = req.body
-    console.log(fullName)
-    console.log(email)
-    console.log(password)
     if(
         [fullName, email, password].some((field) => 
             field?.trim() === ""

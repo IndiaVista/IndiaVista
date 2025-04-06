@@ -3,7 +3,6 @@ import { Link, replace } from "react-router-dom";
 import { scroller } from "react-scroll";
 import { close, menu } from "../../constants/index.js";
 import logo from "../../assets/Landing_page/IndiaVista_logo.png";
-import icon from "../../assets/HomeImages/icon.jpg";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { apiConnector } from "../../services/apiConnector";
@@ -23,7 +22,7 @@ const NavBar = () => {
       await apiConnector("POST", endpoints.LOGOUT_API);
       localStorage.removeItem("profile");
       toast.success("Logged out successfully");
-      navigate("/auth");
+      navigate("/");
     } catch (error) {
       console.error("Logout error:", error);
       toast.error("Error logging out");
