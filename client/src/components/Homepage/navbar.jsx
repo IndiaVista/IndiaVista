@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import { scroller } from "react-scroll";
 import { close, menu } from "../../constants/index.js";
 import logo from "../../assets/Landing_page/IndiaVista_logo.png";
-import icon from "../../assets/HomeImages/icon.jpg";
 import { useNavigate } from "react-router-dom";
 import { toast } from 'react-toastify';
 import { apiConnector } from '../../services/apiConnector';
@@ -23,7 +22,7 @@ const NavBar = () => {
       await apiConnector("POST", endpoints.LOGOUT_API);
       localStorage.removeItem("profile");
       toast.success("Logged out successfully");
-      navigate("/auth");
+      navigate("/");
     } catch (error) {
       console.error("Logout error:", error);
       toast.error("Error logging out");
@@ -128,7 +127,8 @@ const NavBar = () => {
               <>
                 <a href={`#${nav.id}`}>{nav.title}</a>
                 <ul className="absolute left-0 mt-2 w-40 bg-white shadow-lg rounded-md opacity-0 group-hover:opacity-100 group-hover:block transition-opacity duration-200">
-                  <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">
+                  <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
+                  onClick={() => navigate("/home/calendar")}>
                     Cultural Calendar
                   </li>
                   <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">

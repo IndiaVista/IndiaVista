@@ -7,6 +7,7 @@ import IternaryRoutes from './routes/itinerary.routes.js'
 import calendarRoutes from './routes/calendar.routes.js'
 import { ApiError } from "./utils/ApiError.js";
 import bodyParser from "body-parser"
+import galleryRouter from "./routes/gallery.routes.js"
 
 const app = express();
 
@@ -24,6 +25,8 @@ app.use("/api/users", userRouter)
 app.use("/api/map",mapRouter)
 app.use("/api/itinerary",IternaryRoutes)
 app.use("/api/events", calendarRoutes) 
+app.use("/api/gallery", galleryRouter)
+
 
 app.use((err, req, res, next) => {
     console.error(err); 

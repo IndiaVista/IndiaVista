@@ -9,7 +9,7 @@ const Footer = () => {
           {" "}
           {/* Increased left margin */}
           <div className="flex items-center mb-4">
-            <span className="text-white text-3xl font-bold">🇮🇳</span>
+            <span className="text-white text-3xl font-bold">INDIAVISTA</span>
           </div>
           <p className="text-sm">
             Celebrating India's rich cultural heritage and traditions, one step
