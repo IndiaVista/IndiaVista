@@ -17,6 +17,7 @@ export default function Dashboard() {
   const [itineraries, setItineraries] = useState([]);
   const [selectedItinerary, setSelectedItinerary] = useState(null);
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
+  const [savedSites,setSavedSites]=useState([])
 
   useEffect(() => {
     const fetchDashboardData = async () => {
@@ -29,6 +30,11 @@ export default function Dashboard() {
         // Fetch user itineraries
         const itinerariesResponse = await apiConnector("GET", iternaryEndpoints.GET_USER_ITINERARIES);
         setItineraries(itinerariesResponse.data.data.itineraries || []);
+
+        //fetch user Sites
+        const savedSites=await apiConnector("GET",endpoints.GET_SAVED_SITES);
+        console.log(savedSites.data.data)
+        setSavedSites(savedSites.data.data)
 
         setLoading(false);
       } catch (err) {
@@ -100,7 +106,7 @@ export default function Dashboard() {
   };
 
   const stats = [
-    { title: "Total Sites", value: 0 },
+    { title: "Total Sites", value: savedSites.length },
     { title: "Total Events", value: 0 },
     { title: "Itineraries Created", value: itineraries.length },
   ];
@@ -148,7 +154,7 @@ export default function Dashboard() {
               <h2 className="text-xl font-bold text-white">{userData?.fullName || 'User'}</h2>
               <p className="text-gray-600 dark:text-gray-400">{userData?.email || 'No email'}</p>
               <p className="text-sm text-gray-500 dark:text-gray-300">
-                Member since {userData?.createdAt ? new Date(userData.createdAt).toLocaleDateString() : 'N/A'}
+                Member since {userData?.createdAt ? new Date(userData.createdAt).toLocaleDateString("en-GB") : 'N/A'}
               </p>
             </div>
           </motion.div>
@@ -219,7 +225,7 @@ export default function Dashboard() {
                       <div className="flex justify-between items-start">
                         <div 
                           className="flex-1"
-                          onClick={() => handleView(itinerary)}
+                          onClick={() => handlePreview(itinerary)}
                         >
                           <h3 className="text-lg font-semibold">{itinerary.iternaryName}</h3>
                           <div className="mt-2">
@@ -227,7 +233,7 @@ export default function Dashboard() {
                               Places: {itinerary.places.length}
                             </p>
                             <p className="text-sm text-gray-500 dark:text-gray-400">
-                              Created: {new Date(itinerary.createdAt).toLocaleDateString()}
+                              Created: {new Date(itinerary.createdAt).toLocaleDateString("en-GB")}
                             </p>
                           </div>
                         </div>
@@ -239,13 +245,13 @@ export default function Dashboard() {
                           >
                             <Eye size={18} />
                           </button>
-                          <button
+                          {/* <button
                             onClick={() => handleEdit(itinerary)}
                             className="p-2 text-indigo-500 hover:text-indigo-600 transition-colors"
                             title="Edit"
                           >
                             <Edit2 size={18} />
-                          </button>
+                          </button> */}
                           <button
                             onClick={() => handleDeleteClick(itinerary)}
                             className="p-2 text-red-500 hover:text-red-600 transition-colors"
@@ -263,7 +269,51 @@ export default function Dashboard() {
                   </div>
                 )}
               </div>
-            ) : (
+            ) : activeTab === "Your Sites" ? (
+              <div className="space-y-4">
+                <h2 className="text-xl font-bold text-white mb-4">Your Saved Sites</h2>
+                {savedSites.length > 0 ? (
+                  savedSites.map((site, index) => (
+                    <motion.div
+  key={site._id || index}
+  className="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg flex justify-between items-center hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors"
+  initial={{ opacity: 0, x: -20 }}
+  animate={{ opacity: 1, x: 0 }}
+  transition={{ duration: 0.3, delay: index * 0.1 }}
+>
+  <div className="flex flex-col cursor-pointer" onClick={() =>
+    navigate(`/home/heritage/heritage-site/${site.sr_no}`)
+  }>
+      <h3 className="text-lg font-semibold text-indigo-600 dark:text-indigo-400">{site.name}</h3>
+                      <p className="text-sm text-gray-600 dark:text-gray-300">Location: {site.location}</p>
+                      <p className="text-sm text-gray-600 dark:text-gray-300">Category: {site.site_type || 'N/A'}</p>
+                      <p className="text-sm text-gray-500 dark:text-gray-400">
+                        Added on: {site.createdAt ? new Date(site.createdAt).toLocaleDateString("en-GB") : 'N/A'}
+                      </p>
+  </div>
+  <div className="flex gap-2 ml-4">
+    <button
+      onClick={() => navigate(`/home/heritage/heritage-site/${site.sr_no}`)}
+      className="p-2 text-blue-500 hover:text-blue-600 transition-colors"
+      title="View"
+    >
+      <Eye size={18} />
+    </button>
+    <button
+      onClick={() => handleUnsave(site._id)}
+      className="p-2 text-red-500 hover:text-red-600 transition-colors"
+      title="Unsave"
+    >
+      <Trash2 size={18} />
+    </button>
+  </div>
+</motion.div>
+
+                  ))
+                ) : (
+                  <p className="text-center text-gray-500">No sites saved yet.</p>
+                )}
+              </div>): (
               <div className="text-center text-gray-500">
                 Feature coming soon
               </div>

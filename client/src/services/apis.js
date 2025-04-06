@@ -7,12 +7,14 @@ export const endpoints = {
   CHANGE_PASSWORD_API: BASE_URL + "/users/change-password",
   LOGOUT_API: BASE_URL + "/users/logout",
   GET_USER_DATA: BASE_URL + "/users/me",
+  GET_SAVED_SITES:BASE_URL+"/users/saved-sites"
 }
 export const mapEndpoints={
   MAP_SITES_API:BASE_URL+"/map/sites",
   MAP_SITESDATA_API:BASE_URL+"/map/sites-data",
   MAP_GET_SITE:BASE_URL+"/map/getsite/:sr_no",
   PAGINATED_SITES:BASE_URL+"/map/getPaginatedSites",
+  SAVE_SITE:BASE_URL+"/map/save-site"
 }
 export const iternaryEndpoints={
   CREATE_ITERNARY:BASE_URL+"/itinerary/create-Itinerary",

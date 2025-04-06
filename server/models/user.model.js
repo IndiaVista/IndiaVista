@@ -55,6 +55,11 @@ const userSchema = new Schema(
     resetPasswordExpires: {
       type: Date,
     },
+    savedSites: [
+      {
+        type: Number
+      }
+    ]     
   },
   { timestamps: true }
 );
