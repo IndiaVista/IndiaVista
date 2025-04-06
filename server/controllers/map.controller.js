@@ -5,6 +5,8 @@ import path from "path";
 import { fileURLToPath } from "url";
 import { Site } from "../models/heritage.model.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
+import { User } from "../models/user.model.js";
+
 
 
 
@@ -110,5 +112,50 @@ const getPaginatedSites=asyncHandler(async(req,res)=>{
   )
 })
 
+//Saves a site to user data
 
-export { insertSiteData ,getSitesData,getSite,getPaginatedSites};
+const saveSite = asyncHandler(async (req, res) => {
+  const { siteId } = req.body;
+  const user = req.user;
+
+  if (!user) {
+    throw new ApiError(404, "User not found!");
+  }
+
+  // Check if site exists in DB
+  const site = await Site.findOne({ sr_no: siteId });
+  if (!site) {
+    throw new ApiError(404, "Site not found!");
+  }
+
+  // Avoid duplicate saves
+  if (!user.savedSites.includes(siteId)) {
+    user.savedSites.push(siteId);
+    await user.save();
+    return res
+      .status(200)
+      .json(new ApiResponse(200, { message: "Site saved successfully." }));
+  } else {
+    return res
+      .status(200)
+      .json(new ApiResponse(200, { message: "Site already saved." }));
+  }
+});
+
+
+const getSavedSites = asyncHandler(async (req, res) => {
+  const user = req.user;
+
+  if (!user) {
+    throw new ApiError(404, "User not found");
+  }
+
+  // Get all site documents matching saved serial numbers
+  const savedSites = await Site.find({ sr_no: { $in: user.savedSites } });
+
+  return res
+    .status(200)
+    .json(new ApiResponse(200, savedSites, "Saved sites fetched successfully."));
+});
+
+export { insertSiteData ,getSitesData,getSite,getPaginatedSites,saveSite,getSavedSites};

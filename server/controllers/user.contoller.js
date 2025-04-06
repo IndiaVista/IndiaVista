@@ -254,4 +254,31 @@ const changePassword = async (req, res) => {
       })
     }
   }
-export {registerUser, loginUser, logoutUser, refreshAcessToken,changePassword}
+
+const getUserData = asyncHandler(async (req, res) => {
+    try {
+        // Get user from request (added by auth middleware)
+        const user = req.user;
+        
+        if (!user) {
+            throw new ApiError(404, "User not found");
+        }
+
+        // Return user data without sensitive information
+        const userData = {
+            _id: user._id,
+            fullName: user.fullName,
+            email: user.email,
+            createdAt: user.createdAt,
+            // Add any other non-sensitive user data you want to return
+        };
+
+        return res.status(200).json(
+            new ApiResponse(200, userData, "User data fetched successfully")
+        );
+    } catch (error) {
+        throw new ApiError(500, error?.message || "Error fetching user data");
+    }
+});
+
+export {registerUser, loginUser, logoutUser, refreshAcessToken, changePassword, getUserData}
