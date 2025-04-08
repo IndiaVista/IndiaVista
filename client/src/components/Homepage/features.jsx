@@ -1,5 +1,5 @@
 import React from 'react';
-import FeatureCard from './FeatureCard';
+import FeatureCard from './Featurecard';
 import { useNavigate } from 'react-router-dom';
 
 const features = [
@@ -99,7 +99,7 @@ const features = [
     title: 'Journey Planner',
     description: 'Document your travels and create personalized itineraries for future adventures.',
     buttonText: 'Plan Your Trip',
-    // onButtonClick: (navigate) =>  navigate("/home/iternary") 
+    onButtonClick: (navigate) =>  navigate("/home/iternary") 
   },
   {
     svgIcon: (
