@@ -243,7 +243,13 @@ export default function Dashboard() {
                     ? "bg-indigo-500 text-black"
                     : "bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-grey"
                 }`}
-                onClick={() => setActiveTab(tab.name)}
+                // onClick={() => setActiveTab(tab.name)}
+                onClick={() => {
+                  setActiveTab(tab.name);
+                  if (tab.name === "Your Gallery") {
+                    navigate("/home/gallery");
+                  }
+                }}
               >
                 {tab.icon}
                 {tab.name}
