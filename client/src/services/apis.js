@@ -7,7 +7,8 @@ export const endpoints = {
   CHANGE_PASSWORD_API: BASE_URL + "/users/change-password",
   LOGOUT_API: BASE_URL + "/users/logout",
   GET_USER_DATA: BASE_URL + "/users/me",
-  GET_SAVED_SITES:BASE_URL+"/users/saved-sites"
+  GET_SAVED_SITES:BASE_URL+"/users/saved-sites",
+  UNSAVE_SITE:BASE_URL+"/users/unsave-site"
 }
 export const mapEndpoints={
   MAP_SITES_API:BASE_URL+"/map/sites",

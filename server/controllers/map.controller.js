@@ -153,9 +153,43 @@ const getSavedSites = asyncHandler(async (req, res) => {
   // Get all site documents matching saved serial numbers
   const savedSites = await Site.find({ sr_no: { $in: user.savedSites } });
 
+  if(!savedSites){
+    throw new ApiError(404,"Cannot save site")
+  }
   return res
     .status(200)
     .json(new ApiResponse(200, savedSites, "Saved sites fetched successfully."));
 });
+const unsaveSite = asyncHandler(async (req, res) => {
+  const { sr_no } = req.body; // destructure from body
+  const userId = req.user._id; // assuming req.user is populated by auth middleware
+  const user=req.user
+  console.log(sr_no)
 
-export { insertSiteData ,getSitesData,getSite,getPaginatedSites,saveSite,getSavedSites};
+  if (!sr_no) {
+    throw new ApiError(400, "Site sr_no is required to unsave.");
+  }
+
+  const updatedUser = await User.findByIdAndUpdate(
+    userId,
+    { $pull: { savedSites: sr_no } }, // remove sr_no from savedSites array
+    { new: true }
+  );
+
+  if (!updatedUser) {
+    throw new ApiError(404, "User not found.");
+  }
+  if(updatedUser.savedSites.length>0)
+  {
+    return res
+    .status(200)
+    .json(new ApiResponse(200, updatedUser.savedSites, "Site unsaved successfully"));
+  }else{
+    return res
+    .status(200)
+    .json(new ApiResponse(200, null, "Site unsaved successfully"));
+  }
+});
+
+
+export { insertSiteData ,getSitesData,getSite,getPaginatedSites,saveSite,getSavedSites,unsaveSite};

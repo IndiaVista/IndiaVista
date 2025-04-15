@@ -4,7 +4,7 @@ import {
   getSitesData,
   getSite,
   getPaginatedSites,
-  saveSite
+  saveSite,
 } from "../controllers/map.controller.js";
 import {verifyJWT} from "../middlewares/auth.middleware.js"
 
@@ -15,6 +15,7 @@ router.route("/sites-data").get(getSitesData);
 router.route("/getsite/:sr_no").get(getSite);
 router.route("/getPaginatedSites").get(getPaginatedSites);
 router.route('/save-site').post(verifyJWT,saveSite);
+
 
 
 // console.log("I am in map")
