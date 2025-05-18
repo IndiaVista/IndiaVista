@@ -58,7 +58,30 @@ const NavBar = () => {
       offset: -70,
     });
   };
+  const handleNavClick = (navId) => {
+   
+    if (window.location.pathname === "/home") {
+      if (navId === "gallery") {
+        navigate("/home/gallery");
+      }
+      else{
+      scrollToSection(navId);
+      }
 
+    } else {
+      navigate("/home", { replace: false });
+      // Delay to allow React Router to load the Home component
+      setTimeout(() => {
+        if (navId === "gallery") {
+          navigate("/home/gallery");
+        }
+        else{
+        scrollToSection(navId);
+        }
+      }, 100); 
+    }
+  };
+  
   const navbar = [
     { title: "Home", id: "home" },
     { title: "Events", id: "events" },
@@ -88,57 +111,21 @@ const NavBar = () => {
       {/* Desktop Navigation Links */}
       <ul className="list-none hidden lg:flex flex-row items-center space-x-6">
         {navbar.map((nav) => (
+          
+          
+          
           <li
             key={nav.id}
             className={`font-medium text-[16px] cursor-pointer ${
               active === nav.title ? "text-black" : "text-black"
-            } hover:text-black relative group`} // Added group for hover functionality
+            } hover:text-black relative group`}
             onClick={() => {
               setActive(nav.title);
-              scrollToSection(nav.id);
+              handleNavClick(nav.id);
             }}
           >
-            {/* Check if the nav title is Events or Features to render dropdown */}
-            {nav.title === "Features" ? (
-              <>
-                <a href={`#${nav.id}`}>{nav.title}</a>
-                <ul className="absolute left-0 mt-2 w-40 bg-white shadow-lg rounded-md opacity-0 group-hover:opacity-100 group-hover:block transition-opacity duration-200">
-                  <li
-                    className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
-                    onClick={() => navigate("/home/map")}
-                  >
-                    Way to Map
-                  </li>
-                  <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">
-                    Places Near You
-                  </li>
-                  <li
-                    className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
-                    onClick={() => navigate("/home/heritage")}
-                  >
-                    Heritage Sites
-                  </li>
-                  <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">
-                    Journey Planner
-                  </li>
-                </ul>
-              </>
-            ) : nav.title === "Events" ? (
-              <>
-                <a href={`#${nav.id}`}>{nav.title}</a>
-                <ul className="absolute left-0 mt-2 w-40 bg-white shadow-lg rounded-md opacity-0 group-hover:opacity-100 group-hover:block transition-opacity duration-200">
-                  <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
-                  onClick={() => navigate("/home/calendar")}>
-                    Cultural Calendar
-                  </li>
-                  <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">
-                    Festivals
-                  </li>
-                </ul>
-              </>
-            ) : (
-              <a href={`#${nav.id}`}>{nav.title}</a> // Default rendering for other navbar items
-            )}
+            {nav.title}
+            
           </li>
         ))}
       </ul>

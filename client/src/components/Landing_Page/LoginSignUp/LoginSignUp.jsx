@@ -75,6 +75,9 @@ useEffect(() => {
     }
   };
 
+  useEffect(()=>{
+    console.log(error)
+  },[error])
   const switchMode = () => {
     setForm(initialForm);
     setIsregister((prevIsregister) => !prevIsregister);
