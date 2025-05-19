@@ -24,9 +24,13 @@ function Gallery() {
 
   const fetchMedia = async () => {
     try {
+      // const endpoint = activeTab === 'public' 
+      //   ? 'http://localhost:8000/api/gallery/public'
+      //   : 'http://localhost:8000/api/gallery/user';
+
       const endpoint = activeTab === 'public' 
-        ? 'http://localhost:8000/api/gallery/public'
-        : 'http://localhost:8000/api/gallery/user';
+        ? 'https://indiavista.onrender.com/api/gallery/public'
+        : 'https://indiavista.onrender.com/api/gallery/user';
       
       let config = {};
       

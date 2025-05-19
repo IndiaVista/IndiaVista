@@ -42,7 +42,14 @@ function UploadModal({ onClose, onUploadComplete }) {
       const profile = JSON.parse(localStorage.getItem("profile"));
       const accessToken = profile?.token;
       
-      await axios.post('http://localhost:8000/api/gallery/upload', formData, {
+      // await axios.post('http://localhost:8000/api/gallery/upload', formData, {
+      //   headers: { 
+      //     'Content-Type': 'multipart/form-data',
+      //     'Authorization': `Bearer ${accessToken}`
+      //   }
+      // });
+
+      await axios.post('https://indiavista.onrender.com/api/gallery/upload', formData, {
         headers: { 
           'Content-Type': 'multipart/form-data',
           'Authorization': `Bearer ${accessToken}`

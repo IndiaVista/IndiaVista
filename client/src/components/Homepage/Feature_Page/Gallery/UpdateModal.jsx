@@ -44,7 +44,14 @@ function UpdateModal({ item, onClose, onUpdateComplete }) {
         formData.append('media', newFile);
       }
       
-      await axios.put(`http://localhost:8000/api/gallery/${item._id}`, formData, {
+      // await axios.put(`http://localhost:8000/api/gallery/${item._id}`, formData, {
+      //   headers: { 
+      //     'Authorization': `Bearer ${accessToken}`,
+      //     'Content-Type': 'multipart/form-data'
+      //   }
+      // });
+
+       await axios.put(`https://indiavista.onrender.com/api/gallery/${item._id}`, formData, {
         headers: { 
           'Authorization': `Bearer ${accessToken}`,
           'Content-Type': 'multipart/form-data'
