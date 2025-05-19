@@ -25,8 +25,8 @@ const resetPasswordToken = async (req, res) => {
     )
     console.log("DETAILS", updatedDetails)
     console.log(token)
-    const url = `http://localhost:5173/update-password/${token}`
-    
+    // const url = `http://localhost:5173/update-password/${token}`
+    const url = `https://india-vista.vercel.app/update-password/${token}`
     await mailSender(
       email,
       "Password Reset",
