@@ -63,7 +63,13 @@ function Gallery() {
       const profile = JSON.parse(localStorage.getItem("profile"));
       const accessToken = profile?.token;
 
-      await axios.delete(`http://localhost:8000/api/gallery/${id}`, {
+      // await axios.delete(`http://localhost:8000/api/gallery/${id}`, {
+      //   headers: {
+      //     'Authorization': `Bearer ${accessToken}`
+      //   }
+      // });
+
+      await axios.delete(`https://indiavista.onrender.com/api/gallery/${id}`, {
         headers: {
           'Authorization': `Bearer ${accessToken}`
         }
