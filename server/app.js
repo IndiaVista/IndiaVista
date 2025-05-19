@@ -12,7 +12,8 @@ import galleryRouter from "./routes/gallery.routes.js"
 const app = express();
 
 app.use(cors({
-    origin:process.env.CORS_ORIGIN||'http://localhost:5173',
+    // origin:process.env.CORS_ORIGIN||'http://localhost:5173',
+    origin:process.env.CORS_ORIGIN||'india-vista-hmj8bh4zp-indiavistas-projects.vercel.app',
     credentials:true,
 }));
 app.use(bodyParser.json());
