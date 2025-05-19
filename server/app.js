@@ -13,7 +13,6 @@ const app = express();
 
 app.use(cors({
     // origin:process.env.CORS_ORIGIN||'http://localhost:5173',
-    origin:process.env.CORS_ORIGIN||'india-vista.vercel.app',
     credentials:true,
 }));
 app.use(bodyParser.json());
